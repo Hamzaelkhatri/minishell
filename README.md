@@ -17,3 +17,4 @@ https://www.geeksforgeeks.org/making-linux-shell-c/
 https://www.quora.com/What-is-the-3rd-parameter-in-the-main-function-char-envp#:~:text=The%20non%2Dportable%2Dbut%2D,As%20always%2C%20I%20recommend%20experimenting.
 https://chrtophe.developpez.com/tutoriels/minisysteme/#L11
 https://stackoverflow.com/questions/6697753/difference-between-single-and-double-quotes-in-bash
+https://brennan.io/2015/01/16/write-a-shell-in-c/
