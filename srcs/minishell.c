@@ -3,11 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/25 16:22:18 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/11/25 16:22:23 by helkhatr         ###   ########.fr       */
+/*   Created: 2020/11/28 02:17:32 by helkhatr          #+#    #+#             */
+/*   Updated: 2020/11/28 02:36:31 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/minishell.h"
 
+int		main(int argc, char **argv)
+{
+	loop_shell();
+	return (0);
+}
