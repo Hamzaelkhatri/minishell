@@ -1,3 +1,5 @@
+#include "../includes/minishell.h"
+
 char	*read_line(void)
 {
 	char *line;
@@ -11,13 +13,9 @@ char	*read_line(void)
 	if (read(0, line, BUFFER_SIZE) == -1)
 	{
 		if (line[BUFFER_SIZE] == '\0')
-		{
 			exit(0);
-		}
 		else
-		{
 			exit(-1);
-		}
 	}
 	return (line);
 }
@@ -31,7 +29,7 @@ void	loop_shell(void)
 	status = 1;
 	while (status)
 	{
-		write(1, "> ", 2);
+		write(1, "bash$ ", 6);
 		line = read_line();
 		free(line);
 	}
