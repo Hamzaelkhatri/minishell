@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   search_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/11/30 18:42:43 by helkhatr         ###   ########.fr       */
+/*   Created: 2020/11/30 18:16:07 by helkhatr          #+#    #+#             */
+/*   Updated: 2020/11/30 18:53:03 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include  <signal.h>
-# include  <stdio.h>
-# include "../libft/libft.h"
-# define BUFFER_SIZE 1024
+#include "minishell.h"
 
-typedef struct s_path
+char *search_env(char **env,char *str)
 {
-    char *path;
-    char **env;
-} t_path;
+    int i;
+    int j;
+    char *tmp;
 
-void    loop_shell(void);
-void    init(t_path *path);
-void    show_env(char **path);
-char    *search_env(char **env,char *str);
-#endif
+    j = ft_strlen(str)+1; /// exemple [path=] 5 
+    i = 0;
+    while (env[i])
+    {
+        if (ft_strnstr(env[i],str,ft_strlen(env[i])))
+        {
+            tmp = ft_strnstr(env[i],str,ft_strlen(env[i]));
+            return &tmp[j];
+        }
+        i++;
+    }
+    return (NULL);
+}

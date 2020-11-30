@@ -6,7 +6,7 @@
 #    By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/25 16:22:32 by helkhatr          #+#    #+#              #
-#    Updated: 2020/11/30 14:37:16 by helkhatr         ###   ########.fr        #
+#    Updated: 2020/11/30 18:37:58 by helkhatr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,10 @@ OBJ_PATH= obj
 LIB_PATH= libft
 
 
-SRC_NAME=minishell.c\
+SRC_NAME=init.c\
+		search_env.c\
+		env.c\
+		minishell.c\
 		read_line.c\
 
 HDR_NAME=minishell.h 
@@ -40,7 +43,6 @@ all: lib  $(NAME)
 
 $(NAME) : $(LIB_PATH)/$(LIB) $(OBJ)
 	@rm -rf miniRT
-	@clear
 	@$(COMP) $(H_FLAG) $(LLIB_FLAG) $(OBJ) -o $@
 	@echo "													 Made by : \033[1;91mSqatim\033[m"
 	@echo "      ___                       ___                       ___           ___           ___                                  "
@@ -78,10 +80,3 @@ fclean: clean
 	@echo "\033[0;31m>> $(NAME) && all obbjects are deleted.\033[0m" 
 
 re : fclean all
-echo               _                            _                    _       _     _          _ _ 
-echo             | |                          | |                  (_)     (_)   | |        | | |
-echo__      _____| | ___ ___  _ __ ___   ___  | |_ ___    _ __ ___  _ _ __  _ ___| |__   ___| | |
-echo\ \ /\ / / _ \ |/ __/ _ \| '_ ` _ \ / _ \ | __/ _ \  | '_ ` _ \| | '_ \| / __| '_ \ / _ \ | |
-echo \ V  V /  __/ | (_| (_) | | | | | |  __/ | || (_) | | | | | | | | | | | \__ \ | | |  __/ | |
-echo  \_/\_/ \___|_|\___\___/|_| |_| |_|\___|  \__\___/  |_| |_| |_|_|_| |_|_|___/_| |_|\___|_|_|
-                                                                                             
