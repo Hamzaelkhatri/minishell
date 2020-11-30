@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/28 02:17:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/11/30 19:31:41 by zjamali          ###   ########.fr       */
+/*   Created: 2020/11/30 19:15:36 by zjamali           #+#    #+#             */
+/*   Updated: 2020/11/30 19:32:37 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		main(int argc, char **argv,char **env)
+void	print_working_directory(char** env)
 {
-	t_path path;
-	init(&path);
-	path.env = env;
-//	printf("%s",search_env(path.env,"PAGER"));
-	//show_env(path.env);
-	print_working_directory(path.env);
-	// loop_shell();
-	return (0);
+	char *pwd;
+	int i;
+	
+	i = 0;
+	//pwd = search_env(env,"zsh");
+	while (env[i])
+	{
+		if (!ft_strncmp(env[i],"PWD",3))
+		{
+			pwd = env[i] + 4;
+			break;
+		}
+		i++;
+	}
+	write(1,pwd,ft_strlen(pwd));
+	write(1,"\n",1);
 }
