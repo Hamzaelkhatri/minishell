@@ -3,17 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:17:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/11/30 13:55:00 by helkhatr         ###   ########.fr       */
+/*   Updated: 2020/11/30 17:22:00 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		main(int argc, char **argv)
+void	get_env_variables(t_var *var_env, char **env)
 {
-	loop_shell();
+	t_var *vr_env;
+	
+	vr_env = var_env;
+
+	while(env[i])	
+	
+}
+
+int		main(int argc, char **argv, char **env)
+{
+	t_var *var_env;
+	
+	//loop_shell();
+	
 	return (0);
 }

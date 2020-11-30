@@ -19,18 +19,28 @@ char	*read_line(void)
 	}
 	return (line);
 }
+void get_env_variables(void)
+{
+	char *argv[2];
+	argv[0] = "env";
+	argv[1] = NULL;
+	execve(argv[0],argv,NULL);
+}
 
 void	loop_shell(void)
 {
 	char	*line;
 	char	**args;
 	int		status;
-
+	char	**env_variables;
 	status = 1;
-	while (status)
-	{
+	//while (status)
+	//{
+		//line = read_line();
+		//env_variables = 
+		get_env_variables();
+		
 		write(1, "bash$ ", 6);
-		line = read_line();
-		free(line);
-	}
+		//free(line);
+	//}
 }
