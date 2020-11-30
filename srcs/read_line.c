@@ -13,18 +13,9 @@ char	*read_line(void)
 	if (read(0, line, BUFFER_SIZE) == -1)
 	{
 		if (line[BUFFER_SIZE] == '\0')
-		{
 			exit(0);
-		}
-		else if(line[0]=='\0')
-		{
-			exit(0);
-		}
 		else
-		{
 			exit(-1);
-		}
-		
 	}
 	return (line);
 }
@@ -32,6 +23,7 @@ char	*read_line(void)
 void sigint_handler(int sig)
 {
 	int a;
+
 	if(sig == SIGINT)
 	{
 		signal(SIGINT, sigint_handler);
