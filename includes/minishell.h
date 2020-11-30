@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/11/30 17:19:22 by zjamali          ###   ########.fr       */
+/*   Updated: 2020/11/30 17:33:00 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ typedef struct s_env_var
 {
 	char *var_name;
 	char *var_value;
-}				t_var;
+	struct s_env_var *next;
+}				t_env_var;
 
 
 void    loop_shell(void);
