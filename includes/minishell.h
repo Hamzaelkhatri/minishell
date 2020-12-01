@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/11/30 19:18:03 by zjamali          ###   ########.fr       */
+/*   Updated: 2020/12/01 11:09:17 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,6 @@ void    init(t_path *path);
 void    show_env(char **path);
 char    *search_env(char **env,char *str);
 void	print_working_directory(char** env);
+
+void	ft_echo(char  *str,int option);
 #endif
