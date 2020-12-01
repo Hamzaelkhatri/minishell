@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:17:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/11/30 19:31:41 by zjamali          ###   ########.fr       */
+/*   Updated: 2020/12/01 19:27:08 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 int		main(int argc, char **argv,char **env)
 {
 	t_path path;
-	init(&path);
+	t_key key;
+	
+	init(&path,&key);
 	path.env = env;
-//	printf("%s",search_env(path.env,"PAGER"));
-	//show_env(path.env);
-	print_working_directory(path.env);
-	// loop_shell();
+	loop_shell(&key);
 	return (0);
 }
