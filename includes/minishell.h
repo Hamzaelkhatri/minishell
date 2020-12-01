@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/01 19:26:47 by helkhatr         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -37,4 +26,8 @@ void    init(t_path *path,t_key *key);
 void    show_env(char **path);
 char    *search_env(char **env,char *str);
 void	print_working_directory(char** env);
+char    **ft_space_split(char const *s);
+char    *ft_str_in_str(const char *s1, const char *s2);
+int				ft_2strlen(char **str);
+
 #endif
