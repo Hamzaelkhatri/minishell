@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/11/30 19:18:03 by zjamali          ###   ########.fr       */
+/*   Updated: 2020/12/01 19:24:44 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,8 @@ void    init(t_path *path);
 void    show_env(char **path);
 char    *search_env(char **env,char *str);
 void	print_working_directory(char** env);
+char    **ft_space_split(char const *s);
+char    *ft_str_in_str(const char *s1, const char *s2);
+int				ft_2strlen(char **str);
+
 #endif
