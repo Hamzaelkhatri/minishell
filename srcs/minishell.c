@@ -1,20 +1,13 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/28 02:17:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/01 18:29:20 by sqatim           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
 int		main(int argc, char **argv)
 {
-	loop_shell();
-
+	t_path path;
+	t_key key;
+	
+	init(&path,&key);
+	path.env = env;
+	loop_shell(&key);
 	return (0);
 }
