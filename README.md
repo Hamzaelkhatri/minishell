@@ -19,3 +19,4 @@ https://chrtophe.developpez.com/tutoriels/minisysteme/#L11</br>
 https://stackoverflow.com/questions/6697753/difference-between-single-and-double-quotes-in-bash</br>
 https://brennan.io/2015/01/16/write-a-shell-in-c/</br>
 https://www.youtube.com/watch?v=5BE9qM79fgM</br>
+https://sites.cs.ucsb.edu/~manish/discussion/week2.pdf<br>
