@@ -50,7 +50,6 @@ void sigint_handler(int sig)
 			char *cmd_args[] = { "stty", "-echoctl", 0 };
 			char *env[] = {" ", "env", 0};
 			execve(cmd[0], cmd_args, env);
-			// execve()
 		}
 	}
 }
@@ -79,7 +78,7 @@ void split_line(char *line)
 					write(1," ",1);
 				}
 			}
-			write(1,"\n",1);
+              //ft_putstr_fd("bash$ ",1);//\e[32;40m
 		}
 	}
 }
@@ -91,15 +90,14 @@ void	loop_shell(t_key *key)
     int		status;
     int		cntrd;
     
-  //  signal(SIGINT, sigint_handler);
+    signal(SIGINT, sigint_handler);
     status = 1;
     cntrd = 0;
     ft_putstr_fd("bash$ ",1);//\e[32;40m
     while (status)
     {
         line = read_line(key);
-
-        free(line);
         split_line(line);
+        free(line);
     }
 }
