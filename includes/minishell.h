@@ -1,4 +1,3 @@
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <unistd.h>
@@ -26,6 +25,7 @@ void    init(t_path *path,t_key *key);
 void    show_env(char **path);
 char    *search_env(char **env,char *str);
 void	print_working_directory(char** env);
+void exeute(char **env);
 char    **ft_space_split(char const *s);
 char    *ft_str_in_str(const char *s1, const char *s2);
 int				ft_2strlen(char **str);
