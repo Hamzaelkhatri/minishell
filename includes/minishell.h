@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/01 19:26:47 by helkhatr         ###   ########.fr       */
+/*   Updated: 2020/12/02 11:25:05 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ void    init(t_path *path,t_key *key);
 void    show_env(char **path);
 char    *search_env(char **env,char *str);
 void	print_working_directory(char** env);
+void exeute(char **env);
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+         #
+#    By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/25 16:22:32 by helkhatr          #+#    #+#              #
-#    Updated: 2020/11/30 19:18:29 by zjamali          ###   ########.fr        #
+#    Updated: 2020/12/02 11:26:01 by helkhatr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC_NAME=init.c\
 		minishell.c\
 		read_line.c\
 		pwd.c\
+		execute.c\
 
 HDR_NAME=minishell.h 
 

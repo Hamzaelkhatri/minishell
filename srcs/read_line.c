@@ -63,14 +63,14 @@ void	loop_shell(t_key *key)
     int		status;
     int		cntrd;
     
-    signal(SIGINT, sigint_handler);
+  //  signal(SIGINT, sigint_handler);
     status = 1;
     cntrd = 0;
-    ft_putstr_fd("\e[32;40mbash$ ",1);
-    // write(1, "bash$ ", 6);
+    ft_putstr_fd("bash$ ",1);//\e[32;40m
     while (status)
     {
         line = read_line(key);
+
         free(line);
     }
 }
