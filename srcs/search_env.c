@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 18:16:07 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/11/30 18:53:03 by helkhatr         ###   ########.fr       */
+/*   Updated: 2020/12/01 16:25:31 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char *search_env(char **env,char *str)
     int j;
     char *tmp;
 
-    j = ft_strlen(str)+1; /// exemple [path=] 5 
+    j = ft_strlen(str)+1;
     i = 0;
     while (env[i])
     {
