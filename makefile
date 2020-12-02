@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+         #
+#    By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/25 16:22:32 by helkhatr          #+#    #+#              #
-#    Updated: 2020/11/30 19:18:29 by zjamali          ###   ########.fr        #
+#    Updated: 2020/12/01 18:29:13 by zdnaya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC_NAME=init.c\
 		minishell.c\
 		read_line.c\
 		pwd.c\
+		search_path.c\
 
 HDR_NAME=minishell.h 
 
