@@ -80,6 +80,15 @@ int search_cmd(t_cmd *cmd)
     return (1);
 }
 
+void execute_cmd(t_cmd *cmd)
+{
+    if(cmd->echo != 0)
+    {
+        
+        cmd->echo=0;
+    }
+}
+
 void promp_bash(t_cmd *cmd,t_key *key,int ret,char **line)
 {
     if(ret == 0 && key->cntrd !=1)
@@ -94,7 +103,7 @@ void promp_bash(t_cmd *cmd,t_key *key,int ret,char **line)
     }
     else if(ft_strrchr(*line, '\n'))
     {
-        // split_line(*line);
+
         ft_putstr_fd("\nbash$ ",1);
         key->cntrd = 0;
     }    
@@ -107,10 +116,14 @@ void check_cmd(t_cmd *cmd,char **line,t_key *key,int ret)
     int i;
     
     i = 0;
-        if(ft_str_in_str(*line," echo "))
-        {
+        if(ft_str_in_str(*line,"echo"))
+        {   
             cmd->echo =1;
         }
+        else
+        {
+        }
+        
         promp_bash(cmd,key,ret,line);
 }
 
