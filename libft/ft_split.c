@@ -86,14 +86,10 @@ static char		*alloc(char **tab, char *src, char c)
 
 char			**ft_split(char const *s, char c)
 {
-	int			i;
 	int			j;
-	int			o;
 	char		**tab;
 	char		*str;
 
-	o = 0;
-	i = 0;
 	j = 0;
 	if (!s)
 		return (NULL);
