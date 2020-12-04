@@ -4,10 +4,15 @@ int		main(int argc, char **argv,char **env)
 {
 	t_path path;
 	t_key key;
+	t_cmd cmd;
 	
-	init(&path,&key);
-	path.env = env;
-	loop_shell(&key);
+	 init(&path,&key,&cmd);
+	 path.env = env;
+	loop_shell(&key,&cmd);
+	//    if(ft_str_in_str("dehdehd=","echo"))
+    //     {
+            
+    //     }
 	// exeute(path.env);
 	return (0);
 }
