@@ -6,7 +6,6 @@ https://medium.com/dev-genius/lets-build-a-linux-shell-part-i-954c95911501</br>
 https://medium.com/better-programming/how-bash-works-8424becc12f3</br>
 https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html</br>
 https://man7.org/linux/man-pages/dir_all_by_section.html</br>
-https://github.com/MichelleJiam/minishell</br>
 https://unix.stackexchange.com/questions/159513/what-are-the-shells-control-and-redirection-operators</br>
 https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html</br>
 https://www.geeksforgeeks.org/pipe-system-call/?ref=rp</br>

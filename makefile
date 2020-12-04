@@ -1,14 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/25 16:22:32 by helkhatr          #+#    #+#              #
-#    Updated: 2020/12/01 17:53:14 by sqatim           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 NAME= minishell
 SRC_PATH= srcs
@@ -23,8 +12,10 @@ SRC_NAME=init.c\
 		minishell.c\
 		read_line.c\
 		pwd.c\
+		execute.c\
 		ft_split.c\
 		tools.c\
+
 
 HDR_NAME=minishell.h 
 
