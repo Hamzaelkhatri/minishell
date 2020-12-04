@@ -4,11 +4,11 @@ int		main(int argc, char **argv,char **env)
 {
 	t_path path;
 	t_key key;
+	t_cmd cmd;
 	
-	init(&path,&key);
+	init(&path,&key,&cmd);
 	path.env = env;
-	loop_shell(&key);
-	// exeute(path.env);
+	loop_shell(&key,&cmd);
 	return (0);
 }
 
