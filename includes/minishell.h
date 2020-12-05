@@ -8,16 +8,17 @@
 # include "../libft/libft.h"
 # define BUFFER_SIZE 1024
 
-typedef struct s_path
-{
-    char *path;
-    char **env;
-} t_path;
-
 typedef struct s_key
 {
     int     cntrd;
 }t_key;
+
+typedef struct s_path
+{
+    char *path;
+    char **env;
+    t_key *key;
+} t_path;
 
 typedef struct s_cmd
 {
@@ -31,7 +32,7 @@ typedef struct s_cmd
 }t_cmd;
 
 
-void    loop_shell(t_key *key,t_cmd *cmd);
+void    loop_shell(t_cmd *cmd,t_path *path);
 void    init(t_path *path,t_key *key,t_cmd *cmd);
 void    show_env(char **path);
 char    *search_env(char **env,char *str);
