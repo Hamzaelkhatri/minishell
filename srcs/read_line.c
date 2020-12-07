@@ -1,5 +1,4 @@
 #include "minishell.h"
-
 int var_glob = 0; /* hadi zadtha ha9ash fach kanktab shi haja o kandir ctrl + d o n annuli dakshi li ktabt b ctrl + c 
                     makat3awdsh tkhdam ctrl + d*/
 
@@ -20,7 +19,9 @@ int     read_line(t_path *key,char **line)
     if ((ret = read(0, *line, BUFFER_SIZE)) == -1)
     {
         if (line[BUFFER_SIZE] == 0)
+        {
             exit(0);
+        }
         else
             exit(1);
     }
@@ -59,7 +60,6 @@ void execute_cmd(t_cmd *cmd)
     {
         cmd->echo = 0;
     }
-    int a;
 }
 
 void promp_bash(t_cmd *cmd, t_path *path, int ret, char **line)
@@ -95,6 +95,86 @@ void check_pwd(t_cmd *cmd, char **line, t_path *path, int ret)
     }
 }
 
+char **delete_quote(char **line)
+{
+    int i;
+    int j;
+    int index;
+    char wich;
+
+    i = 0;
+    while (line[i])
+    {
+        j = 0;
+        index = 0;
+        while (line[i][j])
+        {
+            while (line[i][j] != 34 && line[i][j] != 39 && line[i][j])
+                line[i][index++] = line[i][j++];
+            if ((line[i][j] == 34 || line[i][j] == 39) && line[i][j])
+            {
+                wich = (line[i][j] == 34) ? 34 : 39;
+                j++;
+                while (line[i][j] != wich && line[i][j])
+                    line[i][index++] = line[i][j++];
+                if (line[i][j] == '\0')
+                    line[i][index] = '\0';
+                else
+                    j++;
+            }
+            if (line[i][j] == '\0')
+                line[i][index] = '\0';
+        }
+        i++;
+    }
+    return (line);
+}
+
+bool check_quote(char *line)
+{
+    int i;
+    int check;
+    char wich;
+
+    check = 0;
+    i = 0;
+    while (line[i])
+    {
+        if (line[i] == 34 || line[i] == 39)
+        {
+            wich = (line[i] == 34) ? 34 : 39;
+            i++;
+            check = 0;
+            while (line[i])
+            {
+                if (line[i] == wich)
+                {
+                    check = 1;
+                    break;
+                }
+                i++;
+            }
+            if (check != 1)
+                return (false);
+        }
+        if (line[i])
+            i++;
+    }
+    return (true);
+}
+
+void ft_nhaydo_nl(char **tab)
+{
+    int count;
+    int len;
+
+    count = ft_2strlen(tab);
+    // printf("|count ==> %d|\n", count);
+    len = ft_strlen(tab[count - 1]);
+    // printf("|len ==> %d|\n", len);
+    tab[count - 1][len - 1] = '\0';
+}
+
 void check_cmd(t_cmd *cmd, char **line, t_path *path, int ret)
 {
     int i;
@@ -103,23 +183,37 @@ void check_cmd(t_cmd *cmd, char **line, t_path *path, int ret)
     i = 1;
     if (ft_strnstr(*line, "echo", 4))
     {
-        tab = ft_space_split(*line);
-        cmd->echo = 1;
-        if (ft_str_in_str(tab[0], "echo\n"))
-            write(1, "\n", 1);
-        else
+        if (check_quote(*line))
         {
-            if (ft_2strlen(tab) == 2)
-                ft_putstr_fd(tab[1], 1);
+            tab = ft_space_split(*line);
+            tab = delete_quote(tab);
+            cmd->echo = 1;
+            if (ft_str_in_str(tab[0], "echo\n"))
+                write(1, "\n", 1);
             else
             {
-                while (i < ft_2strlen(tab))
+                if (tab[1] == 0)
+                    path->key->cntrd = 1;
+                else
                 {
-                    ft_putstr_fd(tab[i++], 1);
-                    if (i < ft_2strlen(tab))
-                        write(1, " ", 1);
+                    if (ft_strnstr(tab[1], "-n", 2) || ft_strnstr(tab[1], "-n\n", 3))
+                    {
+                        ft_nhaydo_nl(tab);
+                        i++;
+                    }
+                    while (i < ft_2strlen(tab))
+                    {
+                        ft_putstr_fd(tab[i++], 1);
+                        if (i < ft_2strlen(tab))
+                            write(1, " ", 1);
+                    }
                 }
             }
+        }
+        else
+        {
+            ft_putstr_fd("check quotes", 1);
+            exit(0);
         }
     }
     else
@@ -144,6 +238,7 @@ void loop_shell(t_cmd *cmd,t_path *path)
         ret = read_line(path, &line);
         check_cmd(cmd, &line, path, ret);
         var_glob = 0;
-        i = 1;
+        free(line);
     }
 }
+
