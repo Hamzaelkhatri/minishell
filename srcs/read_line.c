@@ -193,7 +193,7 @@ void check_cmd(t_cmd *cmd, char **line, t_path *path, int ret)
             else
             {
                 if (tab[1] == 0)
-                    key->cntrd = 1;
+                    path->key->cntrd = 1;
                 else
                 {
                     if (ft_strnstr(tab[1], "-n", 2) || ft_strnstr(tab[1], "-n\n", 3))
