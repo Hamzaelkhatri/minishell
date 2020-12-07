@@ -235,8 +235,8 @@ void loop_shell(t_cmd *cmd,t_path *path)
     while (status)
     {
         ret = 0;
-        ret = read_line(key, &line);
-        check_cmd(cmd, &line, key, ret);
+        ret = read_line(path, &line);
+        check_cmd(cmd, &line, path, ret);
         var_glob = 0;
         free(line);
     }
