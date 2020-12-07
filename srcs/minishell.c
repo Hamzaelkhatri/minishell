@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:17:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/01 13:15:44 by zjamali          ###   ########.fr       */
+/*   Updated: 2020/12/07 12:16:06 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 int		main(int argc, char **argv,char **env)
 {
 	t_path path;
-	init(&path);
+	t_key key;
+	t_cmd cmd;
+	
+	init(&path,&key,&cmd);
 	path.env = env;
-//	printf("%s",search_env(path.env,"PAGER"));
-	//show_env(path.env);
-	//print_working_directory(path.env); 
-	//ft_echo(argv[1],1); // 1 in second argument if -n exist 0 if not
-	// loop_shell();
-	ft_parse("echo hello | echo -n hello");
+	loop_shell(&cmd,&path);
 	return (0);
 }

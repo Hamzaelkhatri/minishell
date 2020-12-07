@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/01 12:23:24 by zjamali          ###   ########.fr       */
+/*   Updated: 2020/12/07 12:15:29 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,38 @@
 # include "../libft/libft.h"
 # define BUFFER_SIZE 1024
 
+typedef struct s_key
+{
+    int     cntrd;
+}t_key;
+
 typedef struct s_path
 {
     char *path;
     char **env;
+    t_key *key;
 } t_path;
 
-typedef struct	s_token
+typedef struct s_cmd
 {
-	char			*tk_value;
-	struct s_token 	*next;
-}				t_token;
+    int echo;
+    int pwd;
+    int exit;
+    int env;
+    int export;
+    int unset;
+    int cd;
+}t_cmd;
 
-void    		loop_shell(void);
-void    		init(t_path *path);
-void    		show_env(char **path);
-char    		*search_env(char **env,char *str);
-void			print_working_directory(char** env);
-void			ft_echo(char  *str,int option);
-t_token			*ft_parse(char *line);
+
+void    loop_shell(t_cmd *cmd,t_path *path);
+void    init(t_path *path,t_key *key,t_cmd *cmd);
+void    show_env(char **path);
+char    *search_env(char **env,char *str);
+void	print_working_directory(char** env);
+void    exeute(char **env);
+char    **ft_space_split(char const *s);
+char            *ft_str_in_str(const char *s1, const char *s2);
+int             ft_2strlen(char **str);
 
 #endif

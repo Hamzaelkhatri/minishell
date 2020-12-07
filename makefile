@@ -6,7 +6,7 @@
 #    By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/25 16:22:32 by helkhatr          #+#    #+#              #
-#    Updated: 2020/12/01 12:19:17 by zjamali          ###   ########.fr        #
+#    Updated: 2020/12/07 12:17:12 by zjamali          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,10 @@ SRC_NAME=init.c\
 		minishell.c\
 		read_line.c\
 		pwd.c\
-		echo.c\
-		parse.c\
+		execute.c\
+		ft_split.c\
+		tools.c\
+
 
 HDR_NAME=minishell.h 
 
@@ -67,10 +69,6 @@ lib:
 $(OBJ_PATH)/%.o:  $(SRC_PATH)/%.c $(HDR)
 	@mkdir -p $(OBJ_PATH) 
 	@$(COMP) $(FLAGS) $(H_FLAG)  -o $@ -c $<
-
-$(OBJ_PATH)/%.o:  $(SRC_B_PATH)/%.c $(HDR_B) 
-	@mkdir -p $(OBJ_PATH) 
-	@$(COMP) $(FLAGS) $(H_B_FLAG)  -o $@ -c $<
 
 clean:
 	@rm -rf $(OBJ_PATH)
