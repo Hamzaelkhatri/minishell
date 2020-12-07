@@ -6,7 +6,7 @@
 #    By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/25 16:22:32 by helkhatr          #+#    #+#              #
-#    Updated: 2020/12/07 12:17:12 by zjamali          ###   ########.fr        #
+#    Updated: 2020/12/07 13:11:45 by zjamali          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC_NAME=init.c\
 		execute.c\
 		ft_split.c\
 		tools.c\
-
+		parse.c\
 
 HDR_NAME=minishell.h 
 
