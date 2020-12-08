@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/07 13:41:08 by zjamali          ###   ########.fr       */
+/*   Updated: 2020/12/08 12:35:23 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ char    **ft_space_split(char const *s);
 char            *ft_str_in_str(const char *s1, const char *s2);
 int             ft_2strlen(char **str);
 t_token	*ft_parse(char *line);
+char	**ft_split_whitespaces(char *str);
 
 #endif

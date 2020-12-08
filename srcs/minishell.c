@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:17:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/07 19:43:57 by zjamali          ###   ########.fr       */
+/*   Updated: 2020/12/08 12:42:44 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int		main(int argc, char **argv,char **env)
 	//init(&path,&key,&cmd);
 	//path.env = env;
 	//loop_shell(&cmd,&path);
-	ft_parse("c  h");
+	ft_parse("echo  -n 		hello");
 	return (0);
 }
