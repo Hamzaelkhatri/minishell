@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
+/*   Updated: 2020/12/08 12:35:23 by zjamali          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <unistd.h>
@@ -5,6 +17,7 @@
 # include <stdlib.h>
 # include  <signal.h>
 # include  <stdio.h>
+# include <stdbool.h>
 # include "../libft/libft.h"
 # define BUFFER_SIZE 1024
 
@@ -31,6 +44,11 @@ typedef struct s_cmd
     int cd;
 }t_cmd;
 
+typedef struct s_token
+{
+	char *token;
+	struct s_token *next;
+}t_token;
 
 void    loop_shell(t_cmd *cmd,t_path *path);
 void    init(t_path *path,t_key *key,t_cmd *cmd);
@@ -41,5 +59,7 @@ void    exeute(char **env);
 char    **ft_space_split(char const *s);
 char            *ft_str_in_str(const char *s1, const char *s2);
 int             ft_2strlen(char **str);
+t_token	*ft_parse(char *line);
+char	**ft_split_whitespaces(char *str);
 
 #endif

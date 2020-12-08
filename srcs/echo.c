@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/28 02:17:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/08 12:42:44 by zjamali          ###   ########.fr       */
+/*   Created: 2020/12/01 11:02:30 by zjamali           #+#    #+#             */
+/*   Updated: 2020/12/01 11:11:07 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-int		main(int argc, char **argv,char **env)
+
+void	ft_echo(char  *str,int option)
 {
-	t_path path;
-	t_key key;
-	t_cmd cmd;
-	
-	//init(&path,&key,&cmd);
-	//path.env = env;
-	//loop_shell(&cmd,&path);
-	ft_parse("echo  -n 		hello");
-	return (0);
-}
+	ft_putstr_fd(str,1);
+	if (option != 1)
+		write(1,"\n",1);
+} 
