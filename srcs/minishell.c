@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:17:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/08 12:42:44 by zjamali          ###   ########.fr       */
+/*   Updated: 2020/12/09 14:42:46 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,12 @@ int		main(int argc, char **argv,char **env)
 	t_path path;
 	t_key key;
 	t_cmd cmd;
+	char *s;
 	
 	init(&path,&key,&cmd);
-	path.env = env;
+	path.env->fullenv = env;
+	cd_cmd("/goinfre/djejd",&path);
 	get_directory(&path);
-	getprogramme(&path,"ls");//exemple : ls
-	// loop_shell(&cmd,&path)
-	//init(&path,&key,&cmd);
-	//path.env = env;
-	//loop_shell(&cmd,&path);
-// 	ft_parse("echo  -n 		hello");
+	getprogramme(&path,"ls");
 	return (0);
 }
