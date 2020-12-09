@@ -34,13 +34,10 @@ void get_directory(t_path *path)
     char **paths;
     int i = 0;
     
-    tmp = search_env(path->env,"PATH");
+    tmp = search_env(path->env->fullenv,"PATH");
     paths = ft_split(tmp,':');
     while (paths[i])
-    {
-        // printf("=>%s\n",paths[i]);
         i++;
-    }
     i =0;
     ft_bzero(tmp,ft_strlen(tmp));
     while (paths[i])
@@ -53,7 +50,6 @@ void get_directory(t_path *path)
                 tmp = ft_strjoin(tmp,"-");
                 while ((sd = readdir(dir)) != NULL )
                 {
-                    // printf("%s\n",sd->d_name);
                     tmp = ft_strjoin(tmp,sd->d_name);
                     tmp = ft_strjoin(tmp,"-");
                 }

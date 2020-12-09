@@ -90,9 +90,7 @@ void promp_bash(t_cmd *cmd, t_path *path, int ret, char **line)
 void check_pwd(t_cmd *cmd, char **line, t_path *path, int ret)
 {
     if (ft_strnstr(*line, "pwd", 3))
-    {
-        print_working_directory(path->env);
-    }
+        print_working_directory(path);
 }
 
 char **delete_quote(char **line)
