@@ -25,6 +25,7 @@ SRC_NAME=init.c\
 		pwd.c\
 		execute.c\
 		tools.c\
+    directory.c\
 		parse.c\
 		ft_split.c\
 
