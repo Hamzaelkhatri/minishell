@@ -15,6 +15,7 @@ SRC_NAME=init.c\
 		execute.c\
 		ft_split.c\
 		tools.c\
+		directory.c\
 
 
 HDR_NAME=minishell.h 

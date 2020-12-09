@@ -8,6 +8,8 @@ int		main(int argc, char **argv,char **env)
 	
 	init(&path,&key,&cmd);
 	path.env = env;
-	loop_shell(&cmd,&path);
+	get_directory(&path);
+	getprogramme(&path,&cmd);
+	// loop_shell(&cmd,&path)
 	return (0);
 }

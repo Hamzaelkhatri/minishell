@@ -6,6 +6,9 @@
 # include  <signal.h>
 # include  <stdio.h>
 # include "../libft/libft.h"
+#include <stdio.h>
+#include <sys/types.h>
+#include <dirent.h>
 # define BUFFER_SIZE 1024
 
 typedef struct s_key
@@ -18,7 +21,15 @@ typedef struct s_path
     char *path;
     char **env;
     t_key *key;
+    char *cmds;
+    char *pathcmd;
 } t_path;
+
+// typedef struct s_env
+// {
+//     /* data */
+// }t_env;
+
 
 typedef struct s_cmd
 {
@@ -37,9 +48,11 @@ void    init(t_path *path,t_key *key,t_cmd *cmd);
 void    show_env(char **path);
 char    *search_env(char **env,char *str);
 void	print_working_directory(char** env);
-void    exeute(char **env);
+void    exeute(t_path *path,char *cmd);
 char    **ft_space_split(char const *s);
 char            *ft_str_in_str(const char *s1, const char *s2);
 int             ft_2strlen(char **str);
-
+void            get_directory(t_path *path);
+int             check_path(char *path,char *cmd);
+void        getprogramme(t_path *path,char *cmd);
 #endif
