@@ -9,8 +9,9 @@ int     read_line(t_path *key,char **line)
     ret = 0;
      
     // line = malloc(sizeof(char));
-    *line = malloc(sizeof(char) * BUFFER_SIZE);
-     ft_bzero(*line,BUFFER_SIZE);
+    // *line = malloc(sizeof(char) * BUFFER_SIZE);
+    //  ft_bzero(*line,BUFFER_SIZE);
+    *line = (char *)ft_calloc(BUFFER_SIZE,sizeof(char));
     if (!line)
     {
         write(1, "bash$> allocation error\n", 30);
@@ -24,7 +25,7 @@ int     read_line(t_path *key,char **line)
         }
         else
             exit(1);
-    }
+    } 
     return (ret);
 }
 
@@ -73,14 +74,14 @@ void promp_bash(t_cmd *cmd, t_path *path, int ret, char **line)
     }
     if (ft_strrchr(*line, '\n') && search_cmd(cmd))
     {
-        write(1, "bash$ ", 6);
+        write(1, "minishell$ ", 6);
         path->key->cntrd = 0;
     }
     else if (ft_strrchr(*line, '\n'))
     {
-        if (cmd->echo != 1)
-            write(1, "\n", 1);
-        ft_putstr_fd("bash$ ", 1);
+        // if (cmd->echo != 1)
+        //     write(1, "\n", 1);
+        ft_putstr_fd("minishell$ ", 1);
         path->key->cntrd = 0;
     }
     if (ret > 0 && !ft_strrchr(*line, '\n'))
@@ -215,7 +216,8 @@ void check_cmd(t_cmd *cmd, char **line, t_path *path, int ret)
         }
     }
     else
-        cmd->echo = 0;
+        exeute(path,*line);
+        // cmd->echo = 0;
     promp_bash(cmd, path, ret, line);
 }
 
@@ -229,7 +231,7 @@ void loop_shell(t_cmd *cmd,t_path *path)
 
     signal(SIGINT, sigint_handler);
     status = 1;
-    ft_putstr_fd("bash$ ", 1);
+    ft_putstr_fd("minishell$ ", 1);
     while (status)
     {
         ret = 0;

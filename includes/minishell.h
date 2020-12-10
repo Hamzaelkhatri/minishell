@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/09 14:41:49 by helkhatr         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:45:55 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include  <stdio.h>
 # include <stdbool.h>
 # include "../libft/libft.h"
-#include <stdio.h>
 #include <sys/types.h>
 #include <dirent.h>
 # define BUFFER_SIZE 1024

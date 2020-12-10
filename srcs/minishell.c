@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:17:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/09 14:42:46 by helkhatr         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:40:03 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		main(int argc, char **argv,char **env)
 	path.env->fullenv = env;
 	cd_cmd("/goinfre/djejd",&path);
 	get_directory(&path);
-	getprogramme(&path,"ls");
+	loop_shell(&cmd,&path);
+	getprogramme(&path,"pwd");
 	return (0);
 }
