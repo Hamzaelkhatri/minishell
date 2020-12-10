@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/26 16:51:28 by sqatim            #+#    #+#             */
-/*   Updated: 2020/12/10 13:47:58 by ahaddad          ###   ########.fr       */
+/*   Created: 2020/12/01 11:02:30 by zjamali           #+#    #+#             */
+/*   Updated: 2020/12/01 11:11:07 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+
+void	ft_echo(char  *str,int option)
 {
-	int i;
-
-	i = 0;
-	if (s)
-	{
-		while (s[i] != '\0')
-		{
-			ft_putchar_fd(s[i], fd);
-			i++;
-		}
-	}
-}
+	ft_putstr_fd(str,1);
+	if (option != 1)
+		write(1,"\n",1);
+} 

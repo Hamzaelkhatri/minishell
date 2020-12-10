@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/26 16:51:28 by sqatim            #+#    #+#             */
-/*   Updated: 2020/12/10 13:47:58 by ahaddad          ###   ########.fr       */
+/*   Created: 2020/11/28 02:17:32 by helkhatr          #+#    #+#             */
+/*   Updated: 2020/12/10 14:40:03 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int		main(int argc, char **argv,char **env)
 {
-	int i;
-
-	i = 0;
-	if (s)
-	{
-		while (s[i] != '\0')
-		{
-			ft_putchar_fd(s[i], fd);
-			i++;
-		}
-	}
+	t_path path;
+	t_key key;
+	t_cmd cmd;
+	char *s;
+	
+	init(&path,&key,&cmd);
+	path.env->fullenv = env;
+	cd_cmd("/goinfre/djejd",&path);
+	get_directory(&path);
+	loop_shell(&cmd,&path);
+	getprogramme(&path,"pwd");
+	return (0);
 }
