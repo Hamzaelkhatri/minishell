@@ -1,85 +1,34 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/09 14:41:49 by helkhatr         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
-# define MINISHELL_H
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include  <signal.h>
-# include  <stdio.h>
-# include <stdbool.h>
-# include "../libft/libft.h"
+#define MINISHELL_H
+
 #include <stdio.h>
-#include <sys/types.h>
-#include <dirent.h>
-# define BUFFER_SIZE 1024
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include "get_next_line.h"
 
-typedef struct s_key
+typedef struct s_sc_element
 {
-    int     cntrd;
-}t_key;
+    char *word;
+    char **assignement;
+    char **redirection;
+} t_sc_element;
 
-typedef struct s_env
+typedef struct s_simple_command
 {
-    char **fullenv;
-    char *pwd;
-    char *oldpwd;
-}t_env;
+    t_sc_element element;
+    struct s_simple_command *parent;
+    struct s_simple_command *left;
+} t_simple_command;
 
-typedef struct s_path
+typedef struct s_list_cmd
 {
-    char *path;
-    // char **env;
-    t_key *key;
-    char *cmds;
-    char *pathcmd;
-    t_env *env;
-} t_path;
-
-
-
-
-typedef struct s_cmd
-{
-    int echo;
-    int pwd;
-    int exit;
-    int env;
-    int export;
-    int unset;
-    int cd;
-}t_cmd;
-
-typedef struct s_token
-{
-	char *token;
-	struct s_token *next;
-}t_token;
-
-void    loop_shell(t_cmd *cmd,t_path *path);
-void    init(t_path *path,t_key *key,t_cmd *cmd);
-void    show_env(char **path);
-char    *search_env(char **env,char *str);
-void	print_working_directory(t_path *path);
-void    exeute(t_path *path,char *cmd);
-char    **ft_space_split(char const *s);
-char    *ft_str_in_str(const char *s1, const char *s2);
-int     ft_2strlen(char **str);
-void    get_directory(t_path *path);
-int     check_path(char *path,char *cmd);
-void    getprogramme(t_path *path,char *cmd);
-t_token *ft_parse(char *line);
-char    **ft_split_whitespaces(char *str);
-void    cd_cmd(char *nextpath,t_path *path);
+    char separator;
+    t_simple_command s_command;
+    struct s_list_cmd *next;
+} t_list_cmd;
+void ft_putchar(char c);
+void ft_putstr(char *str);
+char **ft_space_split(char const *s);
 
 #endif

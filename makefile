@@ -1,14 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/25 16:22:32 by helkhatr          #+#    #+#              #
-#    Updated: 2020/12/09 14:08:32 by helkhatr         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 NAME= minishell
 SRC_PATH= srcs
@@ -17,18 +6,12 @@ OBJ_PATH= obj
 LIB_PATH= libft
 
 
-SRC_NAME=init.c\
-		search_env.c\
-		env.c\
-		minishell.c\
-		read_line.c\
-		pwd.c\
-		execute.c\
+SRC_NAME=main.c\
 		tools.c\
-    	directory.c\
-		parse.c\
 		ft_split.c\
-		cd.c\
+		get_next_line.c\
+		get_next_line_utils.c
+
 
 HDR_NAME=minishell.h 
 
@@ -50,7 +33,7 @@ all: lib  $(NAME)
 
 $(NAME) : $(LIB_PATH)/$(LIB) $(OBJ)
 	@rm -rf miniRT
-	@$(COMP) $(H_FLAG) $(LLIB_FLAG) $(OBJ) -o $@
+	@$(COMP) $(H_FLAG) $(OBJ) $(LLIB_FLAG) -o $@
 	@echo "													 Made by : \033[1;91mSqatim\033[m"
 	@echo "      ___                       ___                       ___           ___           ___                                  "
 	@echo "     /__/\        ___          /__/\        ___          /  /\         /__/\         /  /\                                 "
