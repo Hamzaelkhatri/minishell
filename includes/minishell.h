@@ -1,45 +1,34 @@
 #ifndef MINISHELL_H
-# define MINISHELL_H
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include  <signal.h>
-# include  <stdio.h>
-# include "../libft/libft.h"
-# define BUFFER_SIZE 1024
+#define MINISHELL_H
 
-typedef struct s_key
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include "get_next_line.h"
+
+typedef struct s_sc_element
 {
-    int     cntrd;
-}t_key;
+    char *word;
+    char **assignement;
+    char **redirection;
+} t_sc_element;
 
-typedef struct s_path
+typedef struct s_simple_command
 {
-    char *path;
-    char **env;
-    t_key *key;
-} t_path;
+    t_sc_element element;
+    struct s_simple_command *parent;
+    struct s_simple_command *left;
+} t_simple_command;
 
-typedef struct s_cmd
+typedef struct s_list_cmd
 {
-    int echo;
-    int pwd;
-    int exit;
-    int env;
-    int export;
-    int unset;
-    int cd;
-}t_cmd;
-
-
-void    loop_shell(t_cmd *cmd,t_path *path);
-void    init(t_path *path,t_key *key,t_cmd *cmd);
-void    show_env(char **path);
-char    *search_env(char **env,char *str);
-void	print_working_directory(char** env);
-void    exeute(char **env);
-char    **ft_space_split(char const *s);
-char            *ft_str_in_str(const char *s1, const char *s2);
-int             ft_2strlen(char **str);
+    char separator;
+    t_simple_command s_command;
+    struct s_list_cmd *next;
+} t_list_cmd;
+void ft_putchar(char c);
+void ft_putstr(char *str);
+char **ft_space_split(char const *s);
 
 #endif
