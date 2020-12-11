@@ -29,51 +29,121 @@ t_simple_command *add_data(char *word)
     return (command);
 }
 
-int check(char *line, char **test)
+t_list_cmd *add_list_cmd(t_list_cmd *parent)
 {
-    int i;
-    int count;
-    int j;
+    t_list_cmd *tmp;
+    t_list_cmd *new;
 
-    // tab = 0;
-    i = 0;
-    count = 0;
-    while (line[i])
+    if (parent == NULL)
     {
-        if (line[i] == ';' || line[i] == '|')
-            count++;
+        if (!(parent = (t_list_cmd *)malloc(sizeof(t_list_cmd))))
+            return (NULL);
+        parent->s_command = NULL;
+        parent->separator = 0;
+        parent->next = NULL;
+    }
+    tmp = parent;
+    if (!(new = (t_list_cmd *)malloc(sizeof(t_list_cmd))))
+        return (NULL);
+    new->s_command = NULL;
+    new->separator = 0;
+    new->next = NULL;
+    while (tmp->next != NULL)
+        tmp = tmp->next;
+    tmp->next = new;
+    return (parent);
+}
+
+// int check_type_element(char *line)
+// {
+//     int i;
+
+//     i = 0;
+//     while (line[])
+// }
+// void check_element(char **tab, t_list_cmd *l_cmd, t_check *check)
+// {
+//     int i;
+
+//     i = 0;
+//     while ()
+// }
+void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separator, int y_or_n)
+{
+    char **tab;
+    t_check check;
+    t_list_cmd *tmp;
+
+    tmp = l_cmd;
+    ft_bzero(&check, sizeof(t_check));
+    tab = ft_space_split(s_command);
+
+    // check_element(tab, l_cmd, &check);
+    l_cmd = add_list_cmd(l_cmd);
+    while (l_cmd)
+        l_cmd = l_cmd->next;
+}
+
+void parcs_simple_command(char *line, int count, t_list_cmd *l_cmd, int y_or_n)
+{
+    char *s_command;
+    int i;
+
+    i = 0;
+    if (line[count + 1] == '|' || line[count + 1] == ';')
+    {
+        ft_putstr_fd("u must enter just one controle operator\n", 2);
+        exit(1);
+    }
+    s_command = (char *)malloc(sizeof(char) * count);
+    while (i < count)
+    {
+        s_command[i] = line[i];
         i++;
     }
-    if (count > 0)
+    s_command[i] = '\0';
+    // printf("%s\n", s_command);
+    parcs_this_simple_command(s_command, l_cmd, line[i], y_or_n);
+}
+
+void parcs(char *line, t_list_cmd *l_cmd)
+{
+    int i;
+    int k;
+
+    k = 0;
+    i = 0;
+    while (line[i])
     {
-        i = 0;
-        j = 0;
-        *test = malloc((sizeof(char) * count) + 1);
-        while (line[i])
+        if (is_correct(line[i]) == 0)
         {
-            if (line[i] == ';' || line[i] == '|')
-            {
-                test[0][j] = line[i];
-                j++;
-            }
-            i++;
+            ft_putstr_fd("error 1", 2);
+            exit(1);
         }
-        test[0][j] = '\0';
+        if (line[i] == '|' || line[i] == ';')
+        {
+            k++;
+            parcs_simple_command(line, i, l_cmd, k);
+        }
+        i++;
     }
-    return (count);
+    parcs_simple_command(line, i, l_cmd, k);
 }
 int main()
 {
     int fd;
+    t_list_cmd *l_command;
+    l_command = NULL;
     fd = open("command.txt", O_RDWR);
     char *line;
     char *test;
     int i = 0;
     get_next_line(fd, &line);
-    i = check(line, &test);
-    printf("|i==> %d|\t|%s|\n", i, test);
+    parcs(line, l_command);
     return (0);
 }
+// i = check(line, &test);
+// printf("|i==> %d|\t|\t %s \t|\n", i, test);
 // t_simple_command *s_command;
 // s_command = NULL;
 // s_command = add_node(s_command);
