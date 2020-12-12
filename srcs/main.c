@@ -54,19 +54,30 @@ t_list_cmd *add_list_cmd(t_list_cmd *parent)
     return (parent);
 }
 
-// int check_type_element(char *line)
+// t_check check_type_element(char *line, t_check *check)
 // {
 //     int i;
 
 //     i = 0;
-//     while (line[])
+//     while (line[i])
+//     {
+//         if (line[i] == '>' || line[i] == '<')
+//             check->redirection = check->word  + check->redirection + 1;
+//         else if (line[i])
+//             i++;
+//     }
 // }
 // void check_element(char **tab, t_list_cmd *l_cmd, t_check *check)
 // {
 //     int i;
+//     t_check check;
 
+//     ft_bzero(&check, sizeof(t_check));
 //     i = 0;
-//     while ()
+//     while (tab[i])
+//     {
+//         check_type_element(tab[i], &check);
+//     }
 // }
 void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separator, int y_or_n)
 {
@@ -77,11 +88,12 @@ void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separato
     tmp = l_cmd;
     ft_bzero(&check, sizeof(t_check));
     tab = ft_space_split(s_command);
+    // printf("%s\n", tab[0]);
 
     // check_element(tab, l_cmd, &check);
     l_cmd = add_list_cmd(l_cmd);
-    while (l_cmd)
-        l_cmd = l_cmd->next;
+    // while (l_cmd)
+    //     l_cmd = l_cmd->next;
 }
 
 void parcs_simple_command(char *line, int count, t_list_cmd *l_cmd, int y_or_n)

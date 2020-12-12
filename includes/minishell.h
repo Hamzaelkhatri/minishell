@@ -8,17 +8,25 @@
 #include "../libft/libft.h"
 #include "get_next_line.h"
 
+// modiffit les structures !!!!!!!!!!!!!!!
 typedef struct s_redirection
 {
     char i_o;
     char *word;
+    struct s_redirection *next;
 } t_redirection;
+
+typedef struct s_suffix
+{
+    t_redirection redirection;
+    char *word;
+    struct s_suffix *next;
+} t_suffix;
 
 typedef struct s_check
 {
-    int cmd;
     int word;
-    int assignement;
+    // int assignement;
     int redirection;
 } t_check;
 
@@ -26,22 +34,25 @@ typedef struct s_sc_element
 {
     char *cmd;
     char *word;
-    char **assignement;
+    // char **assignement;
     char **redirection;
 } t_sc_element;
 
 typedef struct s_simple_command
 {
-    t_sc_element element;
+    t_redirection redirection;
+    char *cmd;
+
     struct s_simple_command *parent;
-    struct s_simple_command *left;
+    struct s_simple_command *right;
 } t_simple_command;
 
 typedef struct s_list_cmd
 {
-    t_simple_command *s_command;
+    // t_simple_command *s_command;
     char separator;
-    struct s_list_cmd *next;
+    t_simple_command *right;
+    t_simple_command *left;
 } t_list_cmd;
 
 void ft_putchar(char c);
