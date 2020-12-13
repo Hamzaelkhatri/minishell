@@ -41,7 +41,7 @@ int check(char *line, char **test)
 }
 int is_correct(char c)
 {
-    if (ft_isalnum(c) == 0 && c != '-' && c != '|' && c != ';' && c != ' ' && c != '\t')
+    if (ft_isalnum(c) == 0 && c != '>' && c != '<' && c != '-' && c != '|' && c != ';' && c != ' ' && c != '\t')
     {
         return (0);
     }
