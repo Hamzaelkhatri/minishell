@@ -9,6 +9,7 @@ LIB_PATH= libft
 SRC_NAME=main.c\
 		tools.c\
 		ft_split.c\
+		allocation.c\
 		get_next_line.c\
 		get_next_line_utils.c
 

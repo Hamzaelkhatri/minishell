@@ -56,5 +56,11 @@ void ft_putstr(char *str);
 char **ft_space_split(char const *s);
 int check(char *line, char **test);
 int is_correct(char c);
+void ft_wich(t_check *wich, int number);
+
+// allocation
+
+t_list_cmd *add_list_cmd(t_list_cmd *parent);
+t_list_cmd *add_simple_cmd(t_list_cmd *parent);
 
 #endif

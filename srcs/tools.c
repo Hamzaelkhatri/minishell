@@ -47,3 +47,13 @@ int is_correct(char c)
     }
     return (1);
 }
+
+void ft_wich(t_check *wich, int number)
+{
+    if (number == 1)
+        wich->cmd = wich->cmd + wich->word + wich->redirection + 1;
+    else if (number == 2)
+        wich->word = wich->cmd + wich->word + wich->redirection + 1;
+    else if (number == 3)
+        wich->redirection = wich->cmd + wich->word + wich->redirection + 1;
+}
