@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/28 02:17:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/14 19:02:06 by ahaddad          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 
@@ -31,6 +19,7 @@ void	export_cmd(char *name,char **env)
 	env[line] = name;
 	env[line+1] = NULL;
 }
+
 int main(int argc, char **argv,char **env)
 {
 	t_path path;
@@ -40,20 +29,8 @@ int main(int argc, char **argv,char **env)
 	char *s;
 	init(&path,&key,&cmd);
 	path.env->fullenv = env;
-	export_cmd("myvar=300",path.env->fullenv);
-	// printf("\nHERE ; [%s]\n",search_env(path.env->fullenv,"PWD"));
-	int i = 0;
-	int line = count_line(env);
-	// while (i < li)
-	// {
-	// 	puts(env[i]);
-	// 	i++;
-	// }
-	
-	// printf("{%d}",count_line(env));
-	// cd_cmd("srcs",&path);
 	get_directory(&path);
-	// loop_shell(&cmd,&path);
-	// getprogramme(&path,"ls");
+	loop_shell(&cmd,&path);
+	getprogramme(&path,"pwd");
 	return (0);
 }
