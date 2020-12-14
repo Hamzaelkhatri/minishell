@@ -59,19 +59,16 @@ t_list_cmd *add_list_cmd(t_list_cmd *parent)
     {
         if (!(parent = (t_list_cmd *)malloc(sizeof(t_list_cmd))))
             return (NULL);
+        // bzero(parent, sizeof(t_list_cmd));
+        parent->s_left = NULL;
         parent->right = NULL;
-        if (!(parent->s_left = (t_simple_command *)malloc(sizeof(t_simple_command))))
-            return (NULL);
-        // ft_bzero(&parent->s_left, sizeof(t_simple_command));
         return (parent);
     }
     tmp = parent;
     if (!(new = (t_list_cmd *)malloc(sizeof(t_list_cmd))))
         return (NULL);
     new->right = NULL;
-    if (!(new->s_left = (t_simple_command *)malloc(sizeof(t_simple_command))))
-        return (NULL);
-    ft_bzero(&new->s_left, sizeof(t_simple_command));
+    new->s_left = NULL;
     while (tmp->right != NULL)
         tmp = tmp->right;
     tmp->right = new;
@@ -103,13 +100,6 @@ int check_redirection(char *line, int i)
             return (1);
         else if (check_what_after(line[i + 1]) == 1)
             return (2);
-    }
-    else if (line[i] == '<' && line[i + 1] == '<')
-    {
-        if (line[i + 2] == '\0')
-            return (7);
-        else if (check_what_after(line[i + 2]) == 1)
-            return (8);
     }
     else if (line[i] == '<')
     {
@@ -157,17 +147,17 @@ int check_type_element(char *line, int *check, int count)
     // printf("%d\n", count);
     if (count == 0 && ret == -1)
         return (1); // awal indice khasso ikun commande ila la khass tretourna errour << kandon hh !>>
-    else if (count == 0 && ret == 1 && (*check == 3 || *check == 1 || *check == 5 || *check == 7))
+    else if (count == 0 && ret == 1 && (*check == 3 || *check == 1 || *check == 5))
         return (2); // badya b rederction
-    else if (count == 0 && ret == 1 && (*check == 4 || *check == 2 || *check == 6 || *check == 8))
+    else if (count == 0 && ret == 1 && (*check == 4 || *check == 2 || *check == 6))
         return (3); // badya b rederction
-    else if (ret == 1 && (*check == 3 || *check == 1 || *check == 5 || *check == 7))
+    else if (ret == 1 && (*check == 3 || *check == 1 || *check == 5))
         return (4); // mabadinsh b redirection ! o redirection mfar9a 3la li 9bal manha
-    else if (ret == 1 && (*check == 4 || *check == 2 || *check == 6 || *check == 8))
+    else if (ret == 1 && (*check == 4 || *check == 2 || *check == 6))
         return (5); // mabadinsh b redirection ! o redirection mfar9a 3la li 9bal manha
-    else if (ret == 2 && (*check == 3 || *check == 1 || *check == 5 || *check == 7))
+    else if (ret == 2 && (*check == 3 || *check == 1 || *check == 5))
         return (6); // mabadinsh b redirection ! o redirection mfar9a 3la li 9bal manha
-    else if (ret == 2 && (*check == 4 || *check == 2 || *check == 6 || *check == 8))
+    else if (ret == 2 && (*check == 4 || *check == 2 || *check == 6))
         return (7); // mabadinsh b redirection ! o redirection mfar9a 3la
     else if (count != 0 && ret == -1)
         return (8);
@@ -189,32 +179,30 @@ char **input_or_output(char *line)
     }
     return (NULL);
 }
-void affect_redirection(char **tab, int *index, int result, int check, t_check *wich, t_redirection *rdrct, t_list_cmd *l_cmd)
+void affect_redirection(char **tab, int *index, int result, int check, t_check *wich, t_list_cmd *l_cmd)
 {
     char **tab_split;
     if (check == 3 || check == 4)
-        l_cmd->s_left->redirection.i_o = ft_strdup(">>");
+        l_cmd->s_left->l_element->redirection.i_o = ft_strdup(">>");
     else if (check == 1 || check == 2)
-        l_cmd->s_left->redirection.i_o = ft_strdup(">");
-    else if (check == 7 || check == 8)
-        l_cmd->s_left->redirection.i_o = ft_strdup("<<");
+        l_cmd->s_left->l_element->redirection.i_o = ft_strdup(">");
     else if (check == 5 || check == 6)
-        l_cmd->s_left->redirection.i_o = ft_strdup("<");
+        l_cmd->s_left->l_element->redirection.i_o = ft_strdup("<");
     // printf("%d\n", result);
     if (result == 2 || result == 4 || result == 6)
     {
         if (result == 2 || (result == 4 && (tab[*index][0] == '<' || tab[*index][0] == '>')))
         {
             // ft_putstr_fd("salam a jwayn", 1);
-            l_cmd->s_left->redirection.file = ft_strdup(tab[*index + 1]);
+            l_cmd->s_left->l_element->redirection.file = ft_strdup(tab[*index + 1]);
             // ft_putstr_fd(l_cmd->s_left->redirection.file, 1);
-            *index++;
+            (*index)++;
         }
         else if (result == 6)
         {
             tab_split = input_or_output(tab[*index]);
-            l_cmd->s_left->cmd = ft_strdup(tab_split[0]);
-            ft_putstr_fd(l_cmd->s_left->cmd, 1);
+            l_cmd->s_left->l_element->cmd = ft_strdup(tab_split[0]);
+            ft_putstr_fd(l_cmd->s_left->l_element->cmd, 1);
             // hta nzid free;
         }
     }
@@ -229,6 +217,33 @@ void ft_wich(t_check *wich, int number)
     else if (number == 3)
         wich->redirection = wich->cmd + wich->word + wich->redirection + 1;
 }
+
+t_list_cmd *add_simple_cmd(t_list_cmd *parent)
+{
+    t_simple_command *tmp;
+    t_simple_command *new;
+    static int i = 0;
+    if (parent->s_left == NULL)
+    {
+        if (!(parent->s_left = (t_simple_command *)malloc(sizeof(t_simple_command))))
+            return (NULL);
+        if (!(parent->s_left->l_element = (t_elements *)malloc(sizeof(t_elements))))
+            return (NULL);
+        parent->s_left->right = NULL;
+        return (parent);
+    }
+    tmp = parent->s_left;
+    if (!(new = (t_simple_command *)malloc(sizeof(t_simple_command))))
+        return (NULL);
+    if (!(new->l_element = (t_elements *)malloc(sizeof(t_elements))))
+        return (NULL);
+    new->right = NULL;
+    while (tmp->right != NULL)
+        tmp = tmp->right;
+    tmp->right = new;
+    return (parent);
+}
+
 void check_element(char **tab, t_list_cmd *l_cmd)
 {
     int i;
@@ -237,25 +252,36 @@ void check_element(char **tab, t_list_cmd *l_cmd)
     t_redirection rdrct;
     t_check wich;
 
-    ft_bzero(&check, sizeof(t_check));
     ft_bzero(&wich, sizeof(t_check));
     i = 0;
     while (tab[i])
     {
         check = -1;
         ret = check_type_element(tab[i], &check, i);
-        // printf("%d\n", ret);
-        if (ret == 1)
+        if (ret > 0)
+            l_cmd = add_simple_cmd(l_cmd);
+        if (ret == 1 || ret == 8)
         {
-            l_cmd->s_left->cmd = ft_strdup(tab[i]);
+            if (wich.cmd == 0)
+            {
+                l_cmd->s_left->l_element->cmd = ft_strdup(tab[i]);
+                printf("|cmd ==> %s|\n", l_cmd->s_left->l_element->cmd);
+                // ft_putstr_fd(l_cmd->s_left->l_element->cmd, 1);
+            }
+            else
+            {
+
+                l_cmd->s_left->l_element->argument = ft_strdup(tab[i]);
+                printf("|argument  ==> %s|\n", l_cmd->s_left->l_element->argument);
+                // ft_putstr_fd(l_cmd->s_left->l_element->argument, 1);
+            }
             ft_wich(&wich, 1);
         }
         else if (ret >= 2 && ret <= 7)
         {
-            // ft_putstr_fd("ya hala ya hala\n", 1);
-            affect_redirection(tab, &i, ret, check, &wich, &rdrct, l_cmd);
+            affect_redirection(tab, &i, ret, check, &wich, l_cmd);
+            printf("|direction ==> %s|\t|redirection ==> %s|\n", l_cmd->s_left->l_element->redirection.i_o, l_cmd->s_left->l_element->redirection.file);
         }
-        // printf("%d\n", ret);
         i++;
     }
 }
@@ -268,6 +294,7 @@ void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separato
     tab = ft_space_split(s_command);
 
     l_cmd = add_list_cmd(l_cmd);
+    // ft_bzero(l_cmd, sizeof(t_list_cmd));
     // l_cmd = add_simple_cmd(l_cmd);
     check_element(tab, l_cmd);
     // while (l_cmd)

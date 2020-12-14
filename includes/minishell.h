@@ -16,12 +16,12 @@ typedef struct s_redirection
     struct s_redirection *next;
 } t_redirection;
 
-typedef struct s_suffix
-{
-    t_redirection redirection;
-    char *word;
-    struct s_suffix *next;
-} t_suffix;
+// typedef struct s_suffix
+// {
+//     t_redirection redirection;
+//     char *word;
+//     struct s_suffix *next;
+// } t_suffix;
 
 typedef struct s_check
 {
@@ -31,11 +31,17 @@ typedef struct s_check
     int redirection;
 } t_check;
 
+typedef struct s_elements
+{
+    char *cmd;
+    char *argument;
+    t_redirection redirection;
+} t_elements;
+
 typedef struct s_simple_command
 {
-    t_redirection redirection;
-    char *cmd;
-    t_suffix cmd_sfx;
+    t_elements *l_element;
+    struct s_simple_command *right;
 } t_simple_command;
 
 typedef struct s_list_cmd
