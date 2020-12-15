@@ -37,7 +37,7 @@ void	unset_cmd(char *name, t_path *path)
 {
 	int i = 0;
 	char **spl;
-
+	int check = 0;
 	while (path->env->fullenv[i])
 	{
 		spl = ft_split(path->env->fullenv[i], '=');
@@ -45,8 +45,11 @@ void	unset_cmd(char *name, t_path *path)
 			break ;
 		if (search_str(spl[0], name,ft_strlen(spl[0]), ft_strlen(name)) == 1)
 		{
-			path->env->fullenv[i] = path->env->fullenv[i+1];
+			// path->env->fullenv[i] = path->env->fullenv[i+1];
+			check++;
 		}
+		if (check)
+			path->env->fullenv[i] = path->env->fullenv[i+1];
 		// {
 		// 	path->env->fullenv[i] =  path->env->fullenv[count_line(path->env->fullenv)-1];
 		// 	path->env->fullenv[count_line(path->env->fullenv)-1] = NULL;
@@ -69,7 +72,7 @@ int main(int argc, char **argv,char **env)
 	path.env->fullenv = env;
 
 	// export_cmd("myvar=300",path.env->fullenv);
-	unset_cmd("TMPDIR",&path);
+	unset_cmd("HOME",&path);
 	show_env(path.env->fullenv);
 	// cd_cmd("srcs",&path);
 	get_directory(&path);
