@@ -78,5 +78,6 @@ int main(int argc, char **argv,char **env)
 	get_directory(&path);
 	// loop_shell(&cmd,&path);
 	// getprogramme(&path,"ls");
+	//printf("hi");
 	return (0);
 }
