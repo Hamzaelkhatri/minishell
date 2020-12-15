@@ -57,7 +57,7 @@ void	unset_cmd(char *name, t_path *path)
 		i++;
 	}
 
-	path->env->fullenv[i] = NULL;
+	path->env->fullenv[i+1] = NULL;
 	// path->env->fullenv[count_line(path->env->fullenv)-1] = NULL;
 }
 
@@ -72,7 +72,7 @@ int main(int argc, char **argv,char **env)
 	path.env->fullenv = env;
 
 	// export_cmd("myvar=300",path.env->fullenv);
-	unset_cmd("HOME",&path);
+	unset_cmd("_",&path);
 	show_env(path.env->fullenv);
 	// cd_cmd("srcs",&path);
 	get_directory(&path);
