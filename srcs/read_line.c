@@ -74,14 +74,14 @@ void promp_bash(t_cmd *cmd, t_path *path, int ret, char **line)
     }
     if (ft_strrchr(*line, '\n') && search_cmd(cmd))
     {
-        write(1, "minishell$ ", 6);
+        ft_putstr_fd("bash $ ", 1);
         path->key->cntrd = 0;
     }
     else if (ft_strrchr(*line, '\n'))
     {
         // if (cmd->echo != 1)
         //     write(1, "\n", 1);
-        ft_putstr_fd("minishell$ ", 1);
+        ft_putstr_fd("bash $ ", 1);
         path->key->cntrd = 0;
     }
     if (ret > 0 && !ft_strrchr(*line, '\n'))
@@ -231,7 +231,7 @@ void loop_shell(t_cmd *cmd,t_path *path)
 
     signal(SIGINT, sigint_handler);
     status = 1;
-    ft_putstr_fd("minishell$ ", 1);
+    ft_putstr_fd("bash $ ", 1);
     while (status)
     {
         ret = 0;
