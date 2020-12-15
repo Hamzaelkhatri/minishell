@@ -1,1 +1,1 @@
-ls -la | dasdsa ;  dsads
+ls >o
