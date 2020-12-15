@@ -12,10 +12,11 @@ int check_redirection(char *line, int *i)
 
     if (line[*i] == '>' && line[*i + 1] == '>')
     {
-        (*i)++;
-        if (line[*i + 1] == '\0')
+        if (line[*i + 2] == '\0')
+        {
             return (*i == 0) ? (5) : (6);
-        else if (check_what_after(line[*i + 1]) == 1)
+        }
+        else if (check_what_after(line[*i + 2]) == 1)
             return (*i == 0) ? (7) : (8);
     }
     else if (line[*i] == '>')
@@ -40,6 +41,8 @@ int check_io_redirection(char *line, int *p, int *check_o_i)
     int redirection;
 
     redirection = check_redirection(line, p);
+    if (redirection == 5)
+        (*p)++;
     // printf("%s\n", &line[*p]);
     *check_o_i = redirection;
     if (p == 0 && redirection > 0) // redirection hiya lawla
@@ -69,16 +72,16 @@ int check_type_element(char *line, int *check_i_o, int count)
         exit(1);
     }
     if (count == 0 && redirection == -1)
-        return (1);                                                                                     // awal indice khasso ikun commande ila la khass tretourna errour << kandon hh !>>
-    else if (count == 0 && redirection == 1 && (*check_i_o == 3 || *check_i_o == 1 || *check_i_o == 5)) // '\0' && 3 >>
-        return (2);                                                                                     // badya b rederction > <
-    else if (count == 0 && redirection == 1 && (*check_i_o == 4 || *check_i_o == 2 || *check_i_o == 6)) //
-        return (3);                                                                                     // badya b rederction
-    else if (redirection == 1 && (*check_i_o == 3 || *check_i_o == 1 || *check_i_o == 5))               // '\0' 3 >>
-        return (4);                                                                                     // mabadinsh b redirection ! o redirection mfar9a 3la li 9bal manha
-    else if (redirection == 1 && (*check_i_o == 4 || *check_i_o == 2 || *check_i_o == 6))               //
-        return (5);                                                                                     // mabadinsh b redirection ! o redirection mfar9a 3la li 9bal manha
-    else if (redirection == 2 && (*check_i_o == 3 || *check_i_o == 1 || *check_i_o == 5))               // '\0' 3 >>
+        return (1);                                                                                      // awal indice khasso ikun commande ila la khass tretourna errour << kandon hh !>>
+    else if (count == 0 && redirection == 1 && (*check_i_o == 1 || *check_i_o == 5 || *check_i_o == 9))  // redirection kayna bohdha ma9blha o mab3dha walu
+        return (2);                                                                                      // badya b rederction > <
+    else if (count == 0 && redirection == 1 && (*check_i_o == 3 || *check_i_o == 7 || *check_i_o == 11)) //
+        return (3);                                                                                      // badya b rederction
+    else if (redirection == 1 && (*check_i_o == 1 || *check_i_o == 5 || *check_i_o == 9))                // '\0' 3 >>
+        return (4);                                                                                      // mabadinsh b redirection ! o redirection mfar9a 3la li 9bal manha
+    else if (redirection == 1 && (*check_i_o == 3 || *check_i_o == 7 || *check_i_o == 9))                //
+        return (5);                                                                                      // mabadinsh b redirection ! o redirection mfar9a 3la li 9bal manha
+    else if (redirection == 2 && (*check_i_o == 3 || *check_i_o == 1 || *check_i_o == 5))                // '\0' 3 >>
     {
         // printf("ya himaar\n");
         return (6);
@@ -108,35 +111,25 @@ char **input_or_output(char *line)
 void affect_redirection(char **tab, int *index, int result, int check, t_check *wich, t_list_cmd *l_cmd)
 {
     char **tab_split;
-    if (check == 3 || check == 4)
+    if (check == 5 || check == 6 || check == 7 || check == 8)
         l_cmd->s_left->l_element->redirection.i_o = ft_strdup(">>");
-    else if (check == 1 || check == 2)
+    else if (check == 1 || check == 2 || check == 3 || check == 4)
         l_cmd->s_left->l_element->redirection.i_o = ft_strdup(">");
-    else if (check == 5 || check == 6)
+    else if (check == 9 || check == 10 || check == 11 || check == 12)
         l_cmd->s_left->l_element->redirection.i_o = ft_strdup("<");
     if (result == 2 || result == 4 || result == 6)
     {
-        // printf("|check ==> %d|\n", check);
-        if (result == 2 || (result == 4 && (tab[*index][0] == '<' || tab[*index][0] == '>')))
-        {
-            if (check == 3)
-            {
-                ft_putstr_fd("salam a sat\n", 1);
-                (*index)++;
-            }
-            l_cmd->s_left->l_element->redirection.file = ft_strdup(tab[++(*index)]);
-            // (*index)++;
-        }
-        else if (result == 6)
-        {
-            // printf("%s\n", tab[*index]);
-            l_cmd->s_left->l_element->redirection.file = ft_strdup(tab[++(*index)]);
-            // tab_split = input_or_output(tab[*index]);
-            // l_cmd->s_left->l_element->cmd = ft_strdup(tab_split[0]);
-            // ft_putstr_fd(l_cmd->s_left->l_element->cmd, 1);
-        }
+        // printf("%s\n", ta)
+        // if (check == 1 || check == 9 )
+        l_cmd->s_left->l_element->redirection.file = ft_strdup(tab[++(*index)]);
+        // else if (check == 5)
+        //     l_cmd->s_left->l_element->redirection.file = ft_strdup(tab[++(*index)]);
     }
-    // else if (result ==)
+    // else if (result == 3 || result == 5 || result == 7)
+    // {
+    //     if (result == 3 || result == 5)
+    //         if (check ==)
+    // }
 }
 
 void check_element(char **tab, t_list_cmd *l_cmd)

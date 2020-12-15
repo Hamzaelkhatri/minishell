@@ -34,7 +34,7 @@ all: lib  $(NAME)
 
 $(NAME) : $(LIB_PATH)/$(LIB) $(OBJ)
 	@rm -rf miniRT
-	@$(COMP) $(H_FLAG) $(OBJ) $(LLIB_FLAG) -o $@
+	@$(COMP) -g $(H_FLAG) $(OBJ) $(LLIB_FLAG) -o $@
 	@echo "													 Made by : \033[1;91mSqatim\033[m"
 	@echo "      ___                       ___                       ___           ___           ___                                  "
 	@echo "     /__/\        ___          /__/\        ___          /  /\         /__/\         /  /\                                 "
@@ -54,7 +54,7 @@ lib:
 
 $(OBJ_PATH)/%.o:  $(SRC_PATH)/%.c $(HDR)
 	@mkdir -p $(OBJ_PATH) 
-	@$(COMP) $(FLAGS) $(H_FLAG)  -o $@ -c $<
+	@$(COMP)  $(FLAGS) $(H_FLAG) -g -o $@ -c $<
 
 clean:
 	@rm -rf $(OBJ_PATH)
