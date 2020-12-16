@@ -1,109 +1,5 @@
 #include "minishell.h"
 
-int check_what_after(char c)
-{
-    if (c != '/' && c != '\\' && c != '|' && c != '~' && c != '\n' && ft_isprint(c) == 1)
-        return (1);
-    return (0);
-}
-
-int check_redirection(char *line, int *i)
-{
-    // printf("%s\n", &line[*i]);
-    if (line[*i] == '>' && line[*i + 1] == '>')
-    {
-        if (line[*i + 2] == '\0')
-        {
-            return (*i == 0) ? (5) : (6);
-        }
-        else if (check_what_after(line[*i + 2]) == 1)
-        {
-            return (*i == 0) ? (7) : (8);
-        }
-    }
-    else if (line[*i] == '>')
-    {
-        if (line[*i + 1] == '\0')
-            return (*i == 0) ? (1) : (2);
-        else if (check_what_after(line[*i + 1]) == 1)
-            return (*i == 0) ? (3) : (4);
-    }
-    else if (line[*i] == '<' && line[*i + 1] != '<')
-    {
-        if (line[*i + 1] == '\0')
-            return (*i == 0) ? (9) : (10);
-        else if (check_what_after(line[*i + 1]) == 1)
-            return (*i == 0) ? (11) : (12);
-    }
-    else
-    {
-        ft_putstr_fd("\nerror 2\n", 2);
-        exit(1);
-    }
-    return (0);
-}
-
-int check_io_redirection(char *line, int *p, int *check_o_i)
-{
-    int redirection;
-
-    redirection = check_redirection(line, p);
-    if (redirection == 5 || redirection == 7 || redirection == 8 || redirection == 6)
-        (*p)++;
-    *check_o_i = redirection;
-    if (redirection > 0) // redirection hiya lawla
-        return (1);
-    else
-    {
-        ft_putstr_fd("sba3\n", 1);
-        return (0); //  kayna shi erreur
-    }
-}
-
-int check_type_element(char *line, int *check_i_o, int count)
-{
-    int i;
-    int redirection;
-
-    i = 0;
-    redirection = -1;
-
-    while (line[i])
-    {
-        if (line[i] == '>' || line[i] == '<')
-            redirection = check_io_redirection(line, &i, check_i_o);
-        i++;
-    }
-    if (redirection == 0)
-    {
-        ft_putstr_fd("\nerror 2\n", 2);
-        exit(1);
-    }
-    if (count == 0 && redirection == -1)
-    {
-        return (1);
-    } // awal indice khasso ikun commande ila la khass tretourna errour << kandon hh !>>
-    // else if (count == 0 && redirection == 1 && (*check_i_o == 1 || *check_i_o == 5 || *check_i_o == 9))  // redirection kayna bohdha ma9blha o mab3dha walu
-    //     return (2);                                                                                      // badya b rederction > <
-    // else if (count == 0 && redirection == 1 && (*check_i_o == 3 || *check_i_o == 7 || *check_i_o == 11)) //
-    //     return (3);                                                                                      // badya b rederction
-    // else if (redirection == 1 && (*check_i_o == 1 || *check_i_o == 5 || *check_i_o == 9))                // '\0' 3 >>
-    //     return (4);                                                                                      // mabadinsh b redirection ! o redirection mfar9a 3la li 9bal manha
-    // else if (redirection == 1 && (*check_i_o == 3 || *check_i_o == 7 || *check_i_o == 11))               //
-    //     return (5);                                                                                      // mabadinsh b redirection ! o redirection mfar9a 3la li 9bal manha
-    else if (redirection == 1 && (*check_i_o == 1 || *check_i_o == 5 || *check_i_o == 9)) // '\0' 3 >>
-        return (2);
-    else if (redirection == 1 && (*check_i_o == 3 || *check_i_o == 7 || *check_i_o == 11)) //
-        return (3);
-    else if (redirection == 1 && (*check_i_o == 2 || *check_i_o == 6 || *check_i_o == 10)) //
-        return (4);
-    else if (redirection == 1 && (*check_i_o == 4 || *check_i_o == 8 || *check_i_o == 12)) //
-        return (5);                                                                        // mabadinsh b redirection ! o redirection mfar9a 3la li 9bal manha
-    else if (count != 0 && redirection == -1)
-        return (6);
-    return (7);
-}
-
 char **input_or_output(char *line)
 {
     int i;
@@ -119,118 +15,132 @@ char **input_or_output(char *line)
     }
     return (NULL);
 }
-void affect_redirection(char **tab, int *index, int result, int check, t_check *wich, t_list_cmd *l_cmd)
+
+// void chi_haja(t_list_cmd *l_cmd, char *command, int indice)
+// {
+//     if (indice == 1)
+//     {
+//         l_cmd = add_simple_cmd(l_cmd, 1);
+//         l_cmd->s_left->l_element->cmd = ft_strdup(command);
+//     }
+//     else if (indice == 2)
+//     {
+//         l_cmd = add_simple_cmd(l_cmd, 2);
+//         // while (l_cmd->s_left->right != NULL)
+//         //     l_cmd->s_left = l_cmd->s_left->right;
+//         l_cmd->s_left->l_element->argument = ft_strdup(command);
+//     }
+//     else if (indice == 3)
+//     {
+//     }
+// }
+// void affect_redirection(char **tab, int *index, int result, int check, t_check *wich, t_list_cmd *l_cmd)
+
+void affect_redirection(t_tool *tool, t_list_cmd *l_cmd)
 {
     char **tab_split;
 
-    // printf("|%d|\n", result);
-    if (result == 3 || result == 4 || result == 5)
+    if (tool->result == 3 || tool->result == 4 || tool->result == 5)
     {
-        if (check == 1 || check == 2 || check == 3 || check == 4 || check == 5 || check == 6 || check == 7 || check == 8)
-        {
-            tab_split = ft_split(tab[(*index)], '>');
-        }
+        if (tool->check_io == 1 || tool->check_io == 2 || tool->check_io == 3 || tool->check_io == 4 || tool->check_io == 5 || tool->check_io == 6 || tool->check_io == 7 || tool->check_io == 8)
+            tab_split = ft_split(tool->tab[tool->i], '>');
         else
-            tab_split = ft_split(tab[(*index)], '<');
-        if (result == 3)
+            tab_split = ft_split(tool->tab[tool->i], '<');
+        if (tool->result == 3)
+        {
+            l_cmd = add_simple_cmd(l_cmd, 3);
             l_cmd->s_left->l_element->redirection.file = ft_strdup(tab_split[0]);
-        else if (result == 4)
-        {
-            // ft_putstr_fd("fena a sat\n", 1);
-            if (wich->cmd == 0)
-            {
-                l_cmd->s_left->l_element->cmd = ft_strdup(tab_split[0]);
-                printf("|cmd  ==> %s|\n", l_cmd->s_left->l_element->cmd);
-            }
-            else
-            {
-                l_cmd->s_left->l_element->argument = ft_strdup(tab_split[0]);
-                printf("|argument  ==> %s|\n", l_cmd->s_left->l_element->argument);
-            }
-            l_cmd = add_simple_cmd(l_cmd);
-            l_cmd->s_left->l_element->redirection.file = ft_strdup(tab[++(*index)]);
-            ft_wich(wich, 1);
         }
-        else if (result == 5)
+        else if (tool->result == 4 || tool->result == 5)
         {
-            if (wich->cmd == 0)
+            if (tool->wich.cmd == 0)
             {
+                l_cmd = add_simple_cmd(l_cmd, 1);
                 l_cmd->s_left->l_element->cmd = ft_strdup(tab_split[0]);
-                printf("|cmd  ==> %s|\n", l_cmd->s_left->l_element->cmd);
             }
             else
             {
+                l_cmd = add_simple_cmd(l_cmd, 2);
                 l_cmd->s_left->l_element->argument = ft_strdup(tab_split[0]);
-                printf("|argument  ==> %s|\n", l_cmd->s_left->l_element->argument);
             }
-            l_cmd = add_simple_cmd(l_cmd);
-            l_cmd->s_left->l_element->redirection.file = ft_strdup(tab_split[1]);
-            ft_wich(wich, 1);
+            if (tool->result == 4)
+            {
+                l_cmd = add_simple_cmd(l_cmd, 3);
+                l_cmd->s_left->l_element->redirection.file = ft_strdup(tool->tab[++tool->i]);
+                ft_wich(&tool->wich, 1);
+            }
+            else if (tool->result == 5)
+            {
+                l_cmd = add_simple_cmd(l_cmd, 3);
+                l_cmd->s_left->l_element->redirection.file = ft_strdup(tab_split[1]);
+                ft_wich(&tool->wich, 1);
+            }
         }
     }
-    if (check == 5 || check == 6 || check == 7 || check == 8)
+    if (tool->result == 2)
+    {
+        l_cmd = add_simple_cmd(l_cmd, 3);
+        l_cmd->s_left->l_element->redirection.file = ft_strdup(tool->tab[++tool->i]);
+    }
+    if (tool->check_io == 5 || tool->check_io == 6 || tool->check_io == 7 || tool->check_io == 8)
         l_cmd->s_left->l_element->redirection.i_o = ft_strdup(">>");
-    else if (check == 1 || check == 2 || check == 3 || check == 4)
+    else if (tool->check_io == 1 || tool->check_io == 2 || tool->check_io == 3 || tool->check_io == 4)
         l_cmd->s_left->l_element->redirection.i_o = ft_strdup(">");
-    else if (check == 9 || check == 10 || check == 11 || check == 12)
+    else if (tool->check_io == 9 || tool->check_io == 10 || tool->check_io == 11 || tool->check_io == 12)
         l_cmd->s_left->l_element->redirection.i_o = ft_strdup("<");
-    if (result == 2)
-    {
-        l_cmd->s_left->l_element->redirection.file = ft_strdup(tab[++(*index)]);
-    }
+    l_cmd->s_left = l_cmd->s_left->right;
 }
 
-void check_element(char **tab, t_list_cmd *l_cmd)
+void check_element(t_tool *tool, t_list_cmd *l_cmd)
 {
-    int i;
     int check;
-    int ret;
-    t_redirection rdrct;
-    t_check wich;
-
-    ft_bzero(&wich, sizeof(t_check));
-    i = 0;
-    while (tab[i])
+    t_simple_command *tmp;
+    ft_bzero(&tool->wich, sizeof(t_check));
+    tool->i = 0;
+    tmp = l_cmd->s_left;
+    while (tool->tab[tool->i])
     {
-        check = -1;
-        ret = check_type_element(tab[i], &check, i);
-        if (ret > 0)
-            l_cmd = add_simple_cmd(l_cmd);
-        if (ret == 1 || ret == 6)
+
+        tool->check_io = -1;
+        tool->result = check_type_element(tool->tab[tool->i], &tool->check_io, tool->i);
+        if (tool->result == 1 || tool->result == 6)
         {
-            if (wich.cmd == 0)
+            if (tool->wich.cmd == 0)
             {
-                l_cmd->s_left->l_element->cmd = ft_strdup(tab[i]);
-                printf("|cmd ==> %s|\n", l_cmd->s_left->l_element->cmd);
+                l_cmd = add_simple_cmd(l_cmd, 1);
+                l_cmd->s_left->l_element->cmd = ft_strdup(tool->tab[tool->i]);
             }
             else
             {
-                l_cmd->s_left->l_element->argument = ft_strdup(tab[i]);
-                printf("|argument  ==> %s|\n", l_cmd->s_left->l_element->argument);
+                l_cmd = add_simple_cmd(l_cmd, 2);
+                while (l_cmd->s_left->right != NULL)
+                    l_cmd->s_left = l_cmd->s_left->right;
+                l_cmd->s_left->l_element->argument = ft_strdup(tool->tab[tool->i]);
             }
-            ft_wich(&wich, 1);
+            ft_wich(&tool->wich, 1);
         }
-        else if (ret >= 2 && ret <= 5)
-        {
-            affect_redirection(tab, &i, ret, check, &wich, l_cmd);
-            printf("|direction ==> %s|\t|redirection ==> %s|\n", l_cmd->s_left->l_element->redirection.i_o, l_cmd->s_left->l_element->redirection.file);
-        }
-        i++;
+        // else if (tool->result >= 2 && tool->result <= 5)
+        // {
+        //     affect_redirection(tool, l_cmd);
+        //     // printf("|direction ==> %s|\t|redirection ==> %s|\n", l_cmd->s_left->l_element->redirection.i_o, l_cmd->s_left->l_element->redirection.file);
+        // }
+        tool->i++;
     }
+    // if (tmp == NULL)
+    l_cmd->s_left = tmp;
+    // ft_putstr_fd("ha wahad salam 3alaykum \n", 1);
 }
+
 void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separator, int y_or_n)
 {
-    char **tab;
+    t_tool tool;
     t_list_cmd *tmp;
 
+    ft_bzero(&tool, sizeof(t_tool));
     tmp = l_cmd;
-    tab = ft_space_split(s_command);
-    l_cmd = add_list_cmd(l_cmd);
-    // ft_bzero(l_cmd, sizeof(t_list_cmd));
-    // l_cmd = add_simple_cmd(l_cmd);
-    check_element(tab, l_cmd);
-    // while (l_cmd)
-    //     l_cmd = l_cmd->next;
+    tool.tab = ft_space_split(s_command);
+    // l_cmd = add_list_cmd(l_cmd);
+    check_element(&tool, l_cmd);
 }
 
 void parcs_simple_command(char *line, int count, t_list_cmd *l_cmd, int y_or_n)
@@ -251,7 +161,6 @@ void parcs_simple_command(char *line, int count, t_list_cmd *l_cmd, int y_or_n)
         i++;
     }
     s_command[i] = '\0';
-    // printf("%s\n", s_command);
     parcs_this_simple_command(s_command, l_cmd, line[i], y_or_n);
 }
 
@@ -289,7 +198,21 @@ int main()
     int i = 0;
     get_next_line(fd, &line);
     ft_check_line(line);
-    // parcs(line, l_command);
+    l_command = add_list_cmd(l_command);
+    parcs(line, l_command);
+    if (l_command->s_left->l_element == NULL)
+        ft_putstr_fd("minirt\n", 1);
+    ft_putstr("sahbi anouar wa3ar\n");
+    while (l_command->s_left != NULL)
+    {
+        if (l_command->s_left->l_element->indice == 1)
+            printf("|cmd  ==> %s|\n", l_command->s_left->l_element->cmd);
+        else if (l_command->s_left->l_element->indice == 2)
+            printf("|argument  ==> %s|\n", l_command->s_left->l_element->argument);
+        else if (l_command->s_left->l_element->indice == 3)
+            printf("|direction ==> %s|\t|redirection ==> %s|\n", l_command->s_left->l_element->redirection.i_o, l_command->s_left->l_element->redirection.file);
+        l_command->s_left = l_command->s_left->right;
+    }
     return (0);
 }
 // i = check(line, &test);

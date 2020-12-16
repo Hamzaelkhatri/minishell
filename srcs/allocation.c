@@ -9,34 +9,40 @@ t_list_cmd *add_list_cmd(t_list_cmd *parent)
     {
         if (!(parent = (t_list_cmd *)malloc(sizeof(t_list_cmd))))
             return (NULL);
+        if (!(parent->s_left = (t_simple_command *)malloc(sizeof(t_simple_command))))
+            return (NULL);
         // bzero(parent, sizeof(t_list_cmd));
-        parent->s_left = NULL;
+        parent->s_left->l_element = NULL;
         parent->right = NULL;
         return (parent);
     }
     tmp = parent;
     if (!(new = (t_list_cmd *)malloc(sizeof(t_list_cmd))))
         return (NULL);
+    if (!(new->s_left = (t_simple_command *)malloc(sizeof(t_simple_command))))
+        return (NULL);
     new->right = NULL;
-    new->s_left = NULL;
+    new->s_left->l_element = NULL;
     while (tmp->right != NULL)
         tmp = tmp->right;
     tmp->right = new;
     return (parent);
 }
 
-t_list_cmd *add_simple_cmd(t_list_cmd *parent)
+t_list_cmd *add_simple_cmd(t_list_cmd *parent, int i)
 {
     t_simple_command *tmp;
     t_simple_command *new;
-    static int i = 0;
-    if (parent->s_left == NULL)
+    if (parent->s_left->l_element == NULL)
     {
-        if (!(parent->s_left = (t_simple_command *)malloc(sizeof(t_simple_command))))
-            return (NULL);
+        // if (!(parent->s_left = (t_simple_command *)malloc(sizeof(t_simple_command))))
+        //     return (NULL);
         if (!(parent->s_left->l_element = (t_elements *)malloc(sizeof(t_elements))))
             return (NULL);
+        // parent->s_left->l_element->cmd = NULL;
+        parent->s_left->l_element->indice = i;
         parent->s_left->right = NULL;
+        parent->s_left->parent = NULL;
         return (parent);
     }
     tmp = parent->s_left;
@@ -44,9 +50,15 @@ t_list_cmd *add_simple_cmd(t_list_cmd *parent)
         return (NULL);
     if (!(new->l_element = (t_elements *)malloc(sizeof(t_elements))))
         return (NULL);
+    new->l_element->indice = i;
     new->right = NULL;
-    while (tmp->right != NULL)
-        tmp = tmp->right;
-    tmp->right = new;
+    new->parent = NULL;
+
+    while (parent->s_left->right != NULL)
+    {
+        parent->s_left = parent->s_left->right;
+    }
+    new->parent = parent->s_left;
+    parent->s_left->right = new;
     return (parent);
 }

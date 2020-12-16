@@ -34,7 +34,7 @@ COMP= gcc
 all: lib  $(NAME) 
 
 $(NAME) : $(LIB_PATH)/$(LIB) $(OBJ)
-	@rm -rf miniRT
+	@rm -rf minishell
 	@$(COMP) -g $(H_FLAG) $(OBJ) $(LLIB_FLAG) -o $@
 	@echo "													 Made by : \033[1;91mSqatim\033[m"
 	@echo "      ___                       ___                       ___           ___           ___                                  "
@@ -55,7 +55,7 @@ lib:
 
 $(OBJ_PATH)/%.o:  $(SRC_PATH)/%.c $(HDR)
 	@mkdir -p $(OBJ_PATH) 
-	@$(COMP)  $(FLAGS) $(H_FLAG) -g -o $@ -c $<
+	@$(COMP) -g $(FLAGS) $(H_FLAG) -g -o $@ -c $<
 
 clean:
 	@rm -rf $(OBJ_PATH)
