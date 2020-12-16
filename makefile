@@ -10,6 +10,7 @@ SRC_NAME=main.c\
 		tools.c\
 		ft_split.c\
 		allocation.c\
+		check.c\
 		get_next_line.c\
 		get_next_line_utils.c
 

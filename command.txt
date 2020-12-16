@@ -1,1 +1,1 @@
-ls >o
+dsadsa ls >> file dsadsa 

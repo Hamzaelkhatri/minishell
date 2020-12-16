@@ -40,9 +40,17 @@ typedef struct s_elements
 
 typedef struct s_simple_command
 {
+    int indice;
     t_elements *l_element;
     struct s_simple_command *right;
 } t_simple_command;
+
+typedef struct s_line
+{
+    int pipe;
+    int semicolon;
+    int i_o;
+} t_line;
 
 typedef struct s_list_cmd
 {
@@ -62,5 +70,9 @@ void ft_wich(t_check *wich, int number);
 
 t_list_cmd *add_list_cmd(t_list_cmd *parent);
 t_list_cmd *add_simple_cmd(t_list_cmd *parent);
+
+// check
+
+void ft_check_line(char *line);
 
 #endif

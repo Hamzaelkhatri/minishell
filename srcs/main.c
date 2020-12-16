@@ -9,7 +9,7 @@ int check_what_after(char c)
 
 int check_redirection(char *line, int *i)
 {
-    printf("%s\n", &line[*i]);
+    // printf("%s\n", &line[*i]);
     if (line[*i] == '>' && line[*i + 1] == '>')
     {
         if (line[*i + 2] == '\0')
@@ -122,20 +122,9 @@ char **input_or_output(char *line)
 void affect_redirection(char **tab, int *index, int result, int check, t_check *wich, t_list_cmd *l_cmd)
 {
     char **tab_split;
-    if (check == 5 || check == 6 || check == 7 || check == 8)
-    {
-        // ft_putstr_fd("sahbi\n", 1);
-        l_cmd->s_left->l_element->redirection.i_o = ft_strdup(">>");
-    }
-    else if (check == 1 || check == 2 || check == 3 || check == 4)
-        l_cmd->s_left->l_element->redirection.i_o = ft_strdup(">");
-    else if (check == 9 || check == 10 || check == 11 || check == 12)
-        l_cmd->s_left->l_element->redirection.i_o = ft_strdup("<");
-    if (result == 2)
-    {
-        l_cmd->s_left->l_element->redirection.file = ft_strdup(tab[++(*index)]);
-    }
-    else if (result == 3 || result == 4 || result == 5)
+
+    // printf("|%d|\n", result);
+    if (result == 3 || result == 4 || result == 5)
     {
         if (check == 1 || check == 2 || check == 3 || check == 4 || check == 5 || check == 6 || check == 7 || check == 8)
         {
@@ -148,14 +137,46 @@ void affect_redirection(char **tab, int *index, int result, int check, t_check *
         else if (result == 4)
         {
             // ft_putstr_fd("fena a sat\n", 1);
-            l_cmd->s_left->l_element->argument = ft_strdup(tab_split[0]);
+            if (wich->cmd == 0)
+            {
+                l_cmd->s_left->l_element->cmd = ft_strdup(tab_split[0]);
+                printf("|cmd  ==> %s|\n", l_cmd->s_left->l_element->cmd);
+            }
+            else
+            {
+                l_cmd->s_left->l_element->argument = ft_strdup(tab_split[0]);
+                printf("|argument  ==> %s|\n", l_cmd->s_left->l_element->argument);
+            }
+            l_cmd = add_simple_cmd(l_cmd);
             l_cmd->s_left->l_element->redirection.file = ft_strdup(tab[++(*index)]);
+            ft_wich(wich, 1);
         }
         else if (result == 5)
         {
-            l_cmd->s_left->l_element->argument = ft_strdup(tab_split[0]);
+            if (wich->cmd == 0)
+            {
+                l_cmd->s_left->l_element->cmd = ft_strdup(tab_split[0]);
+                printf("|cmd  ==> %s|\n", l_cmd->s_left->l_element->cmd);
+            }
+            else
+            {
+                l_cmd->s_left->l_element->argument = ft_strdup(tab_split[0]);
+                printf("|argument  ==> %s|\n", l_cmd->s_left->l_element->argument);
+            }
+            l_cmd = add_simple_cmd(l_cmd);
             l_cmd->s_left->l_element->redirection.file = ft_strdup(tab_split[1]);
+            ft_wich(wich, 1);
         }
+    }
+    if (check == 5 || check == 6 || check == 7 || check == 8)
+        l_cmd->s_left->l_element->redirection.i_o = ft_strdup(">>");
+    else if (check == 1 || check == 2 || check == 3 || check == 4)
+        l_cmd->s_left->l_element->redirection.i_o = ft_strdup(">");
+    else if (check == 9 || check == 10 || check == 11 || check == 12)
+        l_cmd->s_left->l_element->redirection.i_o = ft_strdup("<");
+    if (result == 2)
+    {
+        l_cmd->s_left->l_element->redirection.file = ft_strdup(tab[++(*index)]);
     }
 }
 
@@ -184,7 +205,6 @@ void check_element(char **tab, t_list_cmd *l_cmd)
             }
             else
             {
-
                 l_cmd->s_left->l_element->argument = ft_strdup(tab[i]);
                 printf("|argument  ==> %s|\n", l_cmd->s_left->l_element->argument);
             }
@@ -268,7 +288,8 @@ int main()
     char *test;
     int i = 0;
     get_next_line(fd, &line);
-    parcs(line, l_command);
+    ft_check_line(line);
+    // parcs(line, l_command);
     return (0);
 }
 // i = check(line, &test);
