@@ -13,18 +13,12 @@ void	unset_cmd(char *name, t_path *path)
 			break ;
 		if (search_str(spl[0], name,ft_strlen(spl[0]), ft_strlen(name)) == 1)
 		{
-			// path->env->fullenv[i] = path->env->fullenv[i+1];
 			check++;
 		}
 		if (check)
 			path->env->fullenv[i] = path->env->fullenv[i+1];
-		// {
-		// 	path->env->fullenv[i] =  path->env->fullenv[count_line(path->env->fullenv)-1];
-		// 	path->env->fullenv[count_line(path->env->fullenv)-1] = NULL;
-		// }
 		i++;
 	}
 
 	path->env->fullenv[i+1] = NULL;
-	// path->env->fullenv[count_line(path->env->fullenv)-1] = NULL;
 }
