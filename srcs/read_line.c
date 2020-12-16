@@ -8,9 +8,6 @@ int     read_line(t_path *key,char **line)
     int     ret;
     ret = 0;
      
-    // line = malloc(sizeof(char));
-    // *line = malloc(sizeof(char) * BUFFER_SIZE);
-    //  ft_bzero(*line,BUFFER_SIZE);
     *line = (char *)ft_calloc(BUFFER_SIZE,sizeof(char));
     if (!line)
     {
@@ -74,22 +71,14 @@ void promp_bash(t_cmd *cmd, t_path *path, int ret, char **line)
     }
     if (ft_strrchr(*line, '\n') && search_cmd(cmd))
     {
-<<<<<<< HEAD
-        ft_putstr_fd("minishell $ ", 1);
-=======
         ft_putstr_fd("bash $ ", 1);
->>>>>>> 52c1d69f419d3b09b5af90572b783012311480d8
         path->key->cntrd = 0;
     }
     else if (ft_strrchr(*line, '\n'))
     {
         // if (cmd->echo != 1)
         //     write(1, "\n", 1);
-<<<<<<< HEAD
         ft_putstr_fd("minishell $ ", 1);
-=======
-        ft_putstr_fd("bash $ ", 1);
->>>>>>> 52c1d69f419d3b09b5af90572b783012311480d8
         path->key->cntrd = 0;
     }
     if (ret > 0 && !ft_strrchr(*line, '\n'))
@@ -223,8 +212,6 @@ void check_cmd(t_cmd *cmd, char **line, t_path *path, int ret)
             exit(0);
         }
     }
-    else
-        exeute(path,*line);
         // cmd->echo = 0;
     promp_bash(cmd, path, ret, line);
 }
@@ -239,11 +226,7 @@ void loop_shell(t_cmd *cmd,t_path *path)
 
     signal(SIGINT, sigint_handler);
     status = 1;
-<<<<<<< HEAD
-     ft_putstr_fd("minishell $ ", 1);
-=======
     ft_putstr_fd("bash $ ", 1);
->>>>>>> 52c1d69f419d3b09b5af90572b783012311480d8
     while (status)
     {
         ret = 0;
