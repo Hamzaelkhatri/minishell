@@ -6,7 +6,7 @@
 /*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/10 14:45:55 by ahaddad          ###   ########.fr       */
+/*   Updated: 2020/12/16 14:13:01 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,8 @@ void    getprogramme(t_path *path,char *cmd);
 t_token *ft_parse(char *line);
 char    **ft_split_whitespaces(char *str);
 void    cd_cmd(char *nextpath,t_path *path);
-
+int count_line(char **env);
+void	export_cmd(char *name,char **env);
+void	unset_cmd(char *name, t_path *path);
+int		search_str(char *str1, char *str2, int l1, int l2);
 #endif

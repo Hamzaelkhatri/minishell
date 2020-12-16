@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+         #
+#    By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/25 16:22:32 by helkhatr          #+#    #+#              #
-#    Updated: 2020/12/09 14:08:32 by helkhatr         ###   ########.fr        #
+#    Updated: 2020/12/16 14:12:20 by ahaddad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ SRC_NAME=init.c\
 		parse.c\
 		ft_split.c\
 		cd.c\
+		export.c\
+		unset.c\
 
 HDR_NAME=minishell.h 
 
