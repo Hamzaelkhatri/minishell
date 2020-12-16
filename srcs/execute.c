@@ -8,15 +8,9 @@ char *strfromto(char *str,int from,char to)
     
     i = from;
     ret = malloc(from * sizeof(char));
-    // ft_bzero(ret,from);
     while (str[i]!=to)
     {
-        //   printf("{%c}",str[i]);
-        // if(str[i] != to)
-            ret[i] = str[i];
-            // printf("%s",&str[from]);
-        // else
-        //    break;
+        ret[i] = str[i];
         i++;
     }
     ret[i]='\0';
@@ -29,9 +23,7 @@ char *search_prev(char *str,char c,int i)
     while (i>=0)
     {
         if(str[i]==c)
-        {
             return (strfromto(str,i,'-'));
-        }
         i--;
     }
     return (NULL);
@@ -40,22 +32,20 @@ char *search_prev(char *str,char c,int i)
 void getprogramme(t_path *path,char *cmd)
 {
     int i;
-    path->pathcmd= search_prev(path->cmds,'+',i);
+   // path->pathcmd= search_prev(path->cmds,'+',i);
     exeute(path,cmd);
 }
 
 void exeute(t_path *path,char *cmd)
 {
-    char *programName;
-    int i;
     int a = fork();
-    // printf("%s",getcwd(programName,100));
     if(!a)
     {
-        
         char *binaryPath = "/bin/bash";
         char *const args[] = {binaryPath, "-c", cmd,NULL};
-        execve(binaryPath, args, NULL);
+        if(execve(binaryPath, args, NULL)==-1)
+            perror("bash$ ");
+
     }
-    // write(1,"hello",5);
+    wait(0);
 }

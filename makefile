@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/25 16:22:32 by helkhatr          #+#    #+#              #
-#    Updated: 2020/12/16 14:12:20 by ahaddad          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME= minishell
 SRC_PATH= srcs
 HDR_PATH= includes
@@ -29,6 +17,8 @@ SRC_NAME=init.c\
 		parse.c\
 		ft_split.c\
 		cd.c\
+		shift.c\
+		var_env.c\
 		export.c\
 		unset.c\
 
@@ -44,7 +34,6 @@ LIB= libft.a
 FLAGS= 
 LLIB_FLAG= -L$(LIB_PATH) libft/libft.a
 H_FLAG= -I $(HDR_PATH)
-#***************************************************************************** #
 
 COMP= gcc
 
