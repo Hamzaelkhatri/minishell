@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/16 13:57:21 by helkhatr         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <unistd.h>
@@ -19,11 +7,9 @@
 # include  <stdio.h>
 # include <stdbool.h>
 # include "../libft/libft.h"
-# include <stdio.h>
 # include <sys/types.h>
 # include <dirent.h>
 # include<fcntl.h> 
-
 # define BUFFER_SIZE 1024
 
 typedef struct s_key
@@ -82,8 +68,12 @@ int     check_path(char *path,char *cmd);
 void    getprogramme(t_path *path,char *cmd);
 t_token *ft_parse(char *line);
 char    **ft_split_whitespaces(char *str);
-int     cd_cmd(char *nextpath,t_path *path);
 void    shift(int fd);
 void    shift_extra(char *file,char *shifts);
 void     get_var_env(t_path *path,char *var);
+void    cd_cmd(char *nextpath,t_path *path);
+int   count_line(char **env);
+void	export_cmd(char *name,char **env);
+void	unset_cmd(char *name, t_path *path);
+int		search_str(char *str1, char *str2, int l1, int l2);
 #endif

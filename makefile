@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/25 16:22:32 by helkhatr          #+#    #+#              #
-#    Updated: 2020/12/16 13:56:42 by helkhatr         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME= minishell
 SRC_PATH= srcs
 HDR_PATH= includes
@@ -31,6 +19,8 @@ SRC_NAME=init.c\
 		cd.c\
 		shift.c\
 		var_env.c\
+		export.c\
+		unset.c\
 
 HDR_NAME=minishell.h 
 
