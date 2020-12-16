@@ -6,11 +6,11 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:17:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/09 14:42:46 by helkhatr         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:59:41 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int		main(int argc, char **argv,char **env)
 {
@@ -21,8 +21,12 @@ int		main(int argc, char **argv,char **env)
 	
 	init(&path,&key,&cmd);
 	path.env->fullenv = env;
-	cd_cmd("/goinfre/djejd",&path);
-	get_directory(&path);
-	getprogramme(&path,"ls");
+	 //get_directory(&path);
+	// loop_shell(&cmd,&path);
+	
+	//shift_extra("tricky.txt",">");
+	get_var_env(&path,"$ORIGINAL_XDG_CURRENT_DESKTOP");
+	show_env(path.env->fullenv);
+	// getprogramme(&path,"ls | cat");
 	return (0);
 }

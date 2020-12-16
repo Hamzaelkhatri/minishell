@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 02:34:46 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/09 14:41:49 by helkhatr         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:57:21 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@
 # include  <stdio.h>
 # include <stdbool.h>
 # include "../libft/libft.h"
-#include <stdio.h>
-#include <sys/types.h>
-#include <dirent.h>
+# include <stdio.h>
+# include <sys/types.h>
+# include <dirent.h>
+# include<fcntl.h> 
+
 # define BUFFER_SIZE 1024
 
 typedef struct s_key
@@ -80,6 +82,8 @@ int     check_path(char *path,char *cmd);
 void    getprogramme(t_path *path,char *cmd);
 t_token *ft_parse(char *line);
 char    **ft_split_whitespaces(char *str);
-void    cd_cmd(char *nextpath,t_path *path);
-
+int     cd_cmd(char *nextpath,t_path *path);
+void    shift(int fd);
+void    shift_extra(char *file,char *shifts);
+void     get_var_env(t_path *path,char *var);
 #endif

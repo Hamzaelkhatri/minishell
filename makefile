@@ -6,7 +6,7 @@
 #    By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/25 16:22:32 by helkhatr          #+#    #+#              #
-#    Updated: 2020/12/09 14:08:32 by helkhatr         ###   ########.fr        #
+#    Updated: 2020/12/16 13:56:42 by helkhatr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ SRC_NAME=init.c\
 		parse.c\
 		ft_split.c\
 		cd.c\
+		shift.c\
+		var_env.c\
 
 HDR_NAME=minishell.h 
 
@@ -42,7 +44,6 @@ LIB= libft.a
 FLAGS= 
 LLIB_FLAG= -L$(LIB_PATH) libft/libft.a
 H_FLAG= -I $(HDR_PATH)
-#***************************************************************************** #
 
 COMP= gcc
 
