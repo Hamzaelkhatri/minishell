@@ -46,4 +46,5 @@ void exeute(t_path *path,char *cmd)
             perror("bash$ ");
 
     }
+    wait(0);
 }

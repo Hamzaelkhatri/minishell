@@ -19,6 +19,5 @@ void	unset_cmd(char *name, t_path *path)
 			path->env->fullenv[i] = path->env->fullenv[i+1];
 		i++;
 	}
-
 	path->env->fullenv[i+1] = NULL;
 }

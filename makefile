@@ -21,6 +21,7 @@ SRC_NAME=init.c\
 		var_env.c\
 		export.c\
 		unset.c\
+		pipes.c\
 
 HDR_NAME=minishell.h 
 
