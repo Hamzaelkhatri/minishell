@@ -6,7 +6,7 @@ static int check_is_correct(char operation, char *line)
     char c;
 
     i = 0;
-    while (line[i] == ' ' || line[i] == '\t' && line[i])
+    while ((line[i] == ' ' || line[i] == '\t') && line[i])
         i++;
     c = line[i];
     if (operation == '|')

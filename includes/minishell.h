@@ -38,7 +38,7 @@ typedef struct s_tool
     int result;
     int check_io;
     int indice;
-    t_check wich;
+    int cmd;
 } t_tool;
 
 typedef struct s_elements
@@ -87,5 +87,9 @@ t_list_cmd *add_simple_cmd(t_list_cmd *parent, int i);
 void ft_check_line(char *line);
 int check_type_element(char *line, int *check_i_o, int count);
 int check_io_redirection(char *line, int *p, int *check_o_i);
+
+// redirection_tools
+
+int wich_redirection(int check);
 
 #endif

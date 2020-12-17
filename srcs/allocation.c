@@ -13,6 +13,7 @@ t_list_cmd *add_list_cmd(t_list_cmd *parent)
             return (NULL);
         // bzero(parent, sizeof(t_list_cmd));
         parent->s_left->l_element = NULL;
+        parent->s_left->right = NULL;
         parent->right = NULL;
         return (parent);
     }
@@ -23,6 +24,7 @@ t_list_cmd *add_list_cmd(t_list_cmd *parent)
         return (NULL);
     new->right = NULL;
     new->s_left->l_element = NULL;
+    new->s_left->right = NULL;
     while (tmp->right != NULL)
         tmp = tmp->right;
     tmp->right = new;
@@ -53,11 +55,8 @@ t_list_cmd *add_simple_cmd(t_list_cmd *parent, int i)
     new->l_element->indice = i;
     new->right = NULL;
     new->parent = NULL;
-
     while (parent->s_left->right != NULL)
-    {
         parent->s_left = parent->s_left->right;
-    }
     new->parent = parent->s_left;
     parent->s_left->right = new;
     return (parent);

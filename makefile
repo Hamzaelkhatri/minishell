@@ -11,6 +11,7 @@ SRC_NAME=main.c\
 		ft_split.c\
 		allocation.c\
 		check.c\
+		redirection_tools.c\
 		get_next_line.c\
 		get_next_line_utils.c
 
