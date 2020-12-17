@@ -28,6 +28,7 @@ void alloc_affect(t_list_cmd *l_cmd, t_tool *tool, char *command, int indice)
     }
     else if (indice == 2)
     {
+        tool->argument = 2;
         l_cmd = add_simple_cmd(l_cmd, 2);
         if (l_cmd->s_left->right != NULL)
             l_cmd->s_left = l_cmd->s_left->right;
@@ -35,6 +36,7 @@ void alloc_affect(t_list_cmd *l_cmd, t_tool *tool, char *command, int indice)
     }
     else if (indice == 3)
     {
+        tool->argument = 3;
         l_cmd = add_simple_cmd(l_cmd, 3);
         if (l_cmd->s_left->right != NULL)
             l_cmd->s_left = l_cmd->s_left->right;
@@ -108,11 +110,8 @@ void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separato
     ft_bzero(&tool, sizeof(t_tool));
     tmp = l_cmd;
     tool.tab = ft_space_split(s_command);
-    // ft_putstr_fd("\n\nwa kelb\n\n", 1);
-    if (l_cmd->right != NULL)
-    {
+    if (l_cmd->s_left->l_element != NULL)
         l_cmd = add_list_cmd(l_cmd);
-    }
     while (l_cmd->right != NULL)
         l_cmd = l_cmd->right;
     check_element(&tool, l_cmd);
@@ -123,16 +122,17 @@ void parcs_simple_command(char *line, int *index, t_list_cmd *l_cmd, int y_or_n)
 {
     char *s_command;
     int i;
+    int k;
 
+    k = 0;
     i = index[0];
     s_command = (char *)malloc(sizeof(char) * index[1]);
-    printf("index[0] ==> %d\n", index[0]);
     while (i < index[1])
     {
-        s_command[i] = line[i];
+        s_command[k] = line[i];
         i++;
+        k++;
     }
-    printf("|%s|\n", s_command);
     s_command[i] = '\0';
     index[0] = ++i;
     parcs_this_simple_command(s_command, l_cmd, line[i], y_or_n);
@@ -159,16 +159,15 @@ void parcs(char *line, t_list_cmd *l_cmd)
         {
             k = 1;
             index[1] = i;
-            // printf("|index[0] ===> %d|\n", index[0]);
             parcs_simple_command(line, index, l_cmd, k);
         }
         i++;
     }
     k = 0;
     index[1] = i;
-    printf("%d\n", index[1]);
     parcs_simple_command(line, index, l_cmd, k);
 }
+
 int main()
 {
     int fd;
@@ -182,8 +181,18 @@ int main()
     ft_check_line(line);
     l_command = add_list_cmd(l_command);
     parcs(line, l_command);
-    if (l_command->s_left->l_element == NULL)
-        ft_putstr_fd("minirt\n", 1);
+    sort(l_command);
+    while (l_command->s_left != NULL)
+    {
+        if (l_command->s_left->l_element->indice == 1)
+            printf("|cmd  ==> %s|\n", l_command->s_left->l_element->cmd);
+        else if (l_command->s_left->l_element->indice == 2)
+            printf("|argument  ==> %s|\n", l_command->s_left->l_element->argument);
+        else if (l_command->s_left->l_element->indice == 3)
+            printf("|direction ==> %s|\t|redirection ==> %s|\n", l_command->s_left->l_element->redirection.i_o, l_command->s_left->l_element->redirection.file);
+        l_command->s_left = l_command->s_left->right;
+    }
+    // printf("\n\n\n");
     // l_command = l_command->right;
     // while (l_command->s_left != NULL)
     // {

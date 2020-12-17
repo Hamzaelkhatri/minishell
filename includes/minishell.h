@@ -13,7 +13,6 @@ typedef struct s_redirection
 {
     char *i_o;
     char *file;
-    struct s_redirection *next;
 } t_redirection;
 
 // typedef struct s_suffix
@@ -39,6 +38,8 @@ typedef struct s_tool
     int check_io;
     int indice;
     int cmd;
+    int argument;
+    int redirection;
 } t_tool;
 
 typedef struct s_elements
@@ -91,5 +92,9 @@ int check_io_redirection(char *line, int *p, int *check_o_i);
 // redirection_tools
 
 int wich_redirection(int check);
+
+// sort
+
+void sort(t_list_cmd *l_cmd);
 
 #endif
