@@ -6,8 +6,8 @@ int check_space(char *str)
 	while(str[++i] != '=')
 		if(str[i] == ' ')
 			return (0);
-	if(str[i] != '=')
-		return (0);
+	//if(str[i] != '=')
+	//	return (0);
 	i = 0;
 	while(str[++i] != '=')
 		if(!ft_isdigit(str[i]))
@@ -45,5 +45,5 @@ void	export_cmd(char *name,char **env)
 	}
 	line = count_line(env);
 	env[line] = get_after_equal(name);
-	env[line+1] = NULL;
+	env[line + 1]= NULL;
 }

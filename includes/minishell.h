@@ -10,6 +10,7 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include<fcntl.h> 
+# include <string.h>
 # define BUFFER_SIZE 1024
 
 typedef struct s_key
@@ -72,9 +73,10 @@ void    shift(int fd);
 void    shift_extra(char *file,char *shifts);
 char*	get_var_env(t_path *path,char *var);
 void	cd_cmd(char *nextpath,t_path *path);
-int	count_line(char **env);
+int		count_line(char **env);
 void	export_cmd(char *name,char **env);
 void	unset_cmd(char *name, t_path *path);
-int	search_str(char *str1, char *str2, int l1, int l2);
+int		search_str(char *str1, char *str2, int l1, int l2);
 char    *ft_str_to_equal(const char *s1, const char *s2,int len);
+void	show_export(t_path *path);
 #endif
