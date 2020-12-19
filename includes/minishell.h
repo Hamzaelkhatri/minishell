@@ -66,6 +66,7 @@ typedef struct s_line
 
 typedef struct s_list_cmd
 {
+    t_tool tool;
     char separator;
     t_simple_command *s_left;
     struct s_list_cmd *right;

@@ -15,6 +15,7 @@ t_list_cmd *add_list_cmd(t_list_cmd *parent)
         parent->s_left->l_element = NULL;
         parent->s_left->right = NULL;
         parent->right = NULL;
+        ft_bzero(&parent->tool, sizeof(t_tool));
         return (parent);
     }
     tmp = parent;
@@ -23,8 +24,10 @@ t_list_cmd *add_list_cmd(t_list_cmd *parent)
     if (!(new->s_left = (t_simple_command *)malloc(sizeof(t_simple_command))))
         return (NULL);
     new->right = NULL;
+    ft_bzero(&new->tool, sizeof(t_tool));
     new->s_left->l_element = NULL;
     new->s_left->right = NULL;
+
     while (tmp->right != NULL)
         tmp = tmp->right;
     tmp->right = new;

@@ -4,18 +4,67 @@ void sort(t_list_cmd *l_cmd)
 {
     t_list_cmd *tmp_lc;
     t_simple_command *tmp_sc;
+    t_simple_command *tmp_cmd;
+    t_simple_command *tmp_cmd_parent;
+
+    int i = 0;
+    int cmd = 0;
 
     tmp_lc = l_cmd;
     tmp_sc = l_cmd->s_left;
     // while (l_cmd != NULL)
     // {
+
     while (l_cmd->s_left != NULL)
     {
-        if (l_cmd->s_left->parent == NULL)
-            ft_putstr_fd("fen a sahbi\n", 1);
+
+        if (cmd == 0 && l_cmd->tool.cmd == 1 && l_cmd->s_left->l_element->indice == 1)
+        {
+
+            while (l_cmd->s_left->l_element->indice != 1)
+                l_cmd->s_left = l_cmd->s_left->right;
+            while (l_cmd->s_left->parent != NULL)
+            {
+                tmp_cmd = l_cmd->s_left;
+                l_cmd->s_left = l_cmd->s_left->parent;
+                if (l_cmd->s_left->parent != NULL)
+                    l_cmd->s_left->parent->right = l_cmd->s_left->right;
+                l_cmd->s_left->right = tmp_cmd->right;
+                if (l_cmd->s_left->right != NULL)
+                    l_cmd->s_left->right->parent = l_cmd->s_left;
+                tmp_cmd->parent = l_cmd->s_left->parent;
+                tmp_cmd->right = l_cmd->s_left;
+                l_cmd->s_left->parent = tmp_cmd;
+                l_cmd->s_left = tmp_cmd;
+                tmp_sc = l_cmd->s_left;
+            }
+            cmd == 1;
+        }
+        else if (l_cmd->s_left->l_element->indice == 2)
+        {
+            while (l_cmd->s_left->parent->l_element->indice != 1 && l_cmd->s_left->parent->l_element->indice != 2)
+            {
+                tmp_cmd = l_cmd->s_left;
+                l_cmd->s_left = l_cmd->s_left->parent;
+                if (l_cmd->s_left->parent != NULL)
+                    l_cmd->s_left->parent->right = l_cmd->s_left->right;
+                l_cmd->s_left->right = tmp_cmd->right;
+                if (l_cmd->s_left->right != NULL)
+                    l_cmd->s_left->right->parent = l_cmd->s_left;
+                tmp_cmd->parent = l_cmd->s_left->parent;
+                tmp_cmd->right = l_cmd->s_left;
+                l_cmd->s_left->parent = tmp_cmd;
+                l_cmd->s_left = tmp_cmd;
+            }
+        }
         l_cmd->s_left = l_cmd->s_left->right;
     }
-    // l_cmd = l_cmd->right;
-    // }
     l_cmd->s_left = tmp_sc;
 }
+
+// l_cmd->s_left->parent->right = l_cmd->s_left->right;
+// if (l_cmd->s_left->right != NULL)
+//     l_cmd->s_left->right->parent = l_cmd->s_left->parent;
+// l_cmd->s_left->right = l_cmd->s_left->parent;
+// l_cmd->s_left->parent = tmp->parent;
+// tmp->parent = l_cmd->s_left;
