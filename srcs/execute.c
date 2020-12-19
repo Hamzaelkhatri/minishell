@@ -37,7 +37,7 @@ void getprogramme(t_path *path,char *cmd)
 
 void exeute(t_path *path,char *cmd)
 {
-    int a = fork();
+    pid_t a = fork();
     if(!a)
     {
         char *binaryPath = "/bin/bash";
@@ -46,5 +46,5 @@ void exeute(t_path *path,char *cmd)
             perror("bash$ ");
 
     }
-    wait(0);
+    wait(a);
 }

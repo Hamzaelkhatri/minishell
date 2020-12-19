@@ -10,6 +10,7 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include<fcntl.h> 
+#include<sys/wait.h>
 # define BUFFER_SIZE 1024
 
 typedef struct s_key
@@ -79,4 +80,6 @@ void	unset_cmd(char *name, t_path *path);
 int	search_str(char *str1, char *str2, int l1, int l2);
 char    *ft_str_to_equal(const char *s1, const char *s2,int len);
 void    pipes_cmd(char *left, char *right, t_path * path);
+void	ft_sortstr(char **str);
+char **ft_strdup_extra(char **str);
 #endif

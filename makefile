@@ -13,7 +13,7 @@ SRC_NAME=init.c\
 		pwd.c\
 		execute.c\
 		tools.c\
-    	directory.c\
+    		directory.c\
 		parse.c\
 		ft_split.c\
 		cd.c\
@@ -22,6 +22,7 @@ SRC_NAME=init.c\
 		export.c\
 		unset.c\
 		pipes.c\
+		export_sort.c\
 
 HDR_NAME=minishell.h 
 
