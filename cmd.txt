@@ -1,0 +1,1 @@
+echo  hello | ls | cd .. ; pwd | ls ; po
