@@ -64,12 +64,20 @@ typedef struct s_line
     int i_o;
 } t_line;
 
-typedef struct s_list_cmd
+typedef struct s_command
 {
     t_tool tool;
-    char separator;
+    char pipe;
     t_simple_command *s_left;
-    struct s_list_cmd *right;
+    struct s_command *right;
+} t_command;
+
+typedef struct s_list_cmd
+{
+    char semicolon;
+    t_command *command;
+    struct s_list_cmd *next;
+    struct s_list_cmd *previous;
 } t_list_cmd;
 
 void ft_putchar(char c);
@@ -82,7 +90,8 @@ void ft_wich(t_check *wich, int number);
 // allocation
 
 t_list_cmd *add_list_cmd(t_list_cmd *parent);
-t_list_cmd *add_simple_cmd(t_list_cmd *parent, int i);
+t_command *add_command(t_command *parent);
+t_command *add_simple_cmd(t_command *parent, int i);
 
 // check
 
@@ -97,5 +106,8 @@ int wich_redirection(int check);
 // sort
 
 void sort(t_list_cmd *l_cmd);
+
+// print
+void print(t_command *l_command);
 
 #endif
