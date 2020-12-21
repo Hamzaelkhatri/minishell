@@ -42,9 +42,9 @@ void exeute(t_path *path,char *cmd)
     {
         char *binaryPath = "/bin/bash";
         char *const args[] = {binaryPath, "-c", cmd,NULL};
-        if(execve(binaryPath, args, NULL)==-1)
+        if(execve(binaryPath, args, path->env->fullenv)==-1)
             perror("bash$ ");
-
+		exit(0);
     }
-    wait(a);
+    waitpid(-1,NULL,0);
 }
