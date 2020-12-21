@@ -69,7 +69,6 @@ t_command *add_command(t_command *parent)
     ft_bzero(&new->tool, sizeof(t_tool));
     new->s_left->l_element = NULL;
     new->s_left->right = NULL;
-
     while (tmp->right != NULL)
         tmp = tmp->right;
     tmp->right = new;
@@ -105,4 +104,22 @@ t_command *add_simple_cmd(t_command *parent, int i)
     new->parent = parent->s_left;
     parent->s_left->right = new;
     return (parent);
+}
+
+char *alloc_command(char *line, int i, int *save)
+{
+    char *command;
+    int p;
+
+    p = 0;
+    if (!(command = (char *)malloc(sizeof(char) * (i - *save))))
+        return (NULL);
+    while (*save < i)
+    {
+        command[p++] = line[(*save)++];
+    }
+    // khasni nmodifi hadshi man ba3d
+    command[p] = '\0';
+    *save = i + 1;
+    return (command);
 }

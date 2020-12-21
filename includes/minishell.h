@@ -92,6 +92,7 @@ void ft_wich(t_check *wich, int number);
 t_list_cmd *add_list_cmd(t_list_cmd *parent);
 t_command *add_command(t_command *parent);
 t_command *add_simple_cmd(t_command *parent, int i);
+char *alloc_command(char *line, int i, int *save);
 
 // check
 
@@ -108,6 +109,6 @@ int wich_redirection(int check);
 void sort(t_list_cmd *l_cmd);
 
 // print
-void print(t_command *l_command);
+void print(t_list_cmd *l_command);
 
 #endif

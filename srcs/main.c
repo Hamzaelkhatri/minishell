@@ -94,24 +94,26 @@ void check_element(t_list_cmd *l_cmd)
         if (l_cmd->command->tool.result == 1 || l_cmd->command->tool.result == 6)
         {
             if (l_cmd->command->tool.cmd == 0)
+            {
                 alloc_affect(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i], 1);
+            }
             else
+            {
                 alloc_affect(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i], 2);
+            }
         }
         else if (l_cmd->command->tool.result >= 2 && l_cmd->command->tool.result <= 5)
             affect_redirection(l_cmd);
         l_cmd->command->tool.i++;
     }
+    // ft_putendl_fd("i am here", 1);
     l_cmd->command->s_left = tmp;
 }
 
 void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separator, int y_or_n)
 {
-    t_list_cmd *tmp_lcommand;
     t_command *tmp_command;
 
-    // ft_bzero(&tool, sizeof(t_tool));
-    // tmp_lcommand = l_cmd;
     tmp_command = l_cmd->command;
     l_cmd->command->tool.tab = ft_space_split(s_command);
     if (l_cmd->command->s_left->l_element != NULL)
@@ -120,7 +122,6 @@ void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separato
         l_cmd->command = l_cmd->command->right;
     check_element(l_cmd);
     l_cmd->command = tmp_command;
-    // l_cmd = tmp_lcommand;
 }
 
 void parcs_simple_command(char *line, int *index, t_list_cmd *l_cmd, int y_or_n)
@@ -140,21 +141,28 @@ void parcs_simple_command(char *line, int *index, t_list_cmd *l_cmd, int y_or_n)
     }
     s_command[i] = '\0';
     index[0] = ++i;
-
     parcs_this_simple_command(s_command, l_cmd, line[i], y_or_n);
 
     free(s_command);
 }
 
-void parse_command(char *line, t_list_cmd *l_cmd)
+void parse_command(t_list_cmd *l_cmd, char *line)
 {
     int i;
     int k;
     int index[2];
+    t_list_cmd *tmp;
 
     k = 0;
     i = 0;
     index[0] = 0;
+    tmp = l_cmd;
+    if (l_cmd->command->s_left->l_element != NULL)
+    {
+        l_cmd = add_list_cmd(l_cmd);
+    }
+    while (l_cmd->next != NULL)
+        l_cmd = l_cmd->next;
     while (line[i])
     {
         if (is_correct(line[i]) == 0)
@@ -162,7 +170,7 @@ void parse_command(char *line, t_list_cmd *l_cmd)
             ft_putstr_fd("error 1", 2);
             exit(1);
         }
-        if (line[i] == '|' || line[i] == ';')
+        if (line[i] == '|')
         {
             k = 1;
             index[1] = i;
@@ -173,23 +181,18 @@ void parse_command(char *line, t_list_cmd *l_cmd)
     k = 0;
     index[1] = i;
     parcs_simple_command(line, index, l_cmd, k);
+    l_cmd = tmp;
 }
 
-char *alloc_command(char *line, int i, int save)
+int check_parse_list_command(char *line, int i)
 {
-    char *command;
-    int p;
-
-    p = 0;
-    if (!(command = (char *)malloc(sizeof(char) * (i - save))))
-        return (NULL);
-    while (save < i)
+    while (i != 0 && line[i] != ';')
     {
-        command[p++] = line[save++]
+        if (line[i] == '>' || line[i] == '<' || ft_isalnum(line[i]) == 1)
+            return (1);
+        i--;
     }
-    // khasni nmodifi hadshi man ba3d
-    command[p] = '\0';
-    return (command);
+    return (0);
 }
 void parse_list_command(t_list_cmd *l_cmd, char *line)
 {
@@ -197,6 +200,7 @@ void parse_list_command(t_list_cmd *l_cmd, char *line)
     int k;
     int save;
     char *s_command;
+    int check;
 
     i = 0;
     save = 0;
@@ -210,18 +214,17 @@ void parse_list_command(t_list_cmd *l_cmd, char *line)
         }
         if (line[i] == ';')
         {
-
-            s_command = (char *)malloc(sizeof(char) * (i - k));
-            while (save < i)
-            {
-                s_command[k++] = line[save++];
-            }
-            s_command[k] = '\0';
-            save = i + 1;
+            s_command = alloc_command(line, i, &save);
             parse_command(l_cmd, s_command);
             free(s_command);
         }
         i++;
+    }
+    if (check_parse_list_command(line, i) == 1)
+    {
+        s_command = alloc_command(line, i, &save);
+        parse_command(l_cmd, s_command);
+        free(s_command);
     }
 }
 int main()
@@ -236,13 +239,13 @@ int main()
     if (line[0] == '\0')
         return (0);
     l_command = add_list_cmd(l_command);
-    parcs(line, l_command);
+    parse_list_command(l_command, line);
 
     printf("-------------------------------before sort-------------------------------\n");
-    print(l_command->command);
+    print(l_command);
     sort(l_command);
     printf("-------------------------------after sort-------------------------------\n");
-    print(l_command->command);
+    print(l_command);
     return (0);
 }
 // i = check(line, &test);

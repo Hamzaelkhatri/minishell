@@ -58,23 +58,57 @@ void ft_wich(t_check *wich, int number)
         wich->redirection = wich->cmd + wich->word + wich->redirection + 1;
 }
 
-void print(t_command *l_command)
+void print(t_list_cmd *l_command)
 {
-    t_command *tmp;
+    t_list_cmd *tmp_l_command;
+    t_command *tmp_command;
     t_simple_command *tmp_s;
 
-    tmp = l_command;
-    tmp_s = l_command->s_left;
-    while (l_command->s_left != NULL)
+    tmp_l_command = l_command;
+    tmp_command = l_command->command;
+    tmp_s = l_command->command->s_left;
+    while (l_command != NULL)
     {
-        if (l_command->s_left->l_element->indice == 1)
-            printf("|cmd  ==> %s|\n", l_command->s_left->l_element->cmd);
-        else if (l_command->s_left->l_element->indice == 2)
-            printf("|argument  ==> %s|\n", l_command->s_left->l_element->argument);
-        else if (l_command->s_left->l_element->indice == 3)
-            printf("|direction ==> %s|\t|redirection ==> %s|\n", l_command->s_left->l_element->redirection.i_o, l_command->s_left->l_element->redirection.file);
-        l_command->s_left = l_command->s_left->right;
+        tmp_s = l_command->command->s_left;
+        while (l_command->command->s_left != NULL)
+        {
+            if (l_command->command->s_left->l_element->indice == 1)
+                printf("|cmd  ==> %s|\n", l_command->command->s_left->l_element->cmd);
+            else if (l_command->command->s_left->l_element->indice == 2)
+                printf("|argument  ==> %s|\n", l_command->command->s_left->l_element->argument);
+            else if (l_command->command->s_left->l_element->indice == 3)
+                printf("|direction ==> %s|\t|redirection ==> %s|\n", l_command->command->s_left->l_element->redirection.i_o, l_command->command->s_left->l_element->redirection.file);
+            l_command->command->s_left = l_command->command->s_left->right;
+        }
+        ft_putendl_fd("--------- command2 ----------", 1);
+        l_command->command->s_left = tmp_s;
+        l_command = l_command->next;
     }
-    l_command->s_left = tmp_s;
-    l_command = tmp;
+    // l_command->command->s_left = tmp_s;
+    l_command = tmp_l_command;
+
+    // l_command = tmp;
 }
+
+// void print(t_list_cmd *l_command)
+// {
+//     t_list_cmd *tmp_l_command;
+//     t_command *tmp_command;
+//     t_simple_command *tmp_s;
+
+//     tmp_l_command = l_command;
+//     tmp_command = l_command->command;
+//     tmp_s = l_command->command->s_left;
+//     while (l_command->command->s_left != NULL)
+//     {
+//         if (l_command->command->s_left->l_element->indice == 1)
+//             printf("|cmd  ==> %s|\n", l_command->command->s_left->l_element->cmd);
+//         else if (l_command->command->s_left->l_element->indice == 2)
+//             printf("|argument  ==> %s|\n", l_command->command->s_left->l_element->argument);
+//         else if (l_command->command->s_left->l_element->indice == 3)
+//             printf("|direction ==> %s|\t|redirection ==> %s|\n", l_command->command->s_left->l_element->redirection.i_o, l_command->command->s_left->l_element->redirection.file);
+//         l_command->command->s_left = l_command->command->s_left->right;
+//     }
+//     l_command->command->s_left = tmp_s;
+//     // l_command = tmp;
+// }

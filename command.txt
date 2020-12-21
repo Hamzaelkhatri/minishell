@@ -1,1 +1,1 @@
- > file echo said
+> file echo samir > file1 oussama > file2 amine > file3;  > file10 > file12 echo samir

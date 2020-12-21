@@ -1,5 +1,10 @@
 #include "minishell.h"
 
+int stock(char c)
+{
+    ft_putendl_fd("samir zwin", 1);
+    return (1);
+}
 static int check_is_correct(char operation, char *line)
 {
     int i;
@@ -16,8 +21,11 @@ static int check_is_correct(char operation, char *line)
     }
     else if (operation == ';')
     {
-        if (ft_isalnum(c) == 0 || c == '>' || c == '<' || c == '-' || c == '|' || c == ';' || c == '+')
+        //3andi takhwwiiira hna
+        if ((c != '<' || c != '>') && (ft_isalnum(c) == 0 || c == '-' || c == '|' || c == ';' || c == '+'))
+        {
             return (0);
+        }
     }
     else if (operation == '<')
     {
@@ -75,7 +83,7 @@ void ft_check_line(char *line)
             ft_putstr_fd("syntax error\n", 2);
             exit(1);
         }
-        if (line[i] == ';' && check_operation(&line[i]) == 0)
+        if (line[0] == ';' || (line[i] == ';' && check_operation(&line[i]) == 0))
         {
             ft_putstr_fd("syntax error\n", 2);
             exit(1);
