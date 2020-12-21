@@ -1,16 +1,41 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   search_env.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/30 18:16:07 by helkhatr          #+#    #+#             */
-/*   Updated: 2020/12/01 16:25:31 by sqatim           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
+
+char    *ft_str_to_equal(const char *s1, const char *s2,int len)
+{
+        size_t i;
+        size_t j;
+
+        i = 0;
+        j = 0;
+        if (!s2[j])
+                return ((char *)s1);
+        while (s1[i] && i<len)
+        {
+                j = 0;
+                if (s1[i] == s2[j])
+                {
+                        j = 1;
+                        while (s2[j] && s2[j] == s1[i + j] && (i + j) < len)
+                                j++;
+                        if (!s2[j] && s1[i+j] == '=')
+                                return ((char *)&s1[i]);
+                }
+                i++;
+        }
+        return (NULL);
+}
+
+
+
+int cout_to_equal(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+		i++;
+	return (i);
+}
 
 char *search_env(char **env,char *str)
 {
@@ -22,9 +47,9 @@ char *search_env(char **env,char *str)
     i = 0;
     while (env[i])
     {
-        if (ft_strnstr(env[i],str,ft_strlen(env[i])))
+        if (ft_str_to_equal(env[i],str,ft_strlen(env[i])))
         {
-            tmp = ft_strnstr(env[i],str,ft_strlen(env[i]));
+            tmp = ft_str_to_equal(env[i],str,cout_to_equal(env[i]));
             return &tmp[j];
         }
         i++;

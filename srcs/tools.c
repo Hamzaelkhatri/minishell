@@ -34,3 +34,25 @@ int				ft_2strlen(char **str)
 		i++;
 	return (i);
 }
+
+int count_line(char **env)
+{
+	int i = 0;
+	if (!env)
+		return (0);
+	while (env[i])
+		i++;
+	return (i);
+}
+
+int		search_str(char *str1, char *str2, int l1, int l2)
+{
+	int i;
+	i = 0;
+
+	if (l1 != l2 || l1 == 0 || l2 == 0)
+		return (0);
+	else if (ft_strncmp(str1,str2,l1) == 0)
+		return (1);
+	return (0);
+}
