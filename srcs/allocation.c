@@ -60,6 +60,7 @@ t_command *add_command(t_command *parent)
         ft_bzero(&parent->tool, sizeof(t_tool));
         return (parent);
     }
+
     tmp = parent;
     if (!(new = (t_command *)malloc(sizeof(t_command))))
         return (NULL);

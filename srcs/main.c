@@ -55,7 +55,6 @@ void affect_redirection(t_list_cmd *l_cmd)
 {
     char **tab_split;
     int result;
-
     result = l_cmd->command->tool.result;
     if (result == 3 || result == 4 || result == 5)
     {
@@ -87,6 +86,7 @@ void check_element(t_list_cmd *l_cmd)
     t_simple_command *tmp;
     l_cmd->command->tool.i = 0;
     tmp = l_cmd->command->s_left;
+    printf("|command ==> %s|\n", l_cmd->command->tool.tab[0]);
     while (l_cmd->command->tool.tab[l_cmd->command->tool.i])
     {
         l_cmd->command->tool.check_io = -1;
@@ -115,11 +115,12 @@ void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separato
     t_command *tmp_command;
 
     tmp_command = l_cmd->command;
-    l_cmd->command->tool.tab = ft_space_split(s_command);
     if (l_cmd->command->s_left->l_element != NULL)
         l_cmd->command = add_command(l_cmd->command);
     while (l_cmd->command->right != NULL)
         l_cmd->command = l_cmd->command->right;
+    ft_bzero(&l_cmd->command->tool, sizeof(t_tool));
+    l_cmd->command->tool.tab = ft_space_split(s_command);
     check_element(l_cmd);
     l_cmd->command = tmp_command;
 }
@@ -139,6 +140,7 @@ void parcs_simple_command(char *line, int *index, t_list_cmd *l_cmd, int y_or_n)
         i++;
         k++;
     }
+
     s_command[i] = '\0';
     index[0] = ++i;
     parcs_this_simple_command(s_command, l_cmd, line[i], y_or_n);

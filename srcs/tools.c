@@ -69,19 +69,26 @@ void print(t_list_cmd *l_command)
     tmp_s = l_command->command->s_left;
     while (l_command != NULL)
     {
+        tmp_command = l_command->command;
         tmp_s = l_command->command->s_left;
-        while (l_command->command->s_left != NULL)
+        while (l_command->command != NULL)
         {
-            if (l_command->command->s_left->l_element->indice == 1)
-                printf("|cmd  ==> %s|\n", l_command->command->s_left->l_element->cmd);
-            else if (l_command->command->s_left->l_element->indice == 2)
-                printf("|argument  ==> %s|\n", l_command->command->s_left->l_element->argument);
-            else if (l_command->command->s_left->l_element->indice == 3)
-                printf("|direction ==> %s|\t|redirection ==> %s|\n", l_command->command->s_left->l_element->redirection.i_o, l_command->command->s_left->l_element->redirection.file);
-            l_command->command->s_left = l_command->command->s_left->right;
+            tmp_s = l_command->command->s_left;
+            while (l_command->command->s_left != NULL)
+            {
+                if (l_command->command->s_left->l_element->indice == 1)
+                    printf("|cmd  ==> %s|\n", l_command->command->s_left->l_element->cmd);
+                else if (l_command->command->s_left->l_element->indice == 2)
+                    printf("|argument  ==> %s|\n", l_command->command->s_left->l_element->argument);
+                else if (l_command->command->s_left->l_element->indice == 3)
+                    printf("|direction ==> %s|\t|redirection ==> %s|\n", l_command->command->s_left->l_element->redirection.i_o, l_command->command->s_left->l_element->redirection.file);
+                l_command->command->s_left = l_command->command->s_left->right;
+            }
+            l_command->command->s_left = tmp_s;
+            l_command->command = l_command->command->right;
         }
         ft_putendl_fd("--------- command2 ----------", 1);
-        l_command->command->s_left = tmp_s;
+        l_command->command = tmp_command;
         l_command = l_command->next;
     }
     // l_command->command->s_left = tmp_s;

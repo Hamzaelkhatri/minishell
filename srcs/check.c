@@ -22,7 +22,7 @@ static int check_is_correct(char operation, char *line)
     else if (operation == ';')
     {
         //3andi takhwwiiira hna
-        if ((c != '<' || c != '>') && (ft_isalnum(c) == 0 || c == '-' || c == '|' || c == ';' || c == '+'))
+        if ((ft_isalnum(c) == 0 && c != '\0') && (c == '-' || c == '|' || c == ';' || c == '+'))
         {
             return (0);
         }
