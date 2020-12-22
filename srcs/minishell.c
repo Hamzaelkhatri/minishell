@@ -187,8 +187,9 @@ void parse_command(t_list_cmd *l_cmd, char *line)
 
 int check_parse_list_command(char *line, int i)
 {
-    while (i != 0 && line[i] != ';')
+    while ((i != 0 && ft_isalnum(line[0]) != 1) || line[i] != ';')
     {
+
         if (line[i] == '>' || line[i] == '<' || ft_isalnum(line[i]) == 1)
             return (1);
         i--;
@@ -253,8 +254,8 @@ int main(int argc, char **argv, char **env)
     sort(l_command);
     printf("-------------------------------after sort-------------------------------\n");
     print(l_command);
-    init(&path, &key, &cmd);
-    path.env->fullenv = env;
+    // init(&path, &key, &cmd);
+    // path.env->fullenv = env;
     return (0);
 }
 // i = check(line, &test);
