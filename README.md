@@ -19,3 +19,6 @@ https://stackoverflow.com/questions/6697753/difference-between-single-and-double
 https://brennan.io/2015/01/16/write-a-shell-in-c/</br>
 https://www.youtube.com/watch?v=5BE9qM79fgM</br>
 https://sites.cs.ucsb.edu/~manish/discussion/week2.pdf<br>
+https://www.geeksforgeeks.org/chdir-in-c-language-with-examples/
+<b>Important<b>
+<br>https://theswissbay.ch/pdf/Gentoomen%20Library/Programming/Bash/O%27Reilly%20bash%20CookBook.pdf

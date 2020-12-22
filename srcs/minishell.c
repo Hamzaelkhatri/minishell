@@ -230,10 +230,14 @@ void parse_list_command(t_list_cmd *l_cmd, char *line)
         free(s_command);
     }
 }
-int main()
+int main(int argc, char **argv, char **env)
 {
     int fd;
     t_list_cmd *l_command;
+    t_path path;
+    t_key key;
+    t_cmd cmd;
+
     l_command = NULL;
     fd = open("command.txt", O_RDWR);
     char *line;
@@ -249,6 +253,8 @@ int main()
     sort(l_command);
     printf("-------------------------------after sort-------------------------------\n");
     print(l_command);
+    init(&path, &key, &cmd);
+    path.env->fullenv = env;
     return (0);
 }
 // i = check(line, &test);

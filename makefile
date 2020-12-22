@@ -1,4 +1,3 @@
-
 NAME= minishell
 SRC_PATH= srcs
 HDR_PATH= includes
@@ -6,16 +5,30 @@ OBJ_PATH= obj
 LIB_PATH= libft
 
 
-SRC_NAME=main.c\
-		tools.c\
-		ft_split.c\
-		allocation.c\
+SRC_NAME=allocation.c\
 		check.c\
 		redirection_tools.c\
 		sort.c\
 		get_next_line.c\
-		get_next_line_utils.c
-
+		get_next_line_utils.c\
+		init.c\
+		search_env.c\
+		env.c\
+		minishell.c\
+		read_line.c\
+		pwd.c\
+		execute.c\
+		tools.c\
+    	directory.c\
+		parse.c\
+		ft_split.c\
+		cd.c\
+		shift.c\
+		var_env.c\
+		export.c\
+		unset.c\
+		pipes.c\
+		export_sort.c\
 
 HDR_NAME=minishell.h 
 
@@ -29,7 +42,6 @@ LIB= libft.a
 FLAGS= 
 LLIB_FLAG= -L$(LIB_PATH) libft/libft.a
 H_FLAG= -I $(HDR_PATH)
-#***************************************************************************** #
 
 COMP= gcc
 

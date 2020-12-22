@@ -10,6 +10,40 @@ void ft_putstr(char *str)
     write(1, str, ft_strlen(str));
 }
 
+int ft_2strlen(char **str)
+{
+    int i;
+
+    i = 0;
+    while (str[i] != 0)
+        i++;
+    return (i);
+}
+
+char *ft_str_in_str(const char *s1, const char *s2)
+{
+    size_t i;
+    size_t j;
+
+    i = 0;
+    j = 0;
+    if (!s2[j])
+        return ((char *)s1);
+    while (s1[i])
+    {
+        j = 0;
+        if (s1[i] == s2[j])
+        {
+            j = 1;
+            while (s2[j] && s2[j] == s1[i + j])
+                j++;
+            if (!s2[j] && !s1[i + j])
+                return ((char *)&s1[i]);
+        }
+        i++;
+    }
+    return (NULL);
+}
 int check(char *line, char **test)
 {
     int i;
@@ -96,26 +130,24 @@ void print(t_list_cmd *l_command)
 
     // l_command = tmp;
 }
+int count_line(char **env)
+{
+    int i = 0;
+    if (!env)
+        return (0);
+    while (env[i])
+        i++;
+    return (i);
+}
 
-// void print(t_list_cmd *l_command)
-// {
-//     t_list_cmd *tmp_l_command;
-//     t_command *tmp_command;
-//     t_simple_command *tmp_s;
+int search_str(char *str1, char *str2, int l1, int l2)
+{
+    int i;
+    i = 0;
 
-//     tmp_l_command = l_command;
-//     tmp_command = l_command->command;
-//     tmp_s = l_command->command->s_left;
-//     while (l_command->command->s_left != NULL)
-//     {
-//         if (l_command->command->s_left->l_element->indice == 1)
-//             printf("|cmd  ==> %s|\n", l_command->command->s_left->l_element->cmd);
-//         else if (l_command->command->s_left->l_element->indice == 2)
-//             printf("|argument  ==> %s|\n", l_command->command->s_left->l_element->argument);
-//         else if (l_command->command->s_left->l_element->indice == 3)
-//             printf("|direction ==> %s|\t|redirection ==> %s|\n", l_command->command->s_left->l_element->redirection.i_o, l_command->command->s_left->l_element->redirection.file);
-//         l_command->command->s_left = l_command->command->s_left->right;
-//     }
-//     l_command->command->s_left = tmp_s;
-//     // l_command = tmp;
-// }
+    if (l1 != l2 || l1 == 0 || l2 == 0)
+        return (0);
+    else if (ft_strncmp(str1, str2, l1) == 0)
+        return (1);
+    return (0);
+}

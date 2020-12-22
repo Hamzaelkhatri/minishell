@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/26 16:51:28 by sqatim            #+#    #+#             */
-/*   Updated: 2020/12/10 13:47:58 by ahaddad          ###   ########.fr       */
+/*   Created: 2020/11/30 19:15:36 by zjamali           #+#    #+#             */
+/*   Updated: 2020/12/22 13:15:26 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void print_working_directory(t_path *path)
 {
-	int i;
+	char *pwd;
 
-	i = 0;
-	if (s)
+	if (!path->env->pwd)
 	{
-		while (s[i] != '\0')
-		{
-			ft_putchar_fd(s[i], fd);
-			i++;
-		}
+		pwd = search_env(path->env->fullenv, "PWD");
+		write(1, pwd, ft_strlen(pwd));
 	}
+	else
+		ft_putstr_fd(path->env->pwd, 1);
 }
