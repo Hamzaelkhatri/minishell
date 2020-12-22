@@ -1,9 +1,9 @@
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-void init(t_path *path,t_key *key,t_cmd *cmd)
+void init(t_path *path, t_key *key, t_cmd *cmd)
 {
-    ft_bzero(key,sizeof(t_key));
-    ft_bzero(cmd,sizeof(t_cmd));
+    ft_bzero(key, sizeof(t_key));
+    ft_bzero(cmd, sizeof(t_cmd));
     path->key = malloc(sizeof(t_key));
     path->env = malloc(sizeof(t_env));
     // path.env = env;

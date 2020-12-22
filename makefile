@@ -5,7 +5,13 @@ OBJ_PATH= obj
 LIB_PATH= libft
 
 
-SRC_NAME=init.c\
+SRC_NAME=allocation.c\
+		check.c\
+		redirection_tools.c\
+		sort.c\
+		get_next_line.c\
+		get_next_line_utils.c\
+		init.c\
 		search_env.c\
 		env.c\
 		minishell.c\
@@ -13,7 +19,7 @@ SRC_NAME=init.c\
 		pwd.c\
 		execute.c\
 		tools.c\
-    		directory.c\
+    	directory.c\
 		parse.c\
 		ft_split.c\
 		cd.c\
@@ -42,8 +48,8 @@ COMP= gcc
 all: lib  $(NAME) 
 
 $(NAME) : $(LIB_PATH)/$(LIB) $(OBJ)
-	@rm -rf miniRT
-	@$(COMP) $(H_FLAG) $(LLIB_FLAG) $(OBJ) -o $@
+	@rm -rf minishell
+	@$(COMP) -g $(H_FLAG) $(OBJ) $(LLIB_FLAG) -o $@
 	@echo "													 Made by : \033[1;91mSqatim\033[m"
 	@echo "      ___                       ___                       ___           ___           ___                                  "
 	@echo "     /__/\        ___          /__/\        ___          /  /\         /__/\         /  /\                                 "
@@ -63,7 +69,7 @@ lib:
 
 $(OBJ_PATH)/%.o:  $(SRC_PATH)/%.c $(HDR)
 	@mkdir -p $(OBJ_PATH) 
-	@$(COMP) $(FLAGS) $(H_FLAG)  -o $@ -c $<
+	@$(COMP) -g $(FLAGS) $(H_FLAG) -g -o $@ -c $<
 
 clean:
 	@rm -rf $(OBJ_PATH)

@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 19:15:36 by zjamali           #+#    #+#             */
-/*   Updated: 2020/12/15 13:32:00 by helkhatr         ###   ########.fr       */
+/*   Updated: 2020/12/22 13:15:26 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-void	print_working_directory(t_path *path)
+void print_working_directory(t_path *path)
 {
 	char *pwd;
-	
-	if(!path->env->pwd)
+
+	if (!path->env->pwd)
 	{
-		pwd = search_env(path->env->fullenv,"PWD");
-		write(1,pwd,ft_strlen(pwd));
+		pwd = search_env(path->env->fullenv, "PWD");
+		write(1, pwd, ft_strlen(pwd));
 	}
 	else
-		ft_putstr_fd(path->env->pwd,1);
+		ft_putstr_fd(path->env->pwd, 1);
 }

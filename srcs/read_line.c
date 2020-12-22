@@ -2,13 +2,12 @@
 int var_glob = 0; /* hadi zadtha ha9ash fach kanktab shi haja o kandir ctrl + d o n annuli dakshi li ktabt b ctrl + c 
 		     makat3awdsh tkhdam ctrl + d*/
 
-
-int     read_line(t_path *key,char **line)
+int read_line(t_path *key, char **line)
 {
-	int     ret;
+	int ret;
 	ret = 0;
 
-	*line = (char *)ft_calloc(BUFFER_SIZE,sizeof(char));
+	*line = (char *)ft_calloc(BUFFER_SIZE, sizeof(char));
 	if (!line)
 	{
 		write(1, "bash$> allocation error\n", 30);
@@ -22,7 +21,7 @@ int     read_line(t_path *key,char **line)
 		}
 		else
 			exit(1);
-	} 
+	}
 	return (ret);
 }
 
@@ -30,7 +29,7 @@ void sigint_handler(int sig)
 {
 	int a;
 
-	if(sig == SIGINT)
+	if (sig == SIGINT)
 	{
 		write(1, "\nbash$ ", 7);
 		var_glob = 1;
@@ -43,18 +42,18 @@ void sigint_handler(int sig)
 			execve(cmd[0], cmd_args, env);
 		}
 	}
-	if(sig == SIGQUIT)
+	if (sig == SIGQUIT)
 	{
 		pid_t iPid = getpid(); /* Process gets its id.*/
 		kill(iPid, SIGINT);
-		write(1,"HERE",4);
+		write(1, "HERE", 4);
 	}
 }
 
 int search_cmd(t_cmd *cmd)
 {
 	if (cmd->echo != 0 || cmd->cd != 0 || cmd->env != 0 ||
-			cmd->exit != 0 || cmd->export != 0 || cmd->pwd != 0)
+		cmd->exit != 0 || cmd->export != 0 || cmd->pwd != 0)
 	{
 		return (0);
 	}
@@ -218,7 +217,7 @@ void check_cmd(t_cmd *cmd, char **line, t_path *path, int ret)
 	promp_bash(cmd, path, ret, line);
 }
 
-void loop_shell(t_cmd *cmd,t_path *path)
+void loop_shell(t_cmd *cmd, t_path *path)
 {
 	char *line;
 	int ret;
@@ -226,10 +225,10 @@ void loop_shell(t_cmd *cmd,t_path *path)
 	int salam;
 	int i;
 
-	if(signal(SIGINT, sigint_handler)== SIG_ERR)
-		ft_putstr_fd("\n can't catch cnrtl-C",1);
-	if(signal(SIGQUIT, sigint_handler) == SIG_ERR)
-		ft_putstr_fd("\n can't catch cntrl-\\",1);
+	if (signal(SIGINT, sigint_handler) == SIG_ERR)
+		ft_putstr_fd("\n can't catch cnrtl-C", 1);
+	if (signal(SIGQUIT, sigint_handler) == SIG_ERR)
+		ft_putstr_fd("\n can't catch cntrl-\\", 1);
 	status = 1;
 	ft_putstr_fd("bash $ ", 1);
 	while (status)
@@ -241,4 +240,3 @@ void loop_shell(t_cmd *cmd,t_path *path)
 		free(line);
 	}
 }
-
