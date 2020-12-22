@@ -86,7 +86,6 @@ void check_element(t_list_cmd *l_cmd)
     t_simple_command *tmp;
     l_cmd->command->tool.i = 0;
     tmp = l_cmd->command->s_left;
-    printf("|command ==> %s|\n", l_cmd->command->tool.tab[0]);
     while (l_cmd->command->tool.tab[l_cmd->command->tool.i])
     {
         l_cmd->command->tool.check_io = -1;
@@ -106,14 +105,13 @@ void check_element(t_list_cmd *l_cmd)
             affect_redirection(l_cmd);
         l_cmd->command->tool.i++;
     }
-    // ft_putendl_fd("i am here", 1);
     l_cmd->command->s_left = tmp;
 }
 
 void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separator, int y_or_n)
 {
     t_command *tmp_command;
-
+    int i = 0;
     tmp_command = l_cmd->command;
     if (l_cmd->command->s_left->l_element != NULL)
         l_cmd->command = add_command(l_cmd->command);
@@ -121,6 +119,11 @@ void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separato
         l_cmd->command = l_cmd->command->right;
     ft_bzero(&l_cmd->command->tool, sizeof(t_tool));
     l_cmd->command->tool.tab = ft_space_split(s_command);
+    // while (l_cmd->command->tool.tab[i])
+    // {
+    //     printf("hak o ara ==>  %s|\n", l_cmd->command->tool.tab[i++]);
+    // }
+    // // printf("--------------------\n");
     check_element(l_cmd);
     l_cmd->command = tmp_command;
 }
@@ -133,18 +136,16 @@ void parcs_simple_command(char *line, int *index, t_list_cmd *l_cmd, int y_or_n)
 
     k = 0;
     i = index[0];
-    s_command = (char *)malloc(sizeof(char) * index[1]);
+    s_command = (char *)malloc(sizeof(char) * (index[1] - i));
     while (i < index[1])
     {
         s_command[k] = line[i];
         i++;
         k++;
     }
-
-    s_command[i] = '\0';
+    s_command[k] = '\0';
     index[0] = ++i;
     parcs_this_simple_command(s_command, l_cmd, line[i], y_or_n);
-
     free(s_command);
 }
 
@@ -160,9 +161,7 @@ void parse_command(t_list_cmd *l_cmd, char *line)
     index[0] = 0;
     tmp = l_cmd;
     if (l_cmd->command->s_left->l_element != NULL)
-    {
         l_cmd = add_list_cmd(l_cmd);
-    }
     while (l_cmd->next != NULL)
         l_cmd = l_cmd->next;
     while (line[i])
@@ -218,6 +217,7 @@ void parse_list_command(t_list_cmd *l_cmd, char *line)
         {
             s_command = alloc_command(line, i, &save);
             parse_command(l_cmd, s_command);
+
             free(s_command);
         }
         i++;
@@ -226,6 +226,7 @@ void parse_list_command(t_list_cmd *l_cmd, char *line)
     {
         s_command = alloc_command(line, i, &save);
         parse_command(l_cmd, s_command);
+
         free(s_command);
     }
 }

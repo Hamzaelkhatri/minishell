@@ -34,7 +34,7 @@ static int check_is_correct(char operation, char *line)
     }
     else if (operation == '>')
     {
-        if (ft_isalnum(c) == 0 || c == '>' || c == '<' || c == '|' || c == ';')
+        if (ft_isalnum(c) == 0 && (c == '>' || c == '<' || c == '|' || c == ';'))
             return (0);
     }
     return (1);
@@ -73,11 +73,20 @@ static int check_operation(char *line)
 void ft_check_line(char *line)
 {
     int i;
+    int check_quote;
     t_line check;
 
+    check_quote = 0;
     i = 0;
     while (line[i])
     {
+        if (line[i] == '"')
+        {
+            if (check_quote == 0)
+                check_quote = 1;
+            else
+                check_quote = 0;
+        }
         if (line[i] == '|' && check_operation(&line[i]) == 0)
         {
             ft_putstr_fd("syntax error\n", 2);
@@ -102,11 +111,16 @@ void ft_check_line(char *line)
             i++;
         i++;
     }
+    if (check_quote == 1)
+    {
+        ft_putstr_fd("syntax error\n", 2);
+        exit(1);
+    }
 }
 
 int check_what_after(char c)
 {
-    if (c != '/' && c != '\\' && c != '|' && c != '~' && c != '\n' && ft_isprint(c) == 1)
+    if (c != '/' && c != '\\' && c != '|' && c != '~' && c != '\n' && (c == '\'' || c == '"' || ft_isprint(c) == 1))
         return (1);
     return (0);
 }

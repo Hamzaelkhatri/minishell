@@ -1,1 +1,1 @@
-ls | echo samir > file oussama > file2 | said > file zwin ; echo > file samir ; >file echo samir
+ls | echo samir > file oussama > "file2"  ; > file echo said >file5555
