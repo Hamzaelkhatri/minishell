@@ -124,6 +124,7 @@ char **ft_space_split(char const *s);
 int check(char *line, char **test);
 int is_correct(char c);
 void ft_wich(t_check *wich, int number);
+char **ft_space_split_quote(char const *s);
 
 // allocation
 

@@ -118,7 +118,7 @@ void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separato
     while (l_cmd->command->right != NULL)
         l_cmd->command = l_cmd->command->right;
     ft_bzero(&l_cmd->command->tool, sizeof(t_tool));
-    l_cmd->command->tool.tab = ft_space_split(s_command);
+    l_cmd->command->tool.tab = ft_space_split_quote(s_command);
     // while (l_cmd->command->tool.tab[i])
     // {
     //     printf("hak o ara ==>  %s|\n", l_cmd->command->tool.tab[i++]);
