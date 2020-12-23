@@ -150,6 +150,11 @@ void sort(t_list_cmd *l_cmd);
 // print
 void print(t_list_cmd *l_command);
 
+// s_command
+
+void check_scommand(t_list_cmd *l_cmd);
+
+//
 void loop_shell(t_cmd *cmd, t_path *path);
 void init(t_path *path, t_key *key, t_cmd *cmd);
 void show_env(char **path);
