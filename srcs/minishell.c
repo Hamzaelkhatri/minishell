@@ -118,12 +118,7 @@ void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separato
     while (l_cmd->command->right != NULL)
         l_cmd->command = l_cmd->command->right;
     ft_bzero(&l_cmd->command->tool, sizeof(t_tool));
-    l_cmd->command->tool.tab = ft_space_split(s_command);
-    // while (l_cmd->command->tool.tab[i])
-    // {
-    //     printf("hak o ara ==>  %s|\n", l_cmd->command->tool.tab[i++]);
-    // }
-    // // printf("--------------------\n");
+    l_cmd->command->tool.tab = ft_space_split_quote(s_command);
     check_element(l_cmd);
     l_cmd->command = tmp_command;
 }
@@ -187,8 +182,9 @@ void parse_command(t_list_cmd *l_cmd, char *line)
 
 int check_parse_list_command(char *line, int i)
 {
-    while (i != 0 && line[i] != ';')
+    while ((i != 0 && ft_isalnum(line[0]) != 1) || line[i] != ';')
     {
+
         if (line[i] == '>' || line[i] == '<' || ft_isalnum(line[i]) == 1)
             return (1);
         i--;
@@ -230,6 +226,7 @@ void parse_list_command(t_list_cmd *l_cmd, char *line)
         free(s_command);
     }
 }
+
 int main(int argc, char **argv, char **env)
 {
     int fd;
@@ -253,8 +250,11 @@ int main(int argc, char **argv, char **env)
     sort(l_command);
     printf("-------------------------------after sort-------------------------------\n");
     print(l_command);
-    init(&path, &key, &cmd);
-    path.env->fullenv = env;
+    check_scommand(l_command);
+    printf("-------------------------------echo -n -------------------------------\n");
+    print(l_command);
+    // init(&path, &key, &cmd);
+    // path.env->fullenv = env;
     return (0);
 }
 // i = check(line, &test);

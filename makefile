@@ -29,6 +29,8 @@ SRC_NAME=allocation.c\
 		unset.c\
 		pipes.c\
 		export_sort.c\
+		ft_split_quote.c\
+		s_command.c\
 
 HDR_NAME=minishell.h 
 
