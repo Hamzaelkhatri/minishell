@@ -1,0 +1,17 @@
+total 152
+drwxr-xr-x  16 sqatim  candidate    544 Dec 23 15:17 .
+drwxr-xr-x  21 sqatim  candidate    714 Dec 23 13:50 ..
+drwxr-xr-x  12 sqatim  candidate    408 Dec 23 14:54 .git
+drwxr-xr-x   3 sqatim  candidate    102 Dec 23 13:50 .github
+-rw-r--r--   1 sqatim  candidate   1593 Dec 23 13:50 README.md
+-rw-r--r--   1 sqatim  candidate    619 Dec 23 13:50 SECURITY.md
+-rw-r--r--   1 sqatim  candidate     91 Dec 23 14:54 command.txt
+-rw-r--r--   1 sqatim  candidate    912 Dec 23 15:17 file1
+-rw-r--r--   1 sqatim  candidate      0 Dec 23 14:52 file2
+-rw-r--r--   1 sqatim  candidate      0 Dec 23 15:17 file20
+drwxr-xr-x   4 sqatim  candidate    136 Dec 23 13:50 includes
+drwxr-xr-x  73 sqatim  candidate   2482 Dec 23 14:01 libft
+-rwxr-xr-x   1 sqatim  candidate   2837 Dec 23 13:59 makefile
+-rwxr-xr-x   1 sqatim  candidate  54060 Dec 23 14:52 minishell
+drwxr-xr-x  28 sqatim  candidate    952 Dec 23 14:52 obj
+drwxr-xr-x  31 sqatim  candidate   1054 Dec 23 13:58 srcs
