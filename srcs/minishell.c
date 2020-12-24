@@ -227,6 +227,40 @@ void parse_list_command(t_list_cmd *l_cmd, char *line)
     }
 }
 
+void quotes(t_list_cmd *l_cmd)
+{
+    t_list_cmd *tmp_l_command;
+    t_command *tmp_command;
+    t_simple_command *tmp_s;
+
+    tmp_l_command = l_cmd;
+    tmp_command = l_cmd->command;
+    tmp_s = l_cmd->command->s_left;
+    while (l_cmd != NULL)
+    {
+        tmp_command = l_cmd->command;
+        tmp_s = l_cmd->command->s_left;
+        while (l_cmd->command != NULL)
+        {
+            tmp_s = l_cmd->command->s_left;
+            while (l_cmd->command->s_left != NULL)
+            {
+                if (l_cmd->command->s_left->l_element->indice == 1)
+                    l_cmd->command->s_left->l_element->cmd = ignoring_quote(l_cmd->command->s_left->l_element->cmd);
+                else if (l_cmd->command->s_left->l_element->indice == 2)
+                    l_cmd->command->s_left->l_element->argument = ignoring_quote(l_cmd->command->s_left->l_element->argument);
+                else if (l_cmd->command->s_left->l_element->indice == 3)
+                    l_cmd->command->s_left->l_element->redirection.file = ignoring_quote(l_cmd->command->s_left->l_element->redirection.file);
+                l_cmd->command->s_left = l_cmd->command->s_left->right;
+            }
+            l_cmd->command->s_left = tmp_s;
+            l_cmd->command = l_cmd->command->right;
+        }
+        l_cmd->command = tmp_command;
+        l_cmd = l_cmd->next;
+    }
+    l_cmd = tmp_l_command;
+}
 int main(int argc, char **argv, char **env)
 {
     int fd;
@@ -250,8 +284,9 @@ int main(int argc, char **argv, char **env)
     sort(l_command);
     printf("-------------------------------after sort-------------------------------\n");
     print(l_command);
+    quotes(l_command);
     check_scommand(l_command);
-    printf("-------------------------------echo -n -------------------------------\n");
+    printf("-------------------------------echo -n and ignoring quotes-------------------------------\n");
     print(l_command);
     // init(&path, &key, &cmd);
     // path.env->fullenv = env;

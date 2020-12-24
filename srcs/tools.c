@@ -75,7 +75,7 @@ int check(char *line, char **test)
 }
 int is_correct(char c)
 {
-    if (ft_isalnum(c) == 0 && c != '"' && c != '\'' && c != '>' && c != '<' && c != '-' && c != '|' && c != ';' && c != ' ' && c != '\t')
+    if (ft_isalnum(c) == 0 && c != '.' && c != '=' && c != '$' && c != '%' && c != ',' && c != '/' && c != '"' && c != '\'' && c != '>' && c != '<' && c != '-' && c != '|' && c != ';' && c != ' ' && c != '\t')
     {
         return (0);
     }
@@ -150,4 +150,33 @@ int search_str(char *str1, char *str2, int l1, int l2)
     else if (ft_strncmp(str1, str2, l1) == 0)
         return (1);
     return (0);
+}
+
+char *ignoring_quote(char *line)
+{
+    int i;
+    int index;
+    char wich;
+
+    i = 0;
+    index = 0;
+    while (line[i])
+    {
+        while (line[i] != 34 && line[i] != 39 && line[i])
+            line[index++] = line[i++];
+        if ((line[i] == 34 || line[i] == 39) && line[i])
+        {
+            wich = (line[i] == 34) ? 34 : 39;
+            i++;
+            while (line[i] != wich && line[i])
+                line[index++] = line[i++];
+            if (line[i] == '\0')
+                line[index] = '\0';
+            else
+                i++;
+        }
+        if (line[i] == '\0')
+            line[index] = '\0';
+    }
+    return (line);
 }

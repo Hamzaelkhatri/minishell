@@ -154,6 +154,9 @@ void print(t_list_cmd *l_command);
 
 void check_scommand(t_list_cmd *l_cmd);
 
+// tools
+char *ignoring_quote(char *line);
+
 //
 void loop_shell(t_cmd *cmd, t_path *path);
 void init(t_path *path, t_key *key, t_cmd *cmd);
