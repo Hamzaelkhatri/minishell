@@ -1,1 +1,1 @@
-echo -n -n -n -n samir | echo -n >file1 -n >file2 said -n oussama  ; echo -n -n -n  oussama
+ls | cat -e | cat -e | cat -e | ls -l | cat file

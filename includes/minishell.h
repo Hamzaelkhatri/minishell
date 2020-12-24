@@ -156,6 +156,7 @@ void check_scommand(t_list_cmd *l_cmd);
 
 // tools
 char *ignoring_quote(char *line);
+char *ft_strjoin_command(t_simple_command *cmd);
 
 //
 void loop_shell(t_cmd *cmd, t_path *path);

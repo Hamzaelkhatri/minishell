@@ -180,3 +180,37 @@ char *ignoring_quote(char *line)
     }
     return (line);
 }
+
+char *ft_strjoin_command(t_simple_command *cmd)
+{
+    t_simple_command *tmp_s;
+    char *line;
+
+    line = ft_strdup("\0");
+    tmp_s = cmd;
+    while (cmd != NULL)
+    {
+        if (cmd->l_element->indice == 1)
+        {
+            line = ft_strjoin_free(line, cmd->l_element->cmd);
+            if (cmd->right != NULL)
+                line = ft_strjoin_free(line, " ");
+        }
+        else if (cmd->l_element->indice == 2)
+        {
+            line = ft_strjoin_free(line, cmd->l_element->argument);
+            if (cmd->right != NULL)
+                line = ft_strjoin_free(line, " ");
+        }
+        else if (cmd->l_element->indice == 3)
+        {
+            line = ft_strjoin_free(line, cmd->l_element->redirection.i_o);
+            line = ft_strjoin_free(line, cmd->l_element->redirection.file);
+            if (cmd->right != NULL)
+                line = ft_strjoin_free(line, " ");
+        }
+        cmd = cmd->right;
+    }
+    cmd = tmp_s;
+    return (line);
+}

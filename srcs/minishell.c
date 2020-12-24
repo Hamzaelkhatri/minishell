@@ -86,6 +86,7 @@ void check_element(t_list_cmd *l_cmd)
     t_simple_command *tmp;
     l_cmd->command->tool.i = 0;
     tmp = l_cmd->command->s_left;
+    static int i = 0;
     while (l_cmd->command->tool.tab[l_cmd->command->tool.i])
     {
         l_cmd->command->tool.check_io = -1;
@@ -99,6 +100,7 @@ void check_element(t_list_cmd *l_cmd)
             else
             {
                 alloc_affect(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i], 2);
+                // printf("{argument ==> %s}\n",l_cmd->command->s_left->l_element->argument);
             }
         }
         else if (l_cmd->command->tool.result >= 2 && l_cmd->command->tool.result <= 5)
@@ -118,7 +120,7 @@ void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separato
     while (l_cmd->command->right != NULL)
         l_cmd->command = l_cmd->command->right;
     ft_bzero(&l_cmd->command->tool, sizeof(t_tool));
-    l_cmd->command->tool.tab = ft_space_split_quote(s_command);
+    l_cmd->command->tool.tab = ft_space_split(s_command);
     check_element(l_cmd);
     l_cmd->command = tmp_command;
 }
@@ -131,7 +133,10 @@ void parcs_simple_command(char *line, int *index, t_list_cmd *l_cmd, int y_or_n)
 
     k = 0;
     i = index[0];
+    // printf("{index[0] ==> %d}\t{index[1] ==> %d}\n",index[0],index[1]);
     s_command = (char *)malloc(sizeof(char) * (index[1] - i));
+    // printf("{%d}\t",index[1] - i);
+    // printf("{line ==> %s}\n",&line[index[1]]);
     while (i < index[1])
     {
         s_command[k] = line[i];
@@ -139,8 +144,9 @@ void parcs_simple_command(char *line, int *index, t_list_cmd *l_cmd, int y_or_n)
         k++;
     }
     s_command[k] = '\0';
+    // printf("{s_command ==> %s}\n",s_command);
     index[0] = ++i;
-    parcs_this_simple_command(s_command, l_cmd, line[i], y_or_n);
+    // parcs_this_simple_command(s_command, l_cmd, line[i], y_or_n);
     free(s_command);
 }
 
@@ -174,6 +180,10 @@ void parse_command(t_list_cmd *l_cmd, char *line)
         }
         i++;
     }
+        printf("%d\n",i);
+    exit(0);
+    // printf("{ft_strlen ==> %zu}\n",ft_strlen(line));
+    // printf("{dsadasdasdas => %d}\n",i);
     k = 0;
     index[1] = i;
     parcs_simple_command(line, index, l_cmd, k);
@@ -222,6 +232,7 @@ void parse_list_command(t_list_cmd *l_cmd, char *line)
     {
         s_command = alloc_command(line, i, &save);
         parse_command(l_cmd, s_command);
+    //   printf("{ft_strlen ==> %zu}\n",ft_strlen(line));
 
         free(s_command);
     }
@@ -268,6 +279,7 @@ int main(int argc, char **argv, char **env)
     t_path path;
     t_key key;
     t_cmd cmd;
+    char *str;
 
     l_command = NULL;
     fd = open("command.txt", O_RDWR);
@@ -277,17 +289,20 @@ int main(int argc, char **argv, char **env)
     if (line[0] == '\0')
         return (0);
     l_command = add_list_cmd(l_command);
+    // printf("{%d}\t{%s}\n",ft_strlen(line),line);
     parse_list_command(l_command, line);
 
-    printf("-------------------------------before sort-------------------------------\n");
-    print(l_command);
-    sort(l_command);
-    printf("-------------------------------after sort-------------------------------\n");
-    print(l_command);
+    // printf("-------------------------------before sort-------------------------------\n");
+    // print(l_command);
+    // sort(l_command);
+    // printf("-------------------------------after sort-------------------------------\n");
+    // print(l_command);
     quotes(l_command);
     check_scommand(l_command);
-    printf("-------------------------------echo -n and ignoring quotes-------------------------------\n");
-    print(l_command);
+    // printf("-------------------------------echo -n and ignoring quotes-------------------------------\n");
+    // print(l_command);
+    // str = ft_strjoin_command(l_command->command->s_left);
+    // printf("{line ==> %s}\n",str);
     // init(&path, &key, &cmd);
     // path.env->fullenv = env;
     return (0);
