@@ -31,20 +31,21 @@ char *search_prev(char *str,char c,int i)
 
 void getprogramme(t_path *path,char *cmd)
 {
+    // puts(cmd);
     int i;
     exeute(path,cmd);
 }
 
 void exeute(t_path *path,char *cmd)
 {
-    pid_t a = fork();
+    int a = fork();
     if(!a)
     {
         char *binaryPath = "/bin/bash";
         char *const args[] = {binaryPath, "-c", cmd,NULL};
-        if(execve(binaryPath, args, path->env->fullenv)==-1)
+        if(execve(binaryPath, args, NULL)==-1)
             perror("bash$ ");
-		exit(0);
+        exit(0);
     }
-    waitpid(-1,NULL,0);
+    wait(0);
 }

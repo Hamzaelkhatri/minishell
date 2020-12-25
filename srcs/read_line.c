@@ -3,7 +3,7 @@ int var_glob = 0; /* hadi zadtha ha9ash fach kanktab shi haja o kandir ctrl + d 
 		     makat3awdsh tkhdam ctrl + d*/
 
 
-int     read_line(t_path *key,char **line)
+int     read_line1(t_path *key,char **line)
 {
 	int     ret;
 	ret = 0;
@@ -235,7 +235,7 @@ void loop_shell(t_cmd *cmd,t_path *path)
 	while (status)
 	{
 		ret = 0;
-		ret = read_line(path, &line);
+		ret = read_line1(path, &line);
 		check_cmd(cmd, &line, path, ret);
 		var_glob = 0;
 		free(line);
