@@ -1,1 +1,1 @@
-ls | ls;"pwd 'dsadsa";
+echo > "dsadsa dsadsa" "dsa" ; "pwd"

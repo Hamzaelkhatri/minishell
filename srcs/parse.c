@@ -6,7 +6,7 @@ void parcs_simple_command(char *s_command, t_list_cmd *l_cmd)
     int i = 0;
     tmp_command = l_cmd->command;
     if (l_cmd->command->s_left->l_element != NULL)
-        l_cmd->command = add_command(l_cmd->command);
+        l_cmd->command = add_command(l_cmd->command,l_cmd);
     while (l_cmd->command->right != NULL)
         l_cmd->command = l_cmd->command->right;
     ft_bzero(&l_cmd->command->tool, sizeof(t_tool));

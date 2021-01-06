@@ -18,6 +18,7 @@ SRC_NAME=allocation.c\
 		s_command.c\
 		parse.c\
 		free.c\
+		init.c\
 
 HDR_NAME=minishell.h 
 

@@ -120,9 +120,8 @@ char **ft_space_split_quote(char const *s);
 // allocation
 
 t_list_cmd *add_list_cmd(t_list_cmd *parent);
-t_command *add_command(t_command *parent);
-t_command *add_simple_cmd(t_command *parent, int i);
-char *alloc_command(char *line, int i, int *save);
+t_command *add_command(t_command *parent,t_list_cmd *l_cmd);
+t_command *add_simple_cmd(t_command *parent, int i,t_list_cmd *l_cmd);
 void alloc_affect(t_list_cmd *l_cmd, char *command, int indice);
 
 // check
@@ -164,6 +163,14 @@ void free_tab(char ***tab);
 void ft_strdel(char **as);
 void free_element(t_elements **element);
 void free_s_command(t_simple_command **s_command);
+void free_scommand(t_simple_command **scommand);
+void free_command(t_command **command);
+void free_lcommand(t_list_cmd **l_command);
+
+// init
+
+void init_simple_cmd(t_simple_command **parent, int i);
+void init_lcommand(t_list_cmd **parent);
 
 //
 void loop_shell(t_cmd *cmd, t_path *path);

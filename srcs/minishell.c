@@ -20,6 +20,8 @@ void affect_redirection(t_list_cmd *l_cmd)
 {
     char **tab_split;
     int result;
+
+    tab_split = NULL;
     result = l_cmd->command->tool.result;
     if (result == 3 || result == 4 || result == 5)
     {
@@ -43,6 +45,8 @@ void affect_redirection(t_list_cmd *l_cmd)
     }
     if (result == 2)
         alloc_affect(l_cmd, l_cmd->command->tool.tab[++l_cmd->command->tool.i], 3);
+    if (tab_split != NULL)
+        free_tab(&tab_split);
 }
 
 int check_parse_list_command(char *line, int i)
@@ -57,38 +61,6 @@ int check_parse_list_command(char *line, int i)
     return (0);
 }
 
-void free_scommand(t_simple_command **scommand)
-{
-    if (*scommand != NULL)
-        free_scommand(&(*scommand)->right);
-    if (*scommand != NULL)
-        free_s_command(&(*scommand));
-}
-
-void free_command(t_command **command)
-{
-    if (*command != NULL)
-        free_command(&(*command)->right);
-    if (*command != NULL)
-    {
-        free_scommand(&(*command)->s_left);
-        if ((*command)->tool.tab != NULL)
-            free_tab(&(*command)->tool.tab);
-        free(*command);
-        *command = NULL;
-    }
-}
-void free_lcommand(t_list_cmd **l_command)
-{
-    if (*l_command != NULL)
-        free_lcommand(&(*l_command)->next);
-    if (*l_command != NULL)
-    {
-        free_command(&(*l_command)->command);
-        free(*l_command);
-        *l_command = NULL;
-    }
-}
 int main(int argc, char **argv, char **env)
 {
     int fd;
@@ -112,7 +84,6 @@ int main(int argc, char **argv, char **env)
     print(l_command);
     sort(l_command);
     quotes(l_command);
-    check_scommand(l_command);
     printf("-------------------------------after sort-------------------------------\n");
     print(l_command);
     free_lcommand(&l_command);
