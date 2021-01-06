@@ -103,10 +103,9 @@ int main(int argc, char **argv, char **env)
     char *line;
     get_next_line(fd, &line);
     ft_check_line(line);
-    // if (line[0] == '\0')
-    //     return (0);
+    if (line[0] == '\0')
+        return (0);
     l_command = add_list_cmd(l_command);
-    // printf("{%d}\t{%s}\n",ft_strlen(line),line);
     parse_list_command(l_command, line);
 
     printf("-------------------------------before sort-------------------------------\n");
