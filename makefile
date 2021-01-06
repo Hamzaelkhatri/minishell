@@ -20,7 +20,6 @@ SRC_NAME=allocation.c\
 		execute.c\
 		tools.c\
     	directory.c\
-		parse.c\
 		ft_split.c\
 		cd.c\
 		shift.c\
@@ -35,6 +34,8 @@ SRC_NAME=allocation.c\
 		exit.c\
 		execute_cmd.c\
 		commade_effect.c\
+		parse.c\
+		free.c\
 
 HDR_NAME=minishell.h 
 

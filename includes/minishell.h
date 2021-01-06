@@ -132,15 +132,18 @@ t_list_cmd *add_list_cmd(t_list_cmd *parent);
 t_command *add_command(t_command *parent);
 t_command *add_simple_cmd(t_command *parent, int i);
 char *alloc_command(char *line, int i, int *save);
+void alloc_affect(t_list_cmd *l_cmd, char *command, int indice);
 
 // check
 
 void ft_check_line(char *line);
 int check_type_element(char *line, int *check_i_o, int count);
 int check_io_redirection(char *line, int *p, int *check_o_i);
+void check_element(t_list_cmd *l_cmd);
 
 // redirection_tools
 
+void affect_redirection(t_list_cmd *l_cmd);
 int wich_redirection(int check);
 
 // sort
@@ -156,7 +159,20 @@ void check_scommand(t_list_cmd *l_cmd);
 
 // tools
 char *ignoring_quote(char *line);
+void quotes(t_list_cmd *l_cmd);
 char *ft_strjoin_command(t_simple_command *cmd);
+
+// parse
+
+void parcs_simple_command(char *s_command, t_list_cmd *l_cmd);
+void parse_command(t_list_cmd *l_cmd, char *line);
+void parse_list_command(t_list_cmd *l_cmd, char *line);
+
+// free
+void free_tab(char ***tab);
+void ft_strdel(char **as);
+void free_element(t_elements **element);
+void free_s_command(t_simple_command **s_command);
 
 //
 void loop_shell(t_cmd *cmd, t_path *path);
@@ -192,5 +208,6 @@ void execute_foreign(t_list_cmd *lst,int piping);
 int lstsize(t_list_cmd *lst);
 int commande_effect(t_list_cmd *lst,t_path *path);
 int get_cmd(char *cmd,t_path *path,t_command *l_cmd);
+int get_cmd_(char *cmd,t_path *path,t_command *l_cmd);
 void ft_exit();
 #endif

@@ -7,12 +7,10 @@ int commande_effect(t_list_cmd *lst,t_path *path)
         if(lstsize(lst)>1)
         {
             pipes_cmd(path,lst);
+            // waitpid(-1,0,0);
         }
-        else
-        {
-            printf("simple");
-        }
-        // printf("1");
+        else   
+            get_cmd_(lst->command->s_left->l_element->cmd,path,lst->command);
         lst = lst->next;
     }
     return 0;

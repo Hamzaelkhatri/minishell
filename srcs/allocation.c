@@ -86,7 +86,10 @@ t_command *add_simple_cmd(t_command *parent, int i)
         //     return (NULL);
         if (!(parent->s_left->l_element = (t_elements *)malloc(sizeof(t_elements))))
             return (NULL);
-        // parent->s_left->l_element->cmd = NULL;
+        parent->s_left->l_element->cmd = NULL;
+        parent->s_left->l_element->argument = NULL;
+        parent->s_left->l_element->redirection.file = NULL;
+        parent->s_left->l_element->redirection.i_o = NULL;
         parent->s_left->l_element->indice = i;
         parent->s_left->right = NULL;
         parent->s_left->parent = NULL;
@@ -123,4 +126,39 @@ char *alloc_command(char *line, int i, int *save)
     command[p] = '\0';
     *save = i + 1;
     return (command);
+}
+
+void alloc_affect(t_list_cmd *l_cmd, char *command, int indice)
+{
+
+    if (indice == 1)
+    {
+        l_cmd->command->tool.cmd = 1;
+        l_cmd->command = add_simple_cmd(l_cmd->command, 1);
+        if (l_cmd->command->s_left->right != NULL)
+            l_cmd->command->s_left = l_cmd->command->s_left->right;
+        l_cmd->command->s_left->l_element->cmd = ft_strdup(command);
+    }
+    else if (indice == 2)
+    {
+        l_cmd->command->tool.argument = 2;
+        l_cmd->command = add_simple_cmd(l_cmd->command, 2);
+        if (l_cmd->command->s_left->right != NULL)
+            l_cmd->command->s_left = l_cmd->command->s_left->right;
+        l_cmd->command->s_left->l_element->argument = ft_strdup(command);
+    }
+    else if (indice == 3)
+    {
+        l_cmd->command->tool.argument = 3;
+        l_cmd->command = add_simple_cmd(l_cmd->command, 3);
+        if (l_cmd->command->s_left->right != NULL)
+            l_cmd->command->s_left = l_cmd->command->s_left->right;
+        l_cmd->command->s_left->l_element->redirection.file = ft_strdup(command);
+        if (wich_redirection(l_cmd->command->tool.check_io) == 2)
+            l_cmd->command->s_left->l_element->redirection.i_o = ft_strdup(">>");
+        else if (wich_redirection(l_cmd->command->tool.check_io) == 1)
+            l_cmd->command->s_left->l_element->redirection.i_o = ft_strdup(">");
+        else if (wich_redirection(l_cmd->command->tool.check_io) == 3)
+            l_cmd->command->s_left->l_element->redirection.i_o = ft_strdup("<");
+    }
 }

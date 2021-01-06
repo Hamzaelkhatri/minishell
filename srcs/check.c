@@ -198,3 +198,31 @@ int check_type_element(char *line, int *check_i_o, int count)
         return (6);
     return (7);
 }
+
+void check_element(t_list_cmd *l_cmd)
+{
+    int check;
+    t_simple_command *tmp;
+    l_cmd->command->tool.i = 0;
+    tmp = l_cmd->command->s_left;
+    while (l_cmd->command->tool.tab[l_cmd->command->tool.i])
+    {
+        l_cmd->command->tool.check_io = -1;
+        l_cmd->command->tool.result = check_type_element(l_cmd->command->tool.tab[l_cmd->command->tool.i], &l_cmd->command->tool.check_io, l_cmd->command->tool.i);
+        if (l_cmd->command->tool.result == 1 || l_cmd->command->tool.result == 6)
+        {
+            if (l_cmd->command->tool.cmd == 0)
+            {
+                alloc_affect(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i], 1);
+            }
+            else
+            {
+                alloc_affect(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i], 2);
+            }
+        }
+        else if (l_cmd->command->tool.result >= 2 && l_cmd->command->tool.result <= 5)
+            affect_redirection(l_cmd);
+        l_cmd->command->tool.i++;
+    }
+    l_cmd->command->s_left = tmp;
+}

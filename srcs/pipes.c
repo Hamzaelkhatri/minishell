@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 10:32:55 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/01/05 16:20:56 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/01/06 17:12:24 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void execute_foreign(t_list_cmd *lst,int piping)
 		perror("bash$ :");
 		free(cmd);
 	}
+	if(!piping)
+		wait(0);
 }
 
 void    pipes_cmd(t_path * path, t_list_cmd *lst)
@@ -62,7 +64,6 @@ void    pipes_cmd(t_path * path, t_list_cmd *lst)
     char *tmp;
     char *read1;
 	char *cmd;
-	// char ss[100];
 	i = 0;
 
 	int s = lstsize(lst);
@@ -95,15 +96,17 @@ void    pipes_cmd(t_path * path, t_list_cmd *lst)
 			}
 			if(!cmdcheck(lst->command->s_left->l_element->cmd))
 			{
-				printf("HELLO");
-				execute_foreign(lst,1);
-				exit(1);
+					char *cmd;
+					char *binaryPath = "/bin/bash";
+					cmd = ft_strjoin_command(lst->command->s_left);
+					char *const args[] = {binaryPath, "-c", cmd,NULL};
+					if (execve(binaryPath, args, NULL) < 0)
+						perror("bash$ :");
+					// free(cmd);
+				exit(0);
 			}
 			else
 			{
-				// s_cmd = lst->command->s_left;
-				// printf("[%s]",lst->command->s_left->l_element->cmd);
-				//  puts("Here");
 				get_cmd(lst->command->s_left->l_element->cmd,path,lst->command);
 				exit(0);
 			}
@@ -117,5 +120,6 @@ void    pipes_cmd(t_path * path, t_list_cmd *lst)
         }
 		i++;
     }
+	// waitpid(-1,0,0);
     wait(0);
 }

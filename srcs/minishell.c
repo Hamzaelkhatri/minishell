@@ -16,40 +16,40 @@ char **input_or_output(char *line)
     return (NULL);
 }
 
-void alloc_affect(t_list_cmd *l_cmd, char *command, int indice)
-{
+// void alloc_affect(t_list_cmd *l_cmd, char *command, int indice)
+// {
 
-    if (indice == 1)
-    {
-        l_cmd->command->tool.cmd = 1;
-        l_cmd->command = add_simple_cmd(l_cmd->command, 1);
-        if (l_cmd->command->s_left->right != NULL)
-            l_cmd->command->s_left = l_cmd->command->s_left->right;
-        l_cmd->command->s_left->l_element->cmd = ft_strdup(command);
-    }
-    else if (indice == 2)
-    {
-        l_cmd->command->tool.argument = 2;
-        l_cmd->command = add_simple_cmd(l_cmd->command, 2);
-        if (l_cmd->command->s_left->right != NULL)
-            l_cmd->command->s_left = l_cmd->command->s_left->right;
-        l_cmd->command->s_left->l_element->argument = ft_strdup(command);
-    }
-    else if (indice == 3)
-    {
-        l_cmd->command->tool.argument = 3;
-        l_cmd->command = add_simple_cmd(l_cmd->command, 3);
-        if (l_cmd->command->s_left->right != NULL)
-            l_cmd->command->s_left = l_cmd->command->s_left->right;
-        l_cmd->command->s_left->l_element->redirection.file = ft_strdup(command);
-        if (wich_redirection(l_cmd->command->tool.check_io) == 2)
-            l_cmd->command->s_left->l_element->redirection.i_o = ft_strdup(">>");
-        else if (wich_redirection(l_cmd->command->tool.check_io) == 1)
-            l_cmd->command->s_left->l_element->redirection.i_o = ft_strdup(">");
-        else if (wich_redirection(l_cmd->command->tool.check_io) == 3)
-            l_cmd->command->s_left->l_element->redirection.i_o = ft_strdup("<");
-    }
-}
+//     if (indice == 1)
+//     {
+//         l_cmd->command->tool.cmd = 1;
+//         l_cmd->command = add_simple_cmd(l_cmd->command, 1);
+//         if (l_cmd->command->s_left->right != NULL)
+//             l_cmd->command->s_left = l_cmd->command->s_left->right;
+//         l_cmd->command->s_left->l_element->cmd = ft_strdup(command);
+//     }
+//     else if (indice == 2)
+//     {
+//         l_cmd->command->tool.argument = 2;
+//         l_cmd->command = add_simple_cmd(l_cmd->command, 2);
+//         if (l_cmd->command->s_left->right != NULL)
+//             l_cmd->command->s_left = l_cmd->command->s_left->right;
+//         l_cmd->command->s_left->l_element->argument = ft_strdup(command);
+//     }
+//     else if (indice == 3)
+//     {
+//         l_cmd->command->tool.argument = 3;
+//         l_cmd->command = add_simple_cmd(l_cmd->command, 3);
+//         if (l_cmd->command->s_left->right != NULL)
+//             l_cmd->command->s_left = l_cmd->command->s_left->right;
+//         l_cmd->command->s_left->l_element->redirection.file = ft_strdup(command);
+//         if (wich_redirection(l_cmd->command->tool.check_io) == 2)
+//             l_cmd->command->s_left->l_element->redirection.i_o = ft_strdup(">>");
+//         else if (wich_redirection(l_cmd->command->tool.check_io) == 1)
+//             l_cmd->command->s_left->l_element->redirection.i_o = ft_strdup(">");
+//         else if (wich_redirection(l_cmd->command->tool.check_io) == 3)
+//             l_cmd->command->s_left->l_element->redirection.i_o = ft_strdup("<");
+//     }
+// }
 
 void affect_redirection(t_list_cmd *l_cmd)
 {
@@ -80,105 +80,24 @@ void affect_redirection(t_list_cmd *l_cmd)
         alloc_affect(l_cmd, l_cmd->command->tool.tab[++l_cmd->command->tool.i], 3);
 }
 
-void check_element(t_list_cmd *l_cmd)
-{
-    int check;
-    t_simple_command *tmp;
-    l_cmd->command->tool.i = 0;
-    tmp = l_cmd->command->s_left;
-    while (l_cmd->command->tool.tab[l_cmd->command->tool.i])
-    {
-        l_cmd->command->tool.check_io = -1;
-        l_cmd->command->tool.result = check_type_element(l_cmd->command->tool.tab[l_cmd->command->tool.i], &l_cmd->command->tool.check_io, l_cmd->command->tool.i);
-        if (l_cmd->command->tool.result == 1 || l_cmd->command->tool.result == 6)
-        {
-            if (l_cmd->command->tool.cmd == 0)
-            {
-                alloc_affect(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i], 1);
-            }
-            else
-            {
-                alloc_affect(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i], 2);
-            }
-        }
-        else if (l_cmd->command->tool.result >= 2 && l_cmd->command->tool.result <= 5)
-            affect_redirection(l_cmd);
-        l_cmd->command->tool.i++;
-    }
-    l_cmd->command->s_left = tmp;
-}
 
-void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separator, int y_or_n)
-{
-    t_command *tmp_command;
-    int i = 0;
-    tmp_command = l_cmd->command;
-    if (l_cmd->command->s_left->l_element != NULL)
-        l_cmd->command = add_command(l_cmd->command);
-    while (l_cmd->command->right != NULL)
-        l_cmd->command = l_cmd->command->right;
-    ft_bzero(&l_cmd->command->tool, sizeof(t_tool));
-    l_cmd->command->tool.tab = ft_space_split_quote(s_command);
-    check_element(l_cmd);
-    l_cmd->command = tmp_command;
-}
+// void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separator, int y_or_n)
+// {
+//     t_command *tmp_command;
+//     int i = 0;
+//     tmp_command = l_cmd->command;
+//     if (l_cmd->command->s_left->l_element != NULL)
+//         l_cmd->command = add_command(l_cmd->command);
+//     while (l_cmd->command->right != NULL)
+//         l_cmd->command = l_cmd->command->right;
+//     ft_bzero(&l_cmd->command->tool, sizeof(t_tool));
+//     l_cmd->command->tool.tab = ft_space_split_quote(s_command);
+//     check_element(l_cmd);
+//     l_cmd->command = tmp_command;
+// }
 
-void parcs_simple_command(char *line, int *index, t_list_cmd *l_cmd, int y_or_n)
-{
-    char *s_command;
-    int i;
-    int k;
 
-    k = 0;
-    i = index[0];
-    s_command = (char *)malloc(sizeof(char) * (index[1] - i));
-    while (i < index[1])
-    {
-        s_command[k] = line[i];
-        i++;
-        k++;
-    }
-    s_command[k] = '\0';
-    index[0] = ++i;
-    parcs_this_simple_command(s_command, l_cmd, line[i], y_or_n);
-    free(s_command);
-}
 
-void parse_command(t_list_cmd *l_cmd, char *line)
-{
-    int i;
-    int k;
-    int index[2];
-    t_list_cmd *tmp;
-
-    k = 0;
-    i = 0;
-    index[0] = 0;
-    tmp = l_cmd;
-    if (l_cmd->command->s_left->l_element != NULL)
-        l_cmd = add_list_cmd(l_cmd);
-    while (l_cmd->next != NULL)
-        l_cmd = l_cmd->next;
-    while (line[i])
-    {
-        if (is_correct(line[i]) == 0)
-        {
-            ft_putstr_fd("error 1", 2);
-            exit(1);
-        }
-        if (line[i] == '|')
-        {
-            k = 1;
-            index[1] = i;
-            parcs_simple_command(line, index, l_cmd, k);
-        }
-        i++;
-    }
-    k = 0;
-    index[1] = i;
-    parcs_simple_command(line, index, l_cmd, k);
-    l_cmd = tmp;
-}
 
 int check_parse_list_command(char *line, int i)
 {
@@ -191,75 +110,39 @@ int check_parse_list_command(char *line, int i)
     }
     return (0);
 }
-void parse_list_command(t_list_cmd *l_cmd, char *line)
+
+
+void free_scommand(t_simple_command **scommand)
 {
-    int i;
-    int k;
-    int save;
-    char *s_command;
-    int check;
-
-    i = 0;
-    save = 0;
-    while (line[i])
-    {
-        k = 0;
-        if (is_correct(line[i]) == 0)
-        {
-            ft_putstr_fd("error 1", 2);
-            exit(1);
-        }
-        if (line[i] == ';')
-        {
-            s_command = alloc_command(line, i, &save);
-            parse_command(l_cmd, s_command);
-
-            free(s_command);
-        }
-        i++;
-    }
-    if (check_parse_list_command(line, i) == 1)
-    {
-        s_command = alloc_command(line, i, &save);
-        parse_command(l_cmd, s_command);
-
-        free(s_command);
-    }
+    if (*scommand != NULL)
+        free_scommand(&(*scommand)->right);
+    if (*scommand != NULL)
+        free_s_command(&(*scommand));
 }
 
-void quotes(t_list_cmd *l_cmd)
+void free_command(t_command **command)
 {
-    t_list_cmd *tmp_l_command;
-    t_command *tmp_command;
-    t_simple_command *tmp_s;
-
-    tmp_l_command = l_cmd;
-    tmp_command = l_cmd->command;
-    tmp_s = l_cmd->command->s_left;
-    while (l_cmd != NULL)
+    if (*command != NULL)
+        free_command(&(*command)->right);
+    if (*command != NULL)
     {
-        tmp_command = l_cmd->command;
-        tmp_s = l_cmd->command->s_left;
-        while (l_cmd->command != NULL)
-        {
-            tmp_s = l_cmd->command->s_left;
-            while (l_cmd->command->s_left != NULL)
-            {
-                if (l_cmd->command->s_left->l_element->indice == 1)
-                    l_cmd->command->s_left->l_element->cmd = ignoring_quote(l_cmd->command->s_left->l_element->cmd);
-                else if (l_cmd->command->s_left->l_element->indice == 2)
-                    l_cmd->command->s_left->l_element->argument = ignoring_quote(l_cmd->command->s_left->l_element->argument);
-                else if (l_cmd->command->s_left->l_element->indice == 3)
-                    l_cmd->command->s_left->l_element->redirection.file = ignoring_quote(l_cmd->command->s_left->l_element->redirection.file);
-                l_cmd->command->s_left = l_cmd->command->s_left->right;
-            }
-            l_cmd->command->s_left = tmp_s;
-            l_cmd->command = l_cmd->command->right;
-        }
-        l_cmd->command = tmp_command;
-        l_cmd = l_cmd->next;
+        free_scommand(&(*command)->s_left);
+        if ((*command)->tool.tab != NULL)
+            free_tab(&(*command)->tool.tab);
+        free(*command);
+        *command = NULL;
     }
-    l_cmd = tmp_l_command;
+}
+void free_lcommand(t_list_cmd **l_command)
+{
+    if (*l_command != NULL)
+        free_lcommand(&(*l_command)->next);
+    if (*l_command != NULL)
+    {
+        free_command(&(*l_command)->command);
+        free(*l_command);
+        *l_command = NULL;
+    }
 }
 int main(int argc, char **argv, char **env)
 {
@@ -283,6 +166,7 @@ int main(int argc, char **argv, char **env)
     // check_scommand(l_command);
     init(&path, &key, &cmd);
     path.env->fullenv = env;
+    // print_working_directory(&path);
     // unset_cmd("PWssssD",&path);
     // show_env(path.env->fullenv);
     // cd_cmd("../../..",&path);
@@ -294,6 +178,7 @@ int main(int argc, char **argv, char **env)
     //     execute_foreign(l_command,0);
     
     commande_effect(l_command,&path);
+    // print_working_directory(&path);
     // pipes_cmd(&path, l_command);
     // export_cmd("hello=shihaja",path.env->fullenv);
     // show_env(path.env->fullenv);
