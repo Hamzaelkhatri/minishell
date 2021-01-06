@@ -74,12 +74,16 @@ void ft_check_line(char *line)
 {
     int i;
     int check_quote;
-    t_line check;
 
     check_quote = 0;
     i = 0;
     while (line[i])
     {
+        if(line[i] == ':')
+        {
+            ft_putstr_fd("syntax error\n", 2);
+            exit(1);
+        }
         if (line[i] == '"')
         {
             if (check_quote == 0)
@@ -148,11 +152,6 @@ int check_redirection(char *line, int *i)
         else if (check_what_after(line[*i + 1]) == 1)
             return (*i == 0) ? (11) : (12);
     }
-    // else
-    // {
-    //     ft_putstr_fd("\nerror 2\n", 2);
-    //     exit(1);
-    // }
     return (0);
 }
 
@@ -197,4 +196,29 @@ int check_type_element(char *line, int *check_i_o, int count)
     else if (count != 0 && redirection == -1)
         return (6);
     return (7);
+}
+
+void check_element(t_list_cmd *l_cmd)
+{
+    int check;
+    t_simple_command *tmp;
+    l_cmd->command->tool.i = 0;
+    tmp = l_cmd->command->s_left;
+    static int i = 0;
+    while (l_cmd->command->tool.tab[l_cmd->command->tool.i])
+    {
+        l_cmd->command->tool.check_io = -1;
+        l_cmd->command->tool.result = check_type_element(l_cmd->command->tool.tab[l_cmd->command->tool.i], &l_cmd->command->tool.check_io, l_cmd->command->tool.i);
+        if (l_cmd->command->tool.result == 1 || l_cmd->command->tool.result == 6)
+        {
+            if (l_cmd->command->tool.cmd == 0)
+                alloc_affect(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i], 1);
+            else
+                alloc_affect(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i], 2);
+        }
+        else if (l_cmd->command->tool.result >= 2 && l_cmd->command->tool.result <= 5)
+            affect_redirection(l_cmd);
+        l_cmd->command->tool.i++;
+    }
+    l_cmd->command->s_left = tmp;
 }

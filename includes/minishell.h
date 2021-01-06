@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
-#include <stdio.h>
+#include <string.h>
+#include <errno.h>
 #include <stdbool.h>
 #include "../libft/libft.h"
 #include <sys/types.h>
@@ -69,7 +70,6 @@ typedef struct s_check
 
 typedef struct s_tool
 {
-    char *command;
     char **tab;
     int i;
     int result;
@@ -95,24 +95,15 @@ typedef struct s_simple_command
     struct s_simple_command *right;
 } t_simple_command;
 
-typedef struct s_line
-{
-    int pipe;
-    int semicolon;
-    int i_o;
-} t_line;
-
 typedef struct s_command
 {
     t_tool tool;
-    char pipe;
     t_simple_command *s_left;
     struct s_command *right;
 } t_command;
 
 typedef struct s_list_cmd
 {
-    char semicolon;
     t_command *command;
     struct s_list_cmd *next;
     struct s_list_cmd *previous;
@@ -132,15 +123,18 @@ t_list_cmd *add_list_cmd(t_list_cmd *parent);
 t_command *add_command(t_command *parent);
 t_command *add_simple_cmd(t_command *parent, int i);
 char *alloc_command(char *line, int i, int *save);
+void alloc_affect(t_list_cmd *l_cmd, char *command, int indice);
 
 // check
 
 void ft_check_line(char *line);
 int check_type_element(char *line, int *check_i_o, int count);
 int check_io_redirection(char *line, int *p, int *check_o_i);
+void check_element(t_list_cmd *l_cmd);
 
 // redirection_tools
 
+void affect_redirection(t_list_cmd *l_cmd);
 int wich_redirection(int check);
 
 // sort
@@ -156,7 +150,20 @@ void check_scommand(t_list_cmd *l_cmd);
 
 // tools
 char *ignoring_quote(char *line);
+void quotes(t_list_cmd *l_cmd);
 char *ft_strjoin_command(t_simple_command *cmd);
+
+// parse
+
+void parcs_simple_command(char *s_command, t_list_cmd *l_cmd);
+void parse_command(t_list_cmd *l_cmd, char *line);
+void parse_list_command(t_list_cmd *l_cmd, char *line);
+
+// free
+void free_tab(char ***tab);
+void ft_strdel(char **as);
+void free_element(t_elements **element);
+void free_s_command(t_simple_command **s_command);
 
 //
 void loop_shell(t_cmd *cmd, t_path *path);

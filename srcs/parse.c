@@ -1,80 +1,48 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/01 12:18:58 by zjamali           #+#    #+#             */
-/*   Updated: 2020/12/08 12:55:00 by zjamali          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include <string.h>
-
 #include "minishell.h"
 
-t_token *ft_lstlast(t_token *lst)
-{	
-	if(lst)
-	{
-		while (lst->next)
-		{
-			lst = lst->next;
-		}
-		return (lst);
-	}
-	return (NULL);
+void parcs_simple_command(char *s_command, t_list_cmd *l_cmd)
+{
+    t_command *tmp_command;
+    int i = 0;
+    tmp_command = l_cmd->command;
+    if (l_cmd->command->s_left->l_element != NULL)
+        l_cmd->command = add_command(l_cmd->command);
+    while (l_cmd->command->right != NULL)
+        l_cmd->command = l_cmd->command->right;
+    ft_bzero(&l_cmd->command->tool, sizeof(t_tool));
+    l_cmd->command->tool.tab = ft_space_split_quote(s_command);
+    check_element(l_cmd);
+    free_tab(&l_cmd->command->tool.tab);
+    l_cmd->command = tmp_command;
 }
 
-void	ft_lstadd_back(t_token **alst, t_token *new)
+void parse_command(t_list_cmd *l_cmd, char *line)
 {
-	t_token *temp;
+    int index;
+    char **tab;
+    t_list_cmd *tmp;
 
-	if (*alst)
-	{
-		temp = ft_lstlast(*alst);
-		temp->next = new;
-		new->next = NULL;
-	}
-	else
-		*alst = new;
+    index = 0;
+    tmp = l_cmd;
+    if (l_cmd->command->s_left->l_element != NULL)
+        l_cmd = add_list_cmd(l_cmd);
+    while (l_cmd->next != NULL)
+        l_cmd = l_cmd->next;
+    tab = ft_split(line, '|');
+    while (tab[index])
+        parcs_simple_command(tab[index++], l_cmd);
+    l_cmd = tmp;
+    free_tab(&tab);
 }
 
-void ft_printf_tokens(t_token *tokens_list)
+void parse_list_command(t_list_cmd *l_cmd, char *line)
 {
-	int i ;
+    char **tab;
+    int index;
 
-	while (tokens_list != NULL)
-	{
-		write(1, "{", 1);
-		write(1, tokens_list->token, ft_strlen(tokens_list->token));
-		write(1, "}", 1);
-		write(1, "\n", 1);
-		tokens_list = tokens_list->next;
-	}
-}
-
-t_token	*ft_parse(char *line)
-{
-	int i;
-	t_token *tokens_list;
-	t_token *tmp;
-	char **split;
-
-	i = 0;
-	tokens_list = NULL;
-	split = ft_space_split(line);
-	while (split[i])
-	{
-		if (!(tmp = (t_token*)malloc(sizeof(t_token))))
-			ft_putstr_fd("allocation error.",1);
-		ft_memset((void*)tmp,0,sizeof(t_token));
-		tmp->token = split[i];
-		tmp->next = NULL;
-		ft_lstadd_back(&tokens_list,tmp);
-		i++;
-	}
-	//ft_printf_tokens(tokens_list);
-	return (tokens_list);
+    index = 0;
+    tab = ft_split(line, ';');
+    while (tab[index])
+        parse_command(l_cmd, tab[index++]);
+    free_tab(&tab);
 }

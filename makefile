@@ -11,26 +11,13 @@ SRC_NAME=allocation.c\
 		sort.c\
 		get_next_line.c\
 		get_next_line_utils.c\
-		init.c\
-		search_env.c\
-		env.c\
 		minishell.c\
-		read_line.c\
-		pwd.c\
-		execute.c\
 		tools.c\
-    	directory.c\
-		parse.c\
 		ft_split.c\
-		cd.c\
-		shift.c\
-		var_env.c\
-		export.c\
-		unset.c\
-		pipes.c\
-		export_sort.c\
 		ft_split_quote.c\
 		s_command.c\
+		parse.c\
+		free.c\
 
 HDR_NAME=minishell.h 
 
