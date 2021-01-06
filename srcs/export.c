@@ -15,7 +15,7 @@ int check_space(char *str)
 	return (0);
 }
 
-static char*  get_after_equal(char *str)
+static char*  get_to_space(char *str)
 {
 	char *ptr;
 	int i;
@@ -34,6 +34,34 @@ static char*  get_after_equal(char *str)
 	return (ptr);
 }
 
+char *get_befor_equal(char *str)
+{
+	char *ptr;
+	int i;
+
+	i = 0;
+	if(!(ptr = malloc(sizeof(char) * cout_to_char(str,'='))))
+		return (NULL);
+	while(str[i] != '=')
+	{
+		ptr[i] = str[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}
+
+
+char *get_after_equal(char *str)
+{
+	int i;
+
+	i = ft_strlen(get_befor_equal(str));
+
+	return(&str[i+1]);
+}
+
+
 void	export_cmd(char *name,char **env)
 {
 	int line = 0; 
@@ -43,7 +71,12 @@ void	export_cmd(char *name,char **env)
 		ft_putstr_fd("bash$ : bad assignment",1);
 		return ;
 	}
-	line = count_line(env);
-	env[line] = get_after_equal(name);
-	env[line+1] = NULL;
+	if(!search_env(env,get_befor_equal(name)))
+	{
+		line = count_line(env);
+		env[line] = get_to_space(name);
+		env[line+1] = NULL;
+	}
+	else
+		edit_env(env,get_befor_equal(name),get_after_equal(name));
 }

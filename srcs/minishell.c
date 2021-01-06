@@ -278,24 +278,24 @@ int main(int argc, char **argv, char **env)
         return (0);
     l_command = add_list_cmd(l_command);
     parse_list_command(l_command, line);
-
-    printf("-------------------------------before sort-------------------------------\n");
-    print(l_command);
     sort(l_command);
-    printf("-------------------------------after sort-------------------------------\n");
-    print(l_command);
     quotes(l_command);
-    check_scommand(l_command);
-    printf("-------------------------------echo -n and ignoring quotes-------------------------------\n");
-    print(l_command);
-    // init(&path, &key, &cmd);
-    // path.env->fullenv = env;
+    // check_scommand(l_command);
+    init(&path, &key, &cmd);
+    path.env->fullenv = env;
+    // unset_cmd("PWssssD",&path);
+    // show_env(path.env->fullenv);
+    // cd_cmd("../../..",&path);
+    // getprogramme(&path,"");
+    // printf("%s",);
+    // if(cmdcheck(l_command->command->s_left->l_element->cmd))
+    //     get_cmd(l_command->command->s_left->l_element->cmd,&path,l_command->command);
+    // else
+    //     execute_foreign(l_command,0);
+    
+    commande_effect(l_command,&path);
+    // pipes_cmd(&path, l_command);
+    // export_cmd("hello=shihaja",path.env->fullenv);
+    // show_env(path.env->fullenv);
     return (0);
 }
-// i = check(line, &test);
-// printf("|i==> %d|\t|\t %s \t|\n", i, test);
-// t_simple_command *s_command;
-// s_command = NULL;
-// s_command = add_node(s_command);
-// s_command = add_data("amine sbaa3\n");
-// ft_putstr(s_command->element.word);

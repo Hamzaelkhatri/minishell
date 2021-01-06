@@ -25,14 +25,12 @@ char    *ft_str_to_equal(const char *s1, const char *s2,int len)
         return (NULL);
 }
 
-
-
-int cout_to_equal(char *str)
+int cout_to_char(char *str,char c)
 {
 	int i;
 
 	i = 0;
-	while(str[i])
+	while(str[i] != c)
 		i++;
 	return (i);
 }
@@ -49,7 +47,7 @@ char *search_env(char **env,char *str)
     {
         if (ft_str_to_equal(env[i],str,ft_strlen(env[i])))
         {
-            tmp = ft_str_to_equal(env[i],str,cout_to_equal(env[i]));
+            tmp = ft_str_to_equal(env[i],str,ft_strlen(env[i]));
             return &tmp[j];
         }
         i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 19:15:36 by zjamali           #+#    #+#             */
-/*   Updated: 2020/12/22 13:15:26 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/01/05 17:38:47 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,9 @@
 void print_working_directory(t_path *path)
 {
 	char *pwd;
-
-	if (!path->env->pwd)
-	{
-		pwd = search_env(path->env->fullenv, "PWD");
-		write(1, pwd, ft_strlen(pwd));
-	}
-	else
-		ft_putstr_fd(path->env->pwd, 1);
+	char *pwd1;
+	pwd1=ft_strdup("");
+	pwd = getcwd(pwd1,100);
+	ft_putstr_fd(pwd,1);
+	free(pwd1);
 }

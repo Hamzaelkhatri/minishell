@@ -44,6 +44,7 @@ char *ft_str_in_str(const char *s1, const char *s2)
     }
     return (NULL);
 }
+
 int check(char *line, char **test)
 {
     int i;
@@ -75,7 +76,7 @@ int check(char *line, char **test)
 }
 int is_correct(char c)
 {
-    if (ft_isalnum(c) == 0 && c != '.' && c != '=' && c != '$' && c != '%' && c != ',' && c != '/' && c != '"' && c != '\'' && c != '>' && c != '<' && c != '-' && c != '|' && c != ';' && c != ' ' && c != '\t')
+    if (ft_isalnum(c) == 0 && c!='~' &&c!= '*' &&c != '.' && c != '=' && c != '$' && c != '%' && c != ',' && c != '/' && c != '"' && c != '\'' && c != '>' && c != '<' && c != '-' && c != '|' && c != ';' && c != ' ' && c != '\t')
     {
         return (0);
     }
@@ -111,7 +112,14 @@ void print(t_list_cmd *l_command)
             while (l_command->command->s_left != NULL)
             {
                 if (l_command->command->s_left->l_element->indice == 1)
-                    printf("|cmd  ==> %s|\n", l_command->command->s_left->l_element->cmd);
+                    {
+                        // if(!cmdcheck(l_command->command->s_left->l_element->cmd))
+                        //         printf("not us\n");
+                        //     else
+                        //          printf("us\n");
+                        //printf("%i : [%s]\n",cmd(l_command->command->s_left->l_element->cmd),l_command->command->s_left->l_element->cmd);
+                        printf("|cmd  ==> %s|\n", l_command->command->s_left->l_element->cmd);
+                    }
                 else if (l_command->command->s_left->l_element->indice == 2)
                     printf("|argument  ==> %s|\n", l_command->command->s_left->l_element->argument);
                 else if (l_command->command->s_left->l_element->indice == 3)
@@ -178,5 +186,38 @@ char *ignoring_quote(char *line)
         if (line[i] == '\0')
             line[index] = '\0';
     }
+    return (line);
+}
+
+char *ft_strjoin_command(t_simple_command *cmd)
+{
+    t_simple_command *tmp_s;
+    char *line;
+    line = ft_strdup("\0");
+    tmp_s = cmd;
+    while (cmd != NULL)
+    {
+        if (cmd->l_element->indice == 1)
+        {
+            line = ft_strjoin_free(line, cmd->l_element->cmd);
+            if (cmd->right != NULL)
+                line = ft_strjoin_free(line, " ");
+        }
+        else if (cmd->l_element->indice == 2)
+        {
+            line = ft_strjoin_free(line, cmd->l_element->argument);
+            if (cmd->right != NULL)
+                line = ft_strjoin_free(line, " ");
+        }
+        else if (cmd->l_element->indice == 3)
+        {
+            line = ft_strjoin_free(line, cmd->l_element->redirection.i_o);
+            line = ft_strjoin_free(line, cmd->l_element->redirection.file);
+            if (cmd->right != NULL)
+                line = ft_strjoin_free(line, " ");
+        }
+        cmd = cmd->right;
+    }
+    cmd = tmp_s;
     return (line);
 }

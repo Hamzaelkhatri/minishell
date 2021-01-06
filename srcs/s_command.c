@@ -37,7 +37,7 @@ void check_scommand(t_list_cmd *l_cmd)
         while (l_cmd->command != NULL)
         {
             if (ft_str_in_str(l_cmd->command->s_left->l_element->cmd, "echo"))
-                check_echo(l_cmd->command->s_left);
+		 	check_echo(l_cmd->command->s_left);
             l_cmd->command = l_cmd->command->right;
         }
         l_cmd->command = tmp_command;

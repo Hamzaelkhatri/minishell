@@ -31,6 +31,10 @@ SRC_NAME=allocation.c\
 		export_sort.c\
 		ft_split_quote.c\
 		s_command.c\
+		checkcmd.c\
+		exit.c\
+		execute_cmd.c\
+		commade_effect.c\
 
 HDR_NAME=minishell.h 
 

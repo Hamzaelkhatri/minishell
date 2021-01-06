@@ -2,7 +2,7 @@
 
 int stock(char c)
 {
-    ft_putendl_fd("samir zwin", 1);
+    ft_putendl_fd("samir not zwin", 1);
     return (1);
 }
 static int check_is_correct(char operation, char *line)

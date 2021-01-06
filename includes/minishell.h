@@ -156,6 +156,7 @@ void check_scommand(t_list_cmd *l_cmd);
 
 // tools
 char *ignoring_quote(char *line);
+char *ft_strjoin_command(t_simple_command *cmd);
 
 //
 void loop_shell(t_cmd *cmd, t_path *path);
@@ -181,7 +182,15 @@ void export_cmd(char *name, char **env);
 void unset_cmd(char *name, t_path *path);
 int search_str(char *str1, char *str2, int l1, int l2);
 char *ft_str_to_equal(const char *s1, const char *s2, int len);
-void pipes_cmd(char *left, char *right, t_path *path);
+void    pipes_cmd(t_path * path, t_list_cmd *lst);
 void ft_sortstr(char **str);
 char **ft_strdup_extra(char **str);
+int     cmdcheck(char *str);
+int cout_to_char(char *str,char c);
+void edit_env(char **env,char *var,char *res);
+void execute_foreign(t_list_cmd *lst,int piping);
+int lstsize(t_list_cmd *lst);
+int commande_effect(t_list_cmd *lst,t_path *path);
+int get_cmd(char *cmd,t_path *path,t_command *l_cmd);
+void ft_exit();
 #endif

@@ -26,7 +26,7 @@ void ft_sortstr(char **str)
 
 	i = 0;
 	count = count_line(str);
-	while(++i<=count && str[i])
+	while(i<=count && str[i])
 	{
 		j = i+1;
 		while(++j<=count && str[j])
@@ -34,13 +34,14 @@ void ft_sortstr(char **str)
 			if(ft_memcmp(str[i],str[j],ft_strlen(str[j]))>0)
 			{
 				temp = ft_strdup(str[i]);
-				free(str[i]);
+				// free(str[i]);
 				str[i] = ft_strdup(str[j]);
-				free(str[j]);
+				// free(str[j]);
 				str[j] = ft_strdup(temp);
-				free(temp);
+				// free(temp);
 			}
 		}
+		i++;
 	}
 }
 
