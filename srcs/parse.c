@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zdnaya <diyanazizo13@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:18:58 by zjamali           #+#    #+#             */
-/*   Updated: 2020/12/25 14:54:23 by ahaddad          ###   ########.fr       */
+/*   Updated: 2020/12/27 21:45:37 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 t_token *ft_lstlast(t_token *lst)
 {	

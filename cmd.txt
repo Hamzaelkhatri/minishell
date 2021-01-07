@@ -1,1 +1,1 @@
-ls | cat -e | cat -e | pwd
+<file echo  hello > file2  >>file0  >file3  home < file4

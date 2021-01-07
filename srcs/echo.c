@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 11:02:30 by zjamali           #+#    #+#             */
-/*   Updated: 2020/12/01 11:11:07 by zjamali          ###   ########.fr       */
+/*   Updated: 2020/12/29 15:14:02 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-void	ft_echo(char  *str,int option)
-{
-	ft_putstr_fd(str,1);
-	if (option != 1)
-		write(1,"\n",1);
-} 
+void ft_echo(char *str, int option) {
+  ft_putstr_fd(str, 1);
+  if (option != 0)
+    write(1, "\n", 1);
+}
