@@ -1,1 +1,1 @@
-echo  hello | ls | cd .. ; pwd | ls ; po
+echo hello world  >file blba >> file1 again <file2

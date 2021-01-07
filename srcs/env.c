@@ -7,7 +7,7 @@ void show_env(char **env)
 
     i = 0;
     j = 0;
-    while (env[i] != '\0')
+    while (env[i])
     {
         j = 0;
         write(1,env[i],ft_strlen(env[i]));

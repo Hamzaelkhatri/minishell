@@ -1,34 +1,46 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: zdnaya <diyanazizo13@gmail.com>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/25 16:22:32 by helkhatr          #+#    #+#              #
-#    Updated: 2020/12/20 16:44:31 by zdnaya           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME= minishell
-SRC_PATH= src
+SRC_PATH= srcs
 HDR_PATH= includes
 OBJ_PATH= obj
 LIB_PATH= libft
 
 
-SRC_NAME= minishell.c\
-			read.c\
-			lanch.c\
-			parsing.c\
-			get_next_line.c\
-			get_next_line_utils.c\
-			ft_space_split.c  \
-			ft_char_split.c\
-			tools.c\
-			list.c\
-			path.c\
-			pipe.c\
+SRC_NAME=init.c\
+		search_env.c\
+		env.c\
+		minishell.c\
+		read_line.c\
+		pwd.c\
+		execute.c\
+		tools.c\
+    	directory.c\
+		parse.c\
+		cd.c\
+		shift.c\
+		var_env.c\
+		export.c\
+		unset.c\
+		pipes.c\
+		read.c\
+		lanch.c\
+		parsing.c\
+		get_next_line.c\
+		get_next_line_utils.c\
+		ft_space_split.c\
+		ft_char_split.c\
+		list.c\
+		pipe.c\
+		check_built.c\
+		echo.c\
+		check.c\
+		sort.c\
+		details.c\
+		redirection.c\
+		redirections.c\
+		errors.c\
+		cmd_details.c\
+		sort_01.c\
+		sort_02.c\
 
 HDR_NAME=minishell.h 
 
@@ -42,7 +54,6 @@ LIB= libft.a
 FLAGS= 
 LLIB_FLAG= -L$(LIB_PATH) libft/libft.a
 H_FLAG= -I $(HDR_PATH)
-#***************************************************************************** #
 
 COMP= gcc
 
@@ -51,19 +62,6 @@ all: lib  $(NAME)
 $(NAME) : $(LIB_PATH)/$(LIB) $(OBJ)
 	@rm -rf miniRT
 	@$(COMP) $(H_FLAG) $(LLIB_FLAG) $(OBJ) -o $@
-	@echo "													 Made by : \033[1;91mZdnaya\033[m"
-	@echo "      ___                       ___                       ___           ___           ___                                  "
-	@echo "     /__/\        ___          /__/\        ___          /  /\         /__/\         /  /\                                 "
-	@echo "    |  |::\      /  /\         \  \:\      /  /\        /  /:/_        \  \:\       /  /:/_                                "
-	@echo "    |  |:|:\    /  /:/          \  \:\    /  /:/       /  /:/ /\        \__\:\     /  /:/ /\    ___     ___   ___     ___  "
-	@echo "  __|__|:|\:\  /__/::\      _____\__\:\  /__/::\      /  /:/ /::\   ___ /  /::\   /  /:/ /:/_  /__/\   /  /\ /__/\   /  /\ "
-	@echo " /__/::::| \:\ \__\/\:\__  /__/::::::::\ \__\/\:\__  /__/:/ /:/\:\ /__/\  /:/\:\ /__/:/ /:/ /\ \  \:\ /  /:/ \  \:\ /  /:/ "
-	@echo " \  \:\~~\__\/    \  \:\/\ \  \:\~~\~~\/    \  \:\/\ \  \:\/:/~/:/ \  \:\/:/__\/ \  \:\/:/ /:/  \  \:\  /:/   \  \:\  /:/  "
-	@echo "  \  \:\           \__\::/  \  \:\  ~~~      \__\::/  \  \::/ /:/   \  \::/       \  \::/ /:/    \  \:\/:/     \  \:\/:/   "
-	@echo "   \  \:\          /__/:/    \  \:\          /__/:/    \__\/ /:/     \  \:\        \  \:\/:/      \  \::/       \  \::/    "
-	@echo "    \  \:\         \__\/      \  \:\         \__\/       /__/:/       \  \:\        \  \::/        \__\/         \__\/     "
-	@echo "     \__\/                     \__\/                     \__\/         \__\/         \__\/                                 "
-	@echo "						Compilation of $(NAME):  \033[1;32mOK\033[m"
 
 lib:
 	@make -sC $(LIB_PATH)

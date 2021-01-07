@@ -31,8 +31,8 @@ char *search_prev(char *str,char c,int i)
 
 void getprogramme(t_path *path,char *cmd)
 {
+    // puts(cmd);
     int i;
-   // path->pathcmd= search_prev(path->cmds,'+',i);
     exeute(path,cmd);
 }
 
@@ -45,7 +45,7 @@ void exeute(t_path *path,char *cmd)
         char *const args[] = {binaryPath, "-c", cmd,NULL};
         if(execve(binaryPath, args, NULL)==-1)
             perror("bash$ ");
-
+        exit(0);
     }
     wait(0);
 }
