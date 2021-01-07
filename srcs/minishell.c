@@ -1,66 +1,5 @@
 #include "minishell.h"
 
-char **input_or_output(char *line)
-{
-    int i;
-
-    i = 0;
-    while (line[i])
-    {
-        if (line[i] == '>')
-            return (ft_split(line, '>'));
-        else if (line[i] == '<')
-            return (ft_split(line, '<'));
-        i++;
-    }
-    return (NULL);
-}
-
-void affect_redirection(t_list_cmd *l_cmd)
-{
-    char **tab_split;
-    int result;
-
-    tab_split = NULL;
-    result = l_cmd->command->tool.result;
-    if (result == 3 || result == 4 || result == 5)
-    {
-        if (wich_redirection(l_cmd->command->tool.check_io) == 2 || wich_redirection(l_cmd->command->tool.check_io) == 1)
-            tab_split = ft_split(l_cmd->command->tool.tab[l_cmd->command->tool.i], '>');
-        else
-            tab_split = ft_split(l_cmd->command->tool.tab[l_cmd->command->tool.i], '<');
-        if (result == 3)
-            alloc_affect(l_cmd, tab_split[0], 3);
-        else if (result == 4 || result == 5)
-        {
-            if (l_cmd->command->tool.cmd == 0)
-                alloc_affect(l_cmd, tab_split[0], 1);
-            else
-                alloc_affect(l_cmd, tab_split[0], 2);
-            if (result == 4)
-                alloc_affect(l_cmd, l_cmd->command->tool.tab[++l_cmd->command->tool.i], 3);
-            else if (result == 5)
-                alloc_affect(l_cmd, tab_split[1], 3);
-        }
-    }
-    if (result == 2)
-        alloc_affect(l_cmd, l_cmd->command->tool.tab[++l_cmd->command->tool.i], 3);
-    if (tab_split != NULL)
-        free_tab(&tab_split);
-}
-
-int check_parse_list_command(char *line, int i)
-{
-    while ((i != 0 && ft_isalnum(line[0]) != 1) || line[i] != ';')
-    {
-
-        if (line[i] == '>' || line[i] == '<' || ft_isalnum(line[i]) == 1)
-            return (1);
-        i--;
-    }
-    return (0);
-}
-
 int main(int argc, char **argv, char **env)
 {
     int fd;
@@ -84,6 +23,7 @@ int main(int argc, char **argv, char **env)
     print(l_command);
     sort(l_command);
     quotes(l_command);
+    check_scommand(l_command);
     printf("-------------------------------after sort-------------------------------\n");
     print(l_command);
     free_lcommand(&l_command);

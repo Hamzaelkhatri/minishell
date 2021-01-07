@@ -1,76 +1,79 @@
 #include "minishell.h"
 
-static void allocation_lcmd(t_list_cmd **new, t_list_cmd **parent)
+static void	allocation_lcmd(t_list_cmd **new, t_list_cmd **parent)
 {
-    if (!((*new) = (t_list_cmd *)malloc(sizeof(t_list_cmd))))
-        return ;
-    if (!((*new)->command = (t_command *)malloc(sizeof(t_command))))
-        return ;
-    if (!((*new)->command->s_left = (t_simple_command *)malloc(sizeof(t_simple_command))))
-        return ;
-}
-t_list_cmd *add_list_cmd(t_list_cmd *parent)
-{
-    t_list_cmd *tmp;
-    t_list_cmd *new;
-
-    if (parent == NULL)
-    {
-        allocation_lcmd(&parent,&parent);
-        init_lcommand(&parent);
-        return (parent);
-    }
-    tmp = parent;
-    allocation_lcmd(&new,&parent);
-    init_lcommand(&new);
-    while (tmp->next != NULL)
-        tmp = tmp->next;
-    new->previous = tmp;
-    tmp->next = new;
-    return (parent);
+	if (!((*new) = (t_list_cmd *)malloc(sizeof(t_list_cmd))))
+		return ;
+	if (!((*new)->command = (t_command *)malloc(sizeof(t_command))))
+		return ;
+	if (!((*new)->command->s_left =\
+			(t_simple_command *)malloc(sizeof(t_simple_command))))
+		return ;
 }
 
-t_command *add_command(t_command *parent, t_list_cmd *l_cmd)
+t_list_cmd	*add_list_cmd(t_list_cmd *parent)
 {
-    t_command *tmp;
-    t_command *new;
+	t_list_cmd *tmp;
+	t_list_cmd *new;
 
-    tmp = parent;
-    if (!(new = (t_command *)malloc(sizeof(t_command))))
-        return (NULL);
-    if (!(new->s_left = (t_simple_command *)malloc(sizeof(t_simple_command))))
-        return (NULL);
-    ft_bzero(&new->tool, sizeof(t_tool));
-    new->right = NULL;
-    new->s_left->l_element = NULL;
-    new->s_left->right = NULL;
-    while (tmp->right != NULL)
-        tmp = tmp->right;
-    tmp->right = new;
-    return (parent);
+	if (parent == NULL)
+	{
+		allocation_lcmd(&parent, &parent);
+		init_lcommand(&parent);
+		return (parent);
+	}
+	tmp = parent;
+	allocation_lcmd(&new, &parent);
+	init_lcommand(&new);
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	new->previous = tmp;
+	tmp->next = new;
+	return (parent);
 }
 
-t_command *add_simple_cmd(t_command *parent, int i, t_list_cmd *l_cmd)
+t_command	*add_command(t_command *parent, t_list_cmd *l_cmd)
 {
-    t_simple_command *tmp;
-    t_simple_command *new;
+	t_command *tmp;
+	t_command *new;
 
-    if (parent->s_left->l_element == NULL)
-    {
-        if (!(parent->s_left->l_element = (t_elements *)malloc(sizeof(t_elements))))
-            return (NULL);
-        init_simple_cmd(&parent->s_left, i);
-        return (parent);
-    }
-    tmp = parent->s_left;
-    if (!(new = (t_simple_command *)malloc(sizeof(t_simple_command))))
-        return (NULL);
-    if (!(new->l_element = (t_elements *)malloc(sizeof(t_elements))))
-        return (NULL);
-    init_simple_cmd(&new, i);
-    while (parent->s_left->right != NULL)
-        parent->s_left = parent->s_left->right;
-    new->parent = parent->s_left;
-    parent->s_left->right = new;
-    return (parent);
+	tmp = parent;
+	if (!(new = (t_command *)malloc(sizeof(t_command))))
+		return (NULL);
+	if (!(new->s_left = (t_simple_command *)malloc(sizeof(t_simple_command))))
+		return (NULL);
+	ft_bzero(&new->tool, sizeof(t_tool));
+	new->right = NULL;
+	new->s_left->l_element = NULL;
+	new->s_left->right = NULL;
+	while (tmp->right != NULL)
+		tmp = tmp->right;
+	tmp->right = new;
+	return (parent);
+}
+
+t_command	*add_simple_cmd(t_command *parent, int i, t_list_cmd *l_cmd)
+{
+	t_simple_command *tmp;
+	t_simple_command *new;
+
+	if (parent->s_left->l_element == NULL)
+	{
+		if (!(parent->s_left->l_element =\
+			(t_elements *)malloc(sizeof(t_elements))))
+			exit(0);
+		init_simple_cmd(&parent->s_left, i);
+		return (parent);
+	}
+	tmp = parent->s_left;
+	if (!(new = (t_simple_command *)malloc(sizeof(t_simple_command))))
+		return (NULL);
+	if (!(new->l_element = (t_elements *)malloc(sizeof(t_elements))))
+		return (NULL);
+	init_simple_cmd(&new, i);
+	while (parent->s_left->right != NULL)
+		parent->s_left = parent->s_left->right;
+	new->parent = parent->s_left;
+	parent->s_left->right = new;
+	return (parent);
 }

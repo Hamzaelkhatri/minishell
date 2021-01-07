@@ -19,6 +19,9 @@ SRC_NAME=allocation.c\
 		parse.c\
 		free.c\
 		init.c\
+		free_extended.c\
+		exit.c\
+		print.c\
 
 HDR_NAME=minishell.h 
 

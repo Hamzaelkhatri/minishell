@@ -109,19 +109,23 @@ typedef struct s_list_cmd
     struct s_list_cmd *previous;
 } t_list_cmd;
 
-void ft_putchar(char c);
-void ft_putstr(char *str);
+typedef struct s_tmp
+{
+    t_list_cmd *lc;
+    t_command *command;
+    t_simple_command *sc;
+    t_simple_command *cmd;
+} t_tmp;
+;
+
 char **ft_space_split(char const *s);
-int check(char *line, char **test);
-int is_correct(char c);
-void ft_wich(t_check *wich, int number);
 char **ft_space_split_quote(char const *s);
 
 // allocation
 
 t_list_cmd *add_list_cmd(t_list_cmd *parent);
-t_command *add_command(t_command *parent,t_list_cmd *l_cmd);
-t_command *add_simple_cmd(t_command *parent, int i,t_list_cmd *l_cmd);
+t_command *add_command(t_command *parent, t_list_cmd *l_cmd);
+t_command *add_simple_cmd(t_command *parent, int i, t_list_cmd *l_cmd);
 void alloc_affect(t_list_cmd *l_cmd, char *command, int indice);
 
 // check
@@ -130,11 +134,14 @@ void ft_check_line(char *line);
 int check_type_element(char *line, int *check_i_o, int count);
 int check_io_redirection(char *line, int *p, int *check_o_i);
 void check_element(t_list_cmd *l_cmd);
+int check_what_after(char c);
 
 // redirection_tools
 
 void affect_redirection(t_list_cmd *l_cmd);
 int wich_redirection(int check);
+int check_io_redirection(char *line, int *p, int *check_o_i);
+int check_redirection(char *line, int *i);
 
 // sort
 
@@ -181,7 +188,6 @@ void print_working_directory(t_path *path);
 void exeute(t_path *path, char *cmd);
 char **ft_space_split(char const *s);
 char *ft_str_in_str(const char *s1, const char *s2);
-int ft_2strlen(char **str);
 void get_directory(t_path *path);
 int check_path(char *path, char *cmd);
 void getprogramme(t_path *path, char *cmd);
