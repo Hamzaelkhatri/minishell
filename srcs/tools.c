@@ -25,7 +25,6 @@ char *ft_str_in_str(const char *s1, const char *s2)
 	return (NULL);
 }
 
-
 int count_line(char **env)
 {
 	int i = 0;
@@ -58,14 +57,22 @@ char *ignoring_quote(char *line)
 	index = 0;
 	while (line[i])
 	{
-		while (line[i] != 34 && line[i] != 39 && line[i])
+		while (( line[i] == '\\' && (line[i+1] == 34 || line[i+1] == 39)) || (line[i] != 34 && line[i] != 39 && line[i]))
+		{
+			if ( line[i] == '\\' && (line[i+1] == 34 || line[i+1] == 39))
+					i++;
 			line[index++] = line[i++];
+		}
 		if ((line[i] == 34 || line[i] == 39) && line[i])
 		{
 			wich = (line[i] == 34) ? 34 : 39;
 			i++;
-			while (line[i] != wich && line[i])
+			while (((line[i] == '\\' && line[i + 1] == wich) || line[i] != wich) && line[i])
+			{
+				if (line[i] == '\\' && line[i + 1] == wich)
+					i++;
 				line[index++] = line[i++];
+			}
 			if (line[i] == '\0')
 				line[index] = '\0';
 			else
@@ -143,7 +150,7 @@ void quotes(t_list_cmd *l_cmd)
 	{
 		tmp_command = l_cmd->command;
 		tmp_s = l_cmd->command->s_left;
-		quotes_extended(l_cmd,tmp_s);
+		quotes_extended(l_cmd, tmp_s);
 		l_cmd->command = tmp_command;
 		l_cmd = l_cmd->next;
 	}

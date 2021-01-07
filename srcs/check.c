@@ -81,14 +81,14 @@ void ft_check_line(char *line)
             ft_putstr_fd("syntax error\n", 2);
             exit(1);
         }
-        if (line[i] == '"')
+        if (line[i] == '"' && line[i - 1] != '\\')
         {
             if (check_quote == 0)
                 check_quote = 1;
             else
                 check_quote = 0;
         }
-        if (line[i] == '|' && check_operation(&line[i]) == 0)
+        if (line[0] == '|' || (line[i] == '|' && check_operation(&line[i]) == 0))
         {
             ft_putstr_fd("syntax error\n", 2);
             exit(1);

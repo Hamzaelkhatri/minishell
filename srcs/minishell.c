@@ -23,12 +23,13 @@ int main(int argc, char **argv, char **env)
 
     parse_list_command(l_command, l_command->line);
 
-    printf("-------------------------------before sort-------------------------------\n");
-    print(l_command);
+    // printf("-------------------------------before sort-------------------------------\n");
+    // print(l_command);
     sort(l_command);
+    // ft_putendl_fd("fena  sat",1);
     quotes(l_command);
     check_scommand(l_command);
-    printf("-------------------------------after sort-------------------------------\n");
+    // printf("-------------------------------after sort-------------------------------\n");
     print(l_command);
     free_lcommand(&l_command);
     // printf("-------------------------------echo -n and ignoring quotes-------------------------------\n");

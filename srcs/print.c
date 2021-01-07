@@ -40,3 +40,13 @@ void print(t_list_cmd *l_command)
 
     // l_command = tmp;
 }
+
+//|ls -la ; 
+//ls "| ls"
+//echo "\"a"
+// echo a | "d"
+// echo -nnn -n -n a
+// echo -nann -n -n a
+// cat < a >
+// cat >
+// cat ">" (argument not redirection)

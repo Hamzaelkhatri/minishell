@@ -13,8 +13,8 @@ SRC_NAME=allocation.c\
 		get_next_line_utils.c\
 		minishell.c\
 		tools.c\
-		ft_split.c\
-		ft_split_quote.c\
+		ft_space_split.c\
+		ft_space_split_quote.c\
 		s_command.c\
 		parse.c\
 		free.c\
