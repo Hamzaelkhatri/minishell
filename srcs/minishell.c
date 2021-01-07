@@ -6,7 +6,7 @@
 /*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/13 16:30:13 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/07 14:36:41 by ahaddad          ###   ########.fr       */
+/*   Updated: 2021/01/07 15:13:10 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,7 @@ int main(int argc, char **argv, char **env) {
   path.env->fullenv = env;
   // show_env(path.env->fullenv);
   lst = *handle_line(&sh, &rd, &lst, env);
-  // print_nested_lklist(&lst);
-  print_all(&lst);
+  // print_all(&lst);
   // print_working_directory(&path);
   /*------------------check builtins commande--------------*/
   // if (check_one(rd.line, &sh) == 3)
@@ -161,17 +160,17 @@ int main(int argc, char **argv, char **env) {
   // else
   //   check_built(&lst, &cmd);
   // // // /*-----------------for the pipes commande----------------------*/
-  // if (check_one(rd.line, &sh) == 1)
-  // {
-  //   // puts("hola");
-  //   pipes_cmd1(&path, &lst, &cmd);
-  // }
-  // else if (check_one(rd.line, &sh) == 3)
-  // {
-  //   // puts("dkhal l tanya");
-  //   call_pipe(&lst, &path, &sh, &cmd);
-  // }else
-  //   call_getprg(&lst, &path, &cmd);
+  if (check_one(rd.line, &sh) == 1)
+  {
+    // puts("hola");
+    pipes_cmd1(&path, &lst, &cmd);
+  }
+  else if (check_one(rd.line, &sh) == 3)
+  {
+    // puts("dkhal l tanya");
+    call_pipe(&lst, &path, &sh, &cmd);
+  }else
+    call_getprg(&lst, &path, &cmd);
   // show_env(env);
   /*--------------------------------------------------------------*/
 
