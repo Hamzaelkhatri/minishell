@@ -53,28 +53,28 @@ int			check_redirection(char *line, int *i)
 }
 
 static void	affect_redirection_ex(t_list_cmd *l_cmd,
-		int result, char **tab_split)
+		int result, char ***tab_split)
 {
 	if (wich_redirection(l_cmd->command->tool.check_io) == 2\
 			|| wich_redirection(l_cmd->command->tool.check_io) == 1)
-		tab_split = ft_split(l_cmd->command->tool.tab[l_cmd->command->tool.i]\
+		*tab_split = ft_split(l_cmd->command->tool.tab[l_cmd->command->tool.i]\
 			, '>');
 	else
-		tab_split = ft_split(l_cmd->command->tool.tab[l_cmd->command->tool.i]\
+		*tab_split = ft_split(l_cmd->command->tool.tab[l_cmd->command->tool.i]\
 			, '<');
 	if (result == 3)
-		alloc_affect(l_cmd, tab_split[0], 3);
+		alloc_affect(l_cmd, (*tab_split)[0], 3);
 	else if (result == 4 || result == 5)
 	{
 		if (l_cmd->command->tool.cmd == 0)
-			alloc_affect(l_cmd, tab_split[0], 1);
+			alloc_affect(l_cmd, (*tab_split)[0], 1);
 		else
-			alloc_affect(l_cmd, tab_split[0], 2);
+			alloc_affect(l_cmd, (*tab_split)[0], 2);
 		if (result == 4)
 			alloc_affect(l_cmd,\
 				l_cmd->command->tool.tab[++l_cmd->command->tool.i], 3);
 		else if (result == 5)
-			alloc_affect(l_cmd, tab_split[1], 3);
+			alloc_affect(l_cmd, (*tab_split)[1], 3);
 	}
 }
 
@@ -86,7 +86,7 @@ void		affect_redirection(t_list_cmd *l_cmd)
 	tab_split = NULL;
 	result = l_cmd->command->tool.result;
 	if (result == 3 || result == 4 || result == 5)
-		affect_redirection_ex(l_cmd, result, tab_split);
+		affect_redirection_ex(l_cmd, result, &tab_split);
 	if (result == 2)
 		alloc_affect(l_cmd,\
 			l_cmd->command->tool.tab[++l_cmd->command->tool.i], 3);

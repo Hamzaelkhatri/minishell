@@ -10,6 +10,7 @@ int main(int argc, char **argv, char **env)
     char *str;
 
     l_command = NULL;
+    // if()
     fd = open("command.txt", O_RDWR);
     char *line;
     get_next_line(fd, &line);
@@ -17,7 +18,10 @@ int main(int argc, char **argv, char **env)
     if (line[0] == '\0')
         return (0);
     l_command = add_list_cmd(l_command);
-    parse_list_command(l_command, line);
+    l_command->line = ft_strdup(line);
+    ft_strdel(&line);
+
+    parse_list_command(l_command, l_command->line);
 
     printf("-------------------------------before sort-------------------------------\n");
     print(l_command);
@@ -27,7 +31,6 @@ int main(int argc, char **argv, char **env)
     printf("-------------------------------after sort-------------------------------\n");
     print(l_command);
     free_lcommand(&l_command);
-    ft_strdel(&line);
     // printf("-------------------------------echo -n and ignoring quotes-------------------------------\n");
     // print(l_command);
     return (0);

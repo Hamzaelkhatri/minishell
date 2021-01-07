@@ -105,6 +105,7 @@ typedef struct s_command
 typedef struct s_list_cmd
 {
     t_command *command;
+    char *line;
     struct s_list_cmd *next;
     struct s_list_cmd *previous;
 } t_list_cmd;
@@ -173,6 +174,7 @@ void free_s_command(t_simple_command **s_command);
 void free_scommand(t_simple_command **scommand);
 void free_command(t_command **command);
 void free_lcommand(t_list_cmd **l_command);
+void ft_exit(t_list_cmd *l_cmd,int error);
 
 // init
 

@@ -13,6 +13,7 @@ void	init_simple_cmd(t_simple_command **parent, int i)
 
 void	init_lcommand(t_list_cmd **parent)
 {
+	(*parent)->line = NULL;
 	(*parent)->command->s_left->l_element = NULL;
 	(*parent)->command->s_left->right = NULL;
 	(*parent)->command->right = NULL;
