@@ -207,7 +207,10 @@ char *seperat_red(char *tmp);
 char *seperat_file_name(char *tmp);
 int condition_1(char **free_sp, int i);
 int condition_2(char **free_sp, int i);
+void condition_3(t_use *use, char ***free_sp);
 
 t_list_cmd *define_each1_01(t_list_cmd *lst, char *string, char *red);
+t_all *all_conditions(t_all *all, char **free_sp, int *i);
+t_list_cmd *redirection_sort(t_list_cmd *lst, char *cmd, char *arg, char *red);
 
 #endif

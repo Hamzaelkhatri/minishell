@@ -1,1 +1,1 @@
-echo hello world  >file blba >> file1 again <file2
+echo hello world  >file  hello samir >> file1 hello hamza <file2 >>file hello amine <<djej
