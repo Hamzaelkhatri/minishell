@@ -6,7 +6,7 @@
 /*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 16:55:48 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/08 10:09:41 by zdnaya           ###   ########.fr       */
+/*   Updated: 2021/01/08 12:05:24 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ t_list_cmd *sort_all_2(t_list_cmd *lst, t_all *all, char *red, char **free_sp) {
       all = all_conditions(all, free_sp, &use.i);
     else
       condition_3(&use, &free_sp);
-    lst->all = update_all(use.cmd2, use.arg1, all->red);
   }
+  lst->all = update_all(use.cmd2, use.arg1, all->red);
+  // afedal tabe9a hadi lilefo9e hna amchi wast while
   return (lst);
 }

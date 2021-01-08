@@ -6,7 +6,7 @@
 /*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 17:07:25 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/08 10:11:50 by zdnaya           ###   ########.fr       */
+/*   Updated: 2021/01/08 12:02:11 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,21 @@
 t_list_cmd *define_each1_01(t_list_cmd *lst, char *string, char *red) {
   t_all *new1;
   char **tmp;
-  t_use *use;
+  t_use use;
+  ft_bzero(&use, sizeof(t_use));
+
   tmp = ft_space_split(string);
-  use->cmd = ft_strdup(tmp[0]);
-  if (strcmp(use->cmd, "echo") == 0 && strcmp(use->arg, "-n") == 0) {
-    use->cmd = ft_str_join(use->cmd, " ", tmp[1]);
-    use->arg = concat(tmp, 2);
-  } else
-    use->arg = concat(tmp, 1);
-  new1 = s_cmd_details(use->cmd, use->arg, red);
+  int i = 0;
+  if (strcmp(tmp[0], "echo") == 0 && strcmp(tmp[1], "-n") == 0) {
+    use.cmd = concat_1(tmp[1], tmp[0]);
+    use.arg = concat(tmp, 2);
+  } else {
+    use.cmd = ft_strdup(tmp[0]);
+    use.arg = concat(tmp, 1);
+  }
+  new1 = s_cmd_details(use.cmd, use.arg, red);
   add_all(&lst->all, new1);
-  lst = redirection_sort(lst, use->cmd, use->arg, red);
+  lst = redirection_sort(lst, use.cmd, use.arg, red);
   return (lst);
 }
 
@@ -43,7 +47,7 @@ t_list_cmd *redirection_sort(t_list_cmd *lst, char *cmd, char *arg, char *red) {
       use.arg1 = concat_1(use.arg, use.arg1);
       use.i++;
     }
-    lst->all = update_all(cmd, concat_1(use.arg1, arg), lst->all->red);
   }
+  lst->all = update_all(cmd, concat_1(use.arg1, arg), lst->all->red);
   return (lst);
 }

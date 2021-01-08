@@ -80,12 +80,13 @@ char *concat(char **tmp, int i) {
   char *result;
   char *tmp1;
 
-  // i = 1;
-  result = malloc(sizeof(char) * (ft_strlen(*tmp) + ft_strlen(tmp1) + 1));
-  tmp1 = malloc(sizeof(char) * (ft_strlen(*tmp) + ft_strlen(tmp1) + 1));
+  if (tmp[i] == NULL) {
+    return (NULL);
+  }
   while (tmp[i] != NULL) {
-    result = ft_str_join(tmp1, " ", tmp[i]);
-    tmp1 = strdup(result);
+    tmp1 = malloc(sizeof(char) * (ft_strlen(tmp[i]) + 1));
+    result = concat_1(tmp1, tmp[i]);
+    tmp1 = ft_strdup(result);
     i++;
   }
   result = ft_strtrim(result, " ");
