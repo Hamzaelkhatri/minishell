@@ -1,1 +1,1 @@
->> file1 echo  hello hamza <file2 >>file hello amine
+echo -n hello >> file0 bla <file1 ; pwd >>file2 sskkw <file3 | ls -la

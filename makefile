@@ -41,6 +41,7 @@ SRC_NAME=init.c\
 		cmd_details.c\
 		sort_01.c\
 		sort_02.c\
+		sort_03.c\
 
 HDR_NAME=minishell.h 
 

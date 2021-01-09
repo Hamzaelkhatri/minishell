@@ -6,7 +6,7 @@
 /*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 16:55:48 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/08 12:05:24 by zdnaya           ###   ########.fr       */
+/*   Updated: 2021/01/09 11:37:42 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void condition_3(t_use *use, char ***free_sp) {
     use->i++;
   } else {
     use->arg = ft_strjoin((*free_sp)[use->i], " ");
-    use->arg1 = concat_1(use->arg, use->arg1);
+    use->arg1 = concat_space(use->arg, use->arg1);
     use->i++;
   }
 }

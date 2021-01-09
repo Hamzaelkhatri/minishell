@@ -85,7 +85,7 @@ char *concat(char **tmp, int i) {
   }
   while (tmp[i] != NULL) {
     tmp1 = malloc(sizeof(char) * (ft_strlen(tmp[i]) + 1));
-    result = concat_1(tmp1, tmp[i]);
+    result = concat_space(tmp1, tmp[i]);
     tmp1 = ft_strdup(result);
     i++;
   }
@@ -93,11 +93,14 @@ char *concat(char **tmp, int i) {
   return (result);
 }
 
-char *concat_1(char *tmp, char *tmp1) {
+char *concat_space(char *tmp, char *tmp1) {
   int i;
   char *result;
 
   i = 0;
+  if (tmp1 == NULL && tmp == NULL)
+    return (NULL);
+  // puts("here");
   if (tmp1 == NULL && tmp != NULL) {
     result = malloc(sizeof(char) * (ft_strlen(tmp)) + 1);
     result = ft_strdup(tmp);

@@ -11,7 +11,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 2048
 
 typedef struct s_key {
   int cntrd;
@@ -201,7 +201,7 @@ t_redirection *creat_node_r(char *content, char *content1);
 void add_red(t_redirection **head, t_redirection *new_cmd);
 
 t_all *update_all(char *cmd, char *arg, t_redirection *red);
-char *concat_1(char *tmp, char *tmp1);
+char *concat_space(char *tmp, char *tmp1);
 
 char *seperat_red(char *tmp);
 char *seperat_file_name(char *tmp);
@@ -212,5 +212,8 @@ void condition_3(t_use *use, char ***free_sp);
 t_list_cmd *define_each1_01(t_list_cmd *lst, char *string, char *red);
 t_all *all_conditions(t_all *all, char **free_sp, int *i);
 t_list_cmd *redirection_sort(t_list_cmd *lst, char *cmd, char *arg, char *red);
+t_list_cmd *define_each1_02(t_list_cmd *lst, char *string, char *red);
+t_list_cmd *red_sort_02(t_list_cmd *lst, char *cmd, char *arg, char *red);
+t_list_cmd *sort_all_3(t_list_cmd *lst);
 
 #endif
