@@ -16,41 +16,6 @@ char **input_or_output(char *line)
     return (NULL);
 }
 
-// void alloc_affect(t_list_cmd *l_cmd, char *command, int indice)
-// {
-
-//     if (indice == 1)
-//     {
-//         l_cmd->command->tool.cmd = 1;
-//         l_cmd->command = add_simple_cmd(l_cmd->command, 1);
-//         if (l_cmd->command->s_left->right != NULL)
-//             l_cmd->command->s_left = l_cmd->command->s_left->right;
-//         l_cmd->command->s_left->l_element->cmd = ft_strdup(command);
-//     }
-//     else if (indice == 2)
-//     {
-//         l_cmd->command->tool.argument = 2;
-//         l_cmd->command = add_simple_cmd(l_cmd->command, 2);
-//         if (l_cmd->command->s_left->right != NULL)
-//             l_cmd->command->s_left = l_cmd->command->s_left->right;
-//         l_cmd->command->s_left->l_element->argument = ft_strdup(command);
-//     }
-//     else if (indice == 3)
-//     {
-//         l_cmd->command->tool.argument = 3;
-//         l_cmd->command = add_simple_cmd(l_cmd->command, 3);
-//         if (l_cmd->command->s_left->right != NULL)
-//             l_cmd->command->s_left = l_cmd->command->s_left->right;
-//         l_cmd->command->s_left->l_element->redirection.file = ft_strdup(command);
-//         if (wich_redirection(l_cmd->command->tool.check_io) == 2)
-//             l_cmd->command->s_left->l_element->redirection.i_o = ft_strdup(">>");
-//         else if (wich_redirection(l_cmd->command->tool.check_io) == 1)
-//             l_cmd->command->s_left->l_element->redirection.i_o = ft_strdup(">");
-//         else if (wich_redirection(l_cmd->command->tool.check_io) == 3)
-//             l_cmd->command->s_left->l_element->redirection.i_o = ft_strdup("<");
-//     }
-// }
-
 void affect_redirection(t_list_cmd *l_cmd)
 {
     char **tab_split;
@@ -79,25 +44,6 @@ void affect_redirection(t_list_cmd *l_cmd)
     if (result == 2)
         alloc_affect(l_cmd, l_cmd->command->tool.tab[++l_cmd->command->tool.i], 3);
 }
-
-
-// void parcs_this_simple_command(char *s_command, t_list_cmd *l_cmd, char separator, int y_or_n)
-// {
-//     t_command *tmp_command;
-//     int i = 0;
-//     tmp_command = l_cmd->command;
-//     if (l_cmd->command->s_left->l_element != NULL)
-//         l_cmd->command = add_command(l_cmd->command);
-//     while (l_cmd->command->right != NULL)
-//         l_cmd->command = l_cmd->command->right;
-//     ft_bzero(&l_cmd->command->tool, sizeof(t_tool));
-//     l_cmd->command->tool.tab = ft_space_split_quote(s_command);
-//     check_element(l_cmd);
-//     l_cmd->command = tmp_command;
-// }
-
-
-
 
 int check_parse_list_command(char *line, int i)
 {
@@ -182,5 +128,10 @@ int main(int argc, char **argv, char **env)
     // pipes_cmd(&path, l_command);
     // export_cmd("hello=shihaja",path.env->fullenv);
     // show_env(path.env->fullenv);
+    free_lcommand(&l_command);
+    ft_strdel(&line);
+
+
+    
     return (0);
 }

@@ -6,12 +6,11 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 10:32:55 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/01/06 17:12:24 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/01/07 17:42:38 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int lstsize(t_list_cmd *lst)
 {
@@ -42,8 +41,7 @@ void execute_foreign(t_list_cmd *lst,int piping)
 		cmd = ft_strjoin_command(lst->command->s_left);
 		char *const args[] = {binaryPath, "-c", cmd,NULL};
 		if (execve(binaryPath, args, NULL) < 0)
-		perror("bash$ :");
-		free(cmd);
+			ft_putendl_fd(strerror(errno),1);
 	}
 	if(!piping)
 		wait(0);
@@ -53,23 +51,15 @@ void    pipes_cmd(t_path * path, t_list_cmd *lst)
 {
     int fd[2];
 	int _fd[2];
-	t_simple_command *s_cmd;
-
-
     int i;
-    pid_t id1;
-    pid_t id2;
     pid_t pid;
-    char *p;
-    char *tmp;
-    char *read1;
 	char *cmd;
 	i = 0;
 
 	int s = lstsize(lst);
     while (lst->command != NULL)
     {
-         pipe(fd);
+        pipe(fd);
 		if ((pid = fork()) == -1)
         {
 			perror("bash $ fork failed");
@@ -96,13 +86,11 @@ void    pipes_cmd(t_path * path, t_list_cmd *lst)
 			}
 			if(!cmdcheck(lst->command->s_left->l_element->cmd))
 			{
-					char *cmd;
-					char *binaryPath = "/bin/bash";
-					cmd = ft_strjoin_command(lst->command->s_left);
-					char *const args[] = {binaryPath, "-c", cmd,NULL};
-					if (execve(binaryPath, args, NULL) < 0)
-						perror("bash$ :");
-					// free(cmd);
+				char *binaryPath = "/bin/bash";
+				cmd = ft_strjoin_command(lst->command->s_left);
+				char *const args[] = {binaryPath, "-c", cmd,NULL};
+				if (execve(binaryPath, args, path->env->fullenv) < 0)
+					ft_putendl_fd(strerror(errno),1);
 				exit(0);
 			}
 			else
@@ -120,6 +108,5 @@ void    pipes_cmd(t_path * path, t_list_cmd *lst)
         }
 		i++;
     }
-	// waitpid(-1,0,0);
     wait(0);
 }

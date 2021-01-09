@@ -40,7 +40,7 @@ void exeute(t_path *path, char *cmd)
     pid_t a = fork();
     if (!a)
     {
-        char *binaryPath = "/bin/bash";
+        char *binaryPath = "/bin/zsh";
         char *const args[] = {binaryPath, "-c", cmd, NULL};
         if (execve(binaryPath, args, NULL) == -1)
             perror("bash$ ");

@@ -3,12 +3,11 @@
 void cd_cmd(char *nextPath,t_path *path)
 {
     char *s;
-    if(!nextPath)
+    char *s1;
+    if(nextPath==NULL)
         nextPath = search_env(path->env->fullenv,"HOME");
-    getcwd(s,100);
-    edit_env(path->env->fullenv,"OLDPWD",s);
-    if(chdir(nextPath))
-       perror("bash$ ");
-    getcwd(s,100);
-    edit_env(path->env->fullenv,"PWD",s);
+    edit_env(path->env->fullenv,"OLDPWD",getcwd(NULL,100));
+    if(chdir(nextPath)<0)
+       ft_putendl_fd(strerror(errno),1);
+    edit_env(path->env->fullenv,"PWD",getcwd(NULL,100));
 }
