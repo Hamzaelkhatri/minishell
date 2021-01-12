@@ -41,12 +41,13 @@ void print(t_list_cmd *l_command)
     // l_command = tmp;
 }
 
-//|ls -la ; 
-//ls "| ls"
-//echo "\"a"
-// echo a | "d"
+//|ls -la ;     V
+//ls "| ls"     V
+//echo "\"a"    V
+// echo a | "d" V
 // echo -nnn -n -n a
 // echo -nann -n -n a
-// cat < a >
-// cat >
+// cat < a >    V
+// cat >        V
 // cat ">" (argument not redirection)
+// >echo

@@ -21,6 +21,7 @@ SRC_NAME=allocation.c\
 		init.c\
 		free_extended.c\
 		exit.c\
+		ft_split_quotes.c\
 		print.c\
 
 HDR_NAME=minishell.h 

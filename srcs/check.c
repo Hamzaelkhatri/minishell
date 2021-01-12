@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 static int check_is_correct(char operation, char *line)
 {
     int i;
@@ -12,7 +11,7 @@ static int check_is_correct(char operation, char *line)
     c = line[i];
     if (operation == '|')
     {
-        if (ft_isalnum(c) == 0 || c == '>' || c == '<' || c == '-' || c == '|' || c == ';' || c == '+')
+        if (ft_isalnum(c) == 0 && (c == '|' || c == ';'))
             return (0);
     }
     else if (operation == ';')
@@ -24,17 +23,16 @@ static int check_is_correct(char operation, char *line)
     }
     else if (operation == '<')
     {
-        if (ft_isalnum(c) == 0 || c == '>' || c == '<' || c == '|' || c == ';')
+        if ((ft_isalnum(c) == 0) && (c == '\0' || c == '>' || c == '<' || c == '|' || c == ';'))
             return (0);
     }
     else if (operation == '>')
     {
-        if (ft_isalnum(c) == 0 && (c == '>' || c == '<' || c == '|' || c == ';'))
+        if (ft_isalnum(c) == 0 && (c == '\0' || c == '>' || c == '<' || c == '|' || c == ';'))
             return (0);
     }
     return (1);
 }
-
 
 static int check_operation(char *line)
 {
@@ -71,29 +69,34 @@ void ft_check_line(char *line)
 {
     int i;
     int check_quote;
+    char quotes;
 
-    check_quote = 0;
     i = 0;
     while (line[i])
     {
-        if(line[i] == ':')
+        if (line[i] == ':')
         {
             ft_putstr_fd("syntax error\n", 2);
             exit(1);
         }
-        if (line[i] == '"' && line[i - 1] != '\\')
+        if ((line[i] == '"' || line[i] == 39) && line[i - 1] != '\\')
         {
-            if (check_quote == 0)
-                check_quote = 1;
-            else
-                check_quote = 0;
+            quotes = line[i++];
+            while (line[i] != quotes && line[i])
+                i++;
+            
+            if (!(line[i]))
+            {
+                ft_putstr_fd("syntax error\n", 2);
+                exit(1);
+            }
         }
-        if (line[0] == '|' || (line[i] == '|' && check_operation(&line[i]) == 0))
+        else if (line[0] == '|' || (line[i] == '|' && check_operation(&line[i]) == 0))
         {
             ft_putstr_fd("syntax error\n", 2);
             exit(1);
         }
-        if (line[0] == ';' || (line[i] == ';' && check_operation(&line[i]) == 0))
+        else if (line[0] == ';' || (line[i] == ';' && check_operation(&line[i]) == 0))
         {
             ft_putstr_fd("syntax error\n", 2);
             exit(1);
@@ -108,14 +111,9 @@ void ft_check_line(char *line)
             ft_putstr_fd("syntax error\n", 2);
             exit(1);
         }
-        if (line[i] == '>' && line[i + 1] == '>')
+        else if (line[i] == '>' && line[i + 1] == '>')
             i++;
         i++;
-    }
-    if (check_quote == 1)
-    {
-        ft_putstr_fd("syntax error\n", 2);
-        exit(1);
     }
 }
 
@@ -123,13 +121,17 @@ int check_type_element(char *line, int *check_i_o, int count)
 {
     int i;
     int redirection;
+    int quotes;
 
     i = 0;
+    quotes = 0;
     redirection = -1;
 
     while (line[i])
     {
-        if (line[i] == '>' || line[i] == '<')
+        if (line[i] == 34 || line[i] == 39)
+            quotes = (quotes == 0) ? 1 : 0;
+        if ((line[i] == '>' || line[i] == '<') && quotes == 0)
             redirection = check_io_redirection(line, &i, check_i_o);
         i++;
     }

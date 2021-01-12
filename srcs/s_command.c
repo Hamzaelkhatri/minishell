@@ -1,16 +1,32 @@
 #include "minishell.h"
 
-static void	check_echo(t_simple_command **cmd)
+static int check_n(char *str)
+{
+	int i;
+
+	if (str[0] != '-')
+		return (0);
+	i = 1;
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+static void check_echo(t_simple_command **cmd)
 {
 	t_simple_command *tmp;
 	t_simple_command *save;
 
 	tmp = *cmd;
 	*cmd = (*cmd)->right;
-	if (*cmd != NULL && ft_str_in_str((*cmd)->l_element->argument, "-n"))
+
+	if (*cmd != NULL && check_n((*cmd)->l_element->argument))
 	{
-		while ((*cmd)->right != NULL &&\
-			ft_str_in_str((*cmd)->right->l_element->argument, "-n"))
+		while ((*cmd)->right != NULL &&
+			   check_n((*cmd)->right->l_element->argument))
 		{
 			save = (*cmd)->right;
 			free_s_command(&(*cmd));
@@ -22,11 +38,11 @@ static void	check_echo(t_simple_command **cmd)
 	*cmd = tmp;
 }
 
-void		check_scommand(t_list_cmd *l_cmd)
+void check_scommand(t_list_cmd *l_cmd)
 {
-	t_list_cmd			*tmp_l_command;
-	t_command			*tmp_command;
-	t_simple_command	*tmp_s;
+	t_list_cmd *tmp_l_command;
+	t_command *tmp_command;
+	t_simple_command *tmp_s;
 
 	tmp_l_command = l_cmd;
 	tmp_command = l_cmd->command;
@@ -37,7 +53,7 @@ void		check_scommand(t_list_cmd *l_cmd)
 		tmp_s = l_cmd->command->s_left;
 		while (l_cmd->command != NULL)
 		{
-			if (ft_str_in_str(l_cmd->command->s_left->l_element->cmd, "echo"))
+			if (l_cmd->command->s_left->l_element->cmd != NULL && (ft_strlen(l_cmd->command->s_left->l_element->cmd) == 4 && (ft_strnstr(l_cmd->command->s_left->l_element->cmd, "echo", 4))))
 				check_echo(&l_cmd->command->s_left);
 			l_cmd->command = l_cmd->command->right;
 		}

@@ -174,7 +174,7 @@ void free_s_command(t_simple_command **s_command);
 void free_scommand(t_simple_command **scommand);
 void free_command(t_command **command);
 void free_lcommand(t_list_cmd **l_command);
-void ft_exit(t_list_cmd *l_cmd,int error);
+void ft_exit(t_list_cmd *l_cmd, int error);
 
 // init
 
@@ -188,6 +188,7 @@ void show_env(char **path);
 char *search_env(char **env, char *str);
 void print_working_directory(t_path *path);
 void exeute(t_path *path, char *cmd);
+char **ft_split_quotes(char const *s, char c);
 char **ft_space_split(char const *s);
 char *ft_str_in_str(const char *s1, const char *s2);
 void get_directory(t_path *path);
