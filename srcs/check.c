@@ -16,7 +16,7 @@ static int check_is_correct(char operation, char *line)
     c = line[i];
     if (operation == '|')
     {
-        if (ft_isalnum(c) == 0 || c == '>' || c == '<' || c == '-' || c == '|' || c == ';' || c == '+')
+        if (ft_isalnum(c) == 0 && ( c == '|' || c == ';' ))
             return (0);
     }
     else if (operation == ';')

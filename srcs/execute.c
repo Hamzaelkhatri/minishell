@@ -40,10 +40,10 @@ void exeute(t_path *path, char *cmd)
     pid_t a = fork();
     if (!a)
     {
-        char *binaryPath = "/bin/zsh";
+        char *binaryPath = "/bin/bash";
         char *const args[] = {binaryPath, "-c", cmd, NULL};
         if (execve(binaryPath, args, NULL) == -1)
-            perror("bash$ ");
+            ft_putendl_fd(strerror(errno),1);
     }
     wait(0);
 }

@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 10:32:55 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/01/07 17:42:38 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/01/09 16:55:39 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,8 @@ void    pipes_cmd(t_path * path, t_list_cmd *lst)
 			}
 			if(!cmdcheck(lst->command->s_left->l_element->cmd))
 			{
-				char *binaryPath = "/bin/bash";
 				cmd = ft_strjoin_command(lst->command->s_left);
-				char *const args[] = {binaryPath, "-c", cmd,NULL};
-				if (execve(binaryPath, args, path->env->fullenv) < 0)
-					ft_putendl_fd(strerror(errno),1);
+				getprogramme(path,cmd);
 				exit(0);
 			}
 			else

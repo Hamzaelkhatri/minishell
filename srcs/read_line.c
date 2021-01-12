@@ -10,7 +10,7 @@ int read_line(t_path *key, char **line)
 	*line = (char *)ft_calloc(BUFFER_SIZE, sizeof(char));
 	if (!line)
 	{
-		write(1, "bash$> allocation error\n", 30);
+		ft_putendl_fd("\e[0;31m bash$ : allocation error\e[0;37m",1);
 		exit(1);
 	}
 	if ((ret = read(0, *line, BUFFER_SIZE)) == -1)
@@ -46,7 +46,7 @@ void sigint_handler(int sig)
 	{
 		pid_t iPid = getpid(); /* Process gets its id.*/
 		kill(iPid, SIGINT);
-		write(1, "HERE", 4);
+		// write(1, "HERE", 4);
 	}
 }
 
@@ -77,12 +77,12 @@ void promp_bash(t_cmd *cmd, t_path *path, int ret, char **line)
 	}
 	if (ft_strrchr(*line, '\n') && search_cmd(cmd))
 	{
-		ft_putstr_fd("bash $ ", 1);
+		bash_promp();
 		path->key->cntrd = 0;
 	}
 	else if (ft_strrchr(*line, '\n'))
 	{
-		ft_putstr_fd("bash $ ", 1);
+		bash_promp();
 		path->key->cntrd = 0;
 	}
 	if (ret > 0 && !ft_strrchr(*line, '\n'))
@@ -217,12 +217,19 @@ void check_cmd(t_cmd *cmd, char **line, t_path *path, int ret)
 	promp_bash(cmd, path, ret, line);
 }
 
-void loop_shell(t_cmd *cmd, t_path *path)
+void bash_promp()
+{
+	//
+	ft_putstr_fd("\e[1;32mbash$ \e[0;37m", 1);
+}
+
+void loop_shell(t_path *path)
 {
 	char *line;
 	int ret;
 	int status;
 	int salam;
+	t_list_cmd *cmd = NULL;
 	int i;
 
 	if (signal(SIGINT, sigint_handler) == SIG_ERR)
@@ -230,13 +237,23 @@ void loop_shell(t_cmd *cmd, t_path *path)
 	if (signal(SIGQUIT, sigint_handler) == SIG_ERR)
 		ft_putstr_fd("\n can't catch cntrl-\\", 1);
 	status = 1;
-	ft_putstr_fd("bash $ ", 1);
 	while (status)
 	{
+		bash_promp();
 		ret = 0;
 		ret = read_line(path, &line);
-		check_cmd(cmd, &line, path, ret);
+		ft_check_line(line);
+
+    	cmd = add_list_cmd(cmd);
+    	parse_list_command(cmd, line);
+		// if(line[0])
+    	sort(cmd);
+    	quotes(cmd);
+		commande_effect(cmd,path);
+		// check_cmd(cmd, &line, path, ret);
 		var_glob = 0;
+		free_lcommand(&cmd);
+		// free(cmd);
 		free(line);
 	}
 }

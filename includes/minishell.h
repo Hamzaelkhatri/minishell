@@ -177,7 +177,7 @@ void free_element(t_elements **element);
 void free_s_command(t_simple_command **s_command);
 
 //
-void loop_shell(t_cmd *cmd, t_path *path);
+void loop_shell(t_path *path);
 void init(t_path *path, t_key *key, t_cmd *cmd);
 void show_env(char **path);
 char *search_env(char **env, char *str);
@@ -211,5 +211,7 @@ int lstsize(t_list_cmd *lst);
 int commande_effect(t_list_cmd *lst,t_path *path);
 int get_cmd(char *cmd,t_path *path,t_command *l_cmd);
 int get_cmd_(char *cmd,t_path *path,t_command *l_cmd);
+void free_lcommand(t_list_cmd **l_command);
 void ft_exit();
+void bash_promp();
 #endif

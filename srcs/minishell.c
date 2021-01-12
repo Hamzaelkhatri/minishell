@@ -57,7 +57,6 @@ int check_parse_list_command(char *line, int i)
     return (0);
 }
 
-
 void free_scommand(t_simple_command **scommand)
 {
     if (*scommand != NULL)
@@ -99,36 +98,22 @@ int main(int argc, char **argv, char **env)
     t_cmd cmd;
 
     l_command = NULL;
-    fd = open("command.txt", O_RDWR);
+    // fd = open("command.txt", O_RDWR);
     char *line;
-    get_next_line(fd, &line);
-    ft_check_line(line);
-    if (line[0] == '\0')
-        return (0);
-    l_command = add_list_cmd(l_command);
-    parse_list_command(l_command, line);
-    sort(l_command);
-    quotes(l_command);
-    // check_scommand(l_command);
+    // get_next_line(fd, &line);
+    // line = malloc(sizeof(char)*5000);
+    // read(fd,line,5000);
+   
     init(&path, &key, &cmd);
     path.env->fullenv = env;
-    // print_working_directory(&path);
-    // unset_cmd("PWssssD",&path);
-    // show_env(path.env->fullenv);
-    // cd_cmd("../../..",&path);
-    // getprogramme(&path,"");
-    // printf("%s",);
-    // if(cmdcheck(l_command->command->s_left->l_element->cmd))
-    //     get_cmd(l_command->command->s_left->l_element->cmd,&path,l_command->command);
-    // else
-    //     execute_foreign(l_command,0);
+
     
-    commande_effect(l_command,&path);
-    // print_working_directory(&path);
-    // pipes_cmd(&path, l_command);
-    // export_cmd("hello=shihaja",path.env->fullenv);
-    // show_env(path.env->fullenv);
-    free_lcommand(&l_command);
+    loop_shell(&path);
+    // print(l_command);
+    // printf("%s",l_command->command->s_left->right->l_element->cmd); 
+    // shift_extra(l_command->command->s_left->right->l_element->redirection.file,l_command->command->s_left->right->l_element->redirection.i_o);
+   
+    // free_lcommand(&l_command);
     ft_strdel(&line);
 
 

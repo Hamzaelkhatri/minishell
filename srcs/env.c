@@ -17,7 +17,6 @@ void edit_env(char **env,char *var,char *res)
                 j =cout_to_char(env[i],'=')+1;
                 res = ft_strjoin("=",res);
                 env[i] = ft_strjoin(var,res);
-                // break;
             }
             i++;
         }
@@ -32,8 +31,7 @@ void show_env(char **env)
     i = 0;
     while (env[i])
     {
-        write(1, env[i], ft_strlen(env[i]));
-        write(1, "\n", 2);
+        ft_putendl_fd(env[i],1);
         i++;
     }
 }

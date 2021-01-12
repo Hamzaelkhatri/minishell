@@ -71,7 +71,7 @@ int get_cmd_(char *cmd,t_path *path,t_command *l_cmd)
                 l_cmd->s_left->l_element->cmd = ft_strdup(cmd);
             cmds = ft_strjoin_command(l_cmd->s_left);
             getprogramme(path,cmds);
-        wait(0);
+            wait(0);
     }
     wait(0);
     return 0;
