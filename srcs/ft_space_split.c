@@ -1,11 +1,10 @@
 
 #include "minishell.h"
 
-static int words(char *str)
+static int		words(char *str)
 {
-	int i;
-	int j;
-	char quote;
+	int			i;
+	int			j;
 
 	i = 0;
 	j = 0;
@@ -14,22 +13,17 @@ static int words(char *str)
 		while ((str[i] == ' ' || str[i] == '\t') && str[i])
 			i++;
 		if (str[i] && str[i] != ' ' && str[i] != '\t')
-			j++;
-		while (str[i] && str[i] != ' ' && str[i] != '\t')
 		{
-			if (str[i] == 34 || str[i] == 39)
-			{
-				quote = str[i++];
-				while (str[i] != quote)
-					i++;
-			}
 			i++;
+			j++;
 		}
+		while (str[i] && str[i] != ' ' && str[i] != '\t')
+			i++;
 	}
 	return (j);
 }
 
-static void *leak(char **spl, int j)
+static void		*leak(char **spl, int j)
 {
 	j = j - 1;
 	while (spl[j])
@@ -41,34 +35,23 @@ static void *leak(char **spl, int j)
 	return (NULL);
 }
 
-static int carcts(char *str)
+static int		carcts(char *str)
 {
-	int i;
-	int check_quote;
-	char quote;
+	int			i;
 
 	i = 0;
-	check_quote = 0;
 	while (str[i] && str[i] != ' ' && str[i] != '\t')
 	{
-		if (str[i] == 34 || str[i] == 39)
-		{
-			quote = str[i];
-			i++;
-			while (str[i] != quote)
-				i++;
-		}
 		i++;
 	}
 	return (i);
 }
 
-static char *alloc(char **tab, char *src)
+static char		*alloc(char **tab, char *src)
 {
-	int i;
-	int j;
-	int o;
-	char quote;
+	int			i;
+	int			j;
+	int			o;
 
 	j = 0;
 	o = 0;
@@ -81,13 +64,6 @@ static char *alloc(char **tab, char *src)
 			return (leak(tab, j));
 		while ((src[o] != '\t' && src[o] != ' ') && src[o])
 		{
-			if (src[o] == 34 || src[o] == 39)
-			{
-				quote = src[o];
-				tab[j][i++] = src[o++];
-				while (src[o] != quote)
-					tab[j][i++] = src[o++];
-			}
 			tab[j][i++] = src[o++];
 		}
 		tab[j][i] = '\0';
@@ -99,13 +75,13 @@ static char *alloc(char **tab, char *src)
 	return (*tab);
 }
 
-char **ft_space_split_quote(char const *s)
+char			**ft_space_split(char const *s)
 {
-	int i;
-	int j;
-	int o;
-	char **tab;
-	char *str;
+	int			i;
+	int			j;
+	int			o;
+	char		**tab;
+	char		*str;
 
 	o = 0;
 	i = 0;

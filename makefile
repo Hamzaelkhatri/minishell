@@ -28,7 +28,6 @@ SRC_NAME=allocation.c\
 		unset.c\
 		pipes.c\
 		export_sort.c\
-		ft_split_quote.c\
 		s_command.c\
 		checkcmd.c\
 		exit.c\
@@ -36,6 +35,10 @@ SRC_NAME=allocation.c\
 		commade_effect.c\
 		parse.c\
 		free.c\
+		ft_split_quotes.c\
+		ft_space_split_quote.c\
+		free_extended.c\
+		print.c\
 
 HDR_NAME=minishell.h 
 

@@ -10,9 +10,7 @@ int commande_effect(t_list_cmd *lst,t_path *path)
             wait(0);
         }
         else   
-           {
                get_cmd_(lst->command->s_left->l_element->cmd,path,lst->command);
-           }
         lst = lst->next;
     }
     return 0;

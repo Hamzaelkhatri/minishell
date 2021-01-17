@@ -21,7 +21,8 @@ int get_cmd(char *cmd,t_path *path,t_command *l_cmd)
            cd_cmd(NULL,path);
     }
     else if(ft_str_in_str(cmd,"exit"))
-        ft_exit();
+    exit(0);
+        // ft_exit(l_cmd,errno);
     else if(ft_str_in_str(cmd,"export") && l_cmd->s_left->right == NULL)
     {           
         char **tmp = path->env->fullenv;
@@ -56,7 +57,8 @@ int get_cmd_(char *cmd,t_path *path,t_command *l_cmd)
            cd_cmd(NULL,path);
     }
     else if(ft_str_in_str(cmd,"exit"))
-        ft_exit();
+      exit(0);
+        // ft_exit(l_cmd,errno);
     else if(ft_str_in_str(cmd,"export") && l_cmd->s_left->right == NULL)
     {           
         char **tmp = path->env->fullenv;
