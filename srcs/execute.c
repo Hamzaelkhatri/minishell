@@ -42,7 +42,7 @@ void exeute(t_path *path, char *cmd)
     {
         char *binaryPath = "/bin/bash";
         char *const args[] = {binaryPath, "-c", cmd, NULL};
-        if (execve(binaryPath, args, NULL) == -1)
+        if (execve(binaryPath, args, path->env->fullenv) == -1)
             ft_putendl_fd(strerror(errno),1);
     }
     wait(0);

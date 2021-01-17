@@ -242,24 +242,20 @@ void loop_shell(t_path *path)
 		bash_promp();
 		ret = 0;
 		ret = read_line(path, &line);
-		ft_check_line(line);
 		if (line[0] == '\0')
+		{
 			exit(0);
+					break;
+		}
+		ft_check_line(line);
     	cmd = add_list_cmd(cmd);
 		cmd->line = ft_strdup(line);
     	parse_list_command(cmd, cmd->line);
 		ft_strdel(&line);
-		// if(line[0])
     	sort(cmd);
     	quotes(cmd);
 		commande_effect(cmd,path);
-		// check_cmd(cmd, &line, path, ret);
 		var_glob = 0;
-		    // print(cmd);
-		// ft_putendl_fd("\033[1A\r\033[2K",1);
-		// printf("\033[H");
 		free_lcommand(&cmd);
-		// free(cmd);
-		// free(line);
 	}
 }

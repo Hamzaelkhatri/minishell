@@ -4,12 +4,17 @@ void cd_cmd(char *nextPath,t_path *path)
 {
     char *s;
     char *s1;
-    if(nextPath==NULL)
+    if(nextPath == NULL)
         nextPath = search_env(path->env->fullenv,"HOME");
-    else if(!ft_strncmp(nextPath,"$",1))
+    if(!ft_strncmp(nextPath,"$",1) && get_var_env(path,nextPath))
         nextPath = ft_strdup(get_var_env(path,nextPath));
     edit_env(path->env->fullenv,"OLDPWD",getcwd(NULL,100));
+        // puts(nextPath);
+    nextPath=ft_strtrim(nextPath,"\n");
+        // exit(0);
     chdir(nextPath);
-       ft_putendl_fd(strerror(errno),1);
+        // perror("bash");
     edit_env(path->env->fullenv,"PWD",getcwd(NULL,100));
+    // show_env(path->env->fullenv);
+    // puts(getcwd(NULL,100));
 }
