@@ -80,25 +80,27 @@ char *concat(char **tmp, int i) {
   char *result;
   char *tmp1;
 
-  // i = 1;
-  result = malloc(sizeof(char) * (ft_strlen(*tmp) + ft_strlen(tmp1) + 1));
-  tmp1 = ft_strdup("\0");
+  if (tmp[i] == NULL) {
+    return (NULL);
+  }
   while (tmp[i] != NULL) {
-    result = ft_str_join(tmp1, " ", tmp[i]);
-    tmp1 = strdup(result);
+    tmp1 = malloc(sizeof(char) * (ft_strlen(tmp[i]) + 1));
+    result = concat_space(tmp1, tmp[i]);
+    tmp1 = ft_strdup(result);
     i++;
   }
   result = ft_strtrim(result, " ");
   return (result);
 }
 
-char *concat_1(char *tmp, char *tmp1) {
+char *concat_space(char *tmp, char *tmp1) {
   int i;
   char *result;
-  // char *tmp1;
 
   i = 0;
-  // result = malloc(sizeof(char) * (ft_strlen(tmp) + ft_strlen(tmp1) + 1));
+  if (tmp1 == NULL && tmp == NULL)
+    return (NULL);
+  // puts("here");
   if (tmp1 == NULL && tmp != NULL) {
     result = malloc(sizeof(char) * (ft_strlen(tmp)) + 1);
     result = ft_strdup(tmp);
@@ -108,7 +110,6 @@ char *concat_1(char *tmp, char *tmp1) {
     result = ft_strdup(tmp1);
     result = ft_strtrim(result, " ");
   } else {
-    // puts(tmp);
     result = malloc(sizeof(char) * (ft_strlen(tmp) + ft_strlen(tmp1) + 1));
     result = ft_str_join(tmp1, " ", tmp);
     tmp1 = strdup(result);

@@ -1,40 +1,5 @@
 #include "minishell.h"
 
-// void cd_cmd(char *nextPath,t_path *path)
-// {
-//     char *s;
-//     getcwd(path->env->oldpwd,100);
-//     if(chdir(nextPath))
-//     {
-//         perror("bash$ ");
-//     }
-//     getcwd(s,100);
-//     path->env->pwd = ft_strdup(s);
-// }
-// void cd_cmd(char *nextPath,t_path *path)
-// {
-//     char *s;
-
-//     // if(
-//     // printf("\n {%s} \n",getcwd(path->env->oldpwd,100));
-//         // printf("\n +++++++++ \n");
-//         // printf("{%s}",nextPath);
-//     // printf("\n |%s| \n", nextPath);
-//     chdir(nextPath);
-//     // chdir(nextPath);
-//     // {
-//         // perror("bash$ ");
-//     // }
-//     // getcwd(s,100);
-//     // print_working_directory(path);
-//     // {
-//     //     // perror("bash$ ");
-//     // }
-//     // printf("{%s}",getcwd(s, 1000));
-//     // path->env->pwd = ft_strdup(s);
-//     // puts(path->env->pwd);
-// }
-
 char *get_user(char *user)
 {
     DIR *dir;

@@ -9,40 +9,27 @@ void part_one(t_list_cmd *lst) {
   char *cmd;
   char *arg;
   char *red;
+  t_all *new1;
 
   pipe = lst->pipe;
   while (lst->pipe != NULL) {
     if (search(lst->pipe->str_pipe) == 1) {
-      str = is_after_redirection(lst->pipe->str_pipe);
       string = is_befor_redirection(lst->pipe->str_pipe);
-    } else {
-      string = ft_strdup(lst->pipe->str_pipe);
-      str = NULL;
-    }
-    tmp = ft_space_split(string);
-    if (count_array(tmp) == 2 || count_array(tmp) == 1) {
-      cmd = tmp[0];
-      arg = tmp[1];
-      if (strcmp(cmd, "echo") == 0 && strcmp(arg, "-n") == 0) {
-        cmd = ft_str_join(cmd, " ", arg);
-        arg = NULL;
+      red = is_after_redirection(lst->pipe->str_pipe);
+      if (string == NULL) {
+        new1 = s_cmd_details(NULL, NULL, red);
+        add_all(&lst->pipe->all, new1);
+        tmp = ft_space_split(red);
+        lst = sort_all_2(lst, lst->pipe->all, red, tmp);
+      } else {
+
+        lst = define_each1_02(lst, string, red);
       }
-    } else {
-      cmd = tmp[0];
-      if (strcmp(cmd, "echo") == 0 && strcmp(tmp[1], "-n") == 0) {
-        cmd = ft_str_join(cmd, " ", tmp[1]);
-        arg = concat(tmp, 2);
-      } else
-        arg = concat(tmp, 1);
-    }
-    // printf("string: |%s|\n",cmd);
-    all = s_cmd_details(cmd, arg, str);
-    add_all(&lst->pipe->all, all);
+    } else
+      lst = sort_all_3(lst);
     lst->pipe = lst->pipe->next;
-    // return(lst);
   }
   lst->pipe = pipe;
-  // print_all(lst);
 }
 
 void cmd_details(t_list_cmd *lst) {
@@ -64,5 +51,4 @@ void cmd_details(t_list_cmd *lst) {
     lst = lst->next;
   }
   lst = lstt;
-  // print_nested_lklist(lst);
 }

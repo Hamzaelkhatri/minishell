@@ -39,6 +39,10 @@ SRC_NAME=init.c\
 		redirections.c\
 		errors.c\
 		cmd_details.c\
+		sort_01.c\
+		sort_02.c\
+		sort_03.c\
+		test.c\
 
 HDR_NAME=minishell.h 
 

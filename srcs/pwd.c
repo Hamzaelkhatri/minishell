@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 19:15:36 by zjamali           #+#    #+#             */
-/*   Updated: 2021/01/06 15:58:30 by zdnaya           ###   ########.fr       */
+/*   Updated: 2021/01/09 14:40:12 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 void print_working_directory(t_path *path) {
   char *pwd;
-  pwd = getcwd(path->env->oldpwd, 100);
+  pwd = getcwd(NULL, 100);
   // ft_putstr_fd(pwd,1);
   ft_putstr_fd(pwd, 1);
   // if (path->env->pwd == NULL)

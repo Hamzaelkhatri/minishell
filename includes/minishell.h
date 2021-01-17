@@ -11,7 +11,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 2048
 
 typedef struct s_key {
   int cntrd;
@@ -131,7 +131,7 @@ void getprogramme(t_path *path, char *cmd);
 t_token *ft_parse(char *line);
 char **ft_split_whitespaces(char *str);
 void shift(int fd);
-void shift_extra(char *file, char *shifts);
+void shift_extra(char *file, char *shifts,t_path *path,t_list_cmd *lst);
 char *get_var_env(t_path *path, char *var);
 void cd_cmd(char *nextpath, t_path *path);
 int count_line(char **env);
@@ -139,7 +139,7 @@ void export_cmd(char *name, char **env);
 void unset_cmd(char *name, t_path *path);
 int search_str(char *str1, char *str2, int l1, int l2);
 char *ft_str_to_equal(const char *s1, const char *s2, int len);
-void pipes_cmd(t_path *path, t_list_cmd *lst);
+void pipes_cmd(t_path *path, t_list_cmd *lst, t_cmd *cmd1);
 void loop_sh(void);
 char *read_line(char *line);
 void lanch_cmd(char *line);
@@ -195,12 +195,27 @@ void part_two(t_list_cmd *lst); // khashom ite3awedo
 t_list_cmd *link_list(t_list_cmd *lst);
 
 t_list_cmd *sort_all_1(t_list_cmd *lst);
-t_list_cmd *sort_all_2(t_list_cmd *lst, t_all *all, char *red);
+t_list_cmd *sort_all_2(t_list_cmd *lst, t_all *all, char *red, char **free_sp);
 
 t_redirection *creat_node_r(char *content, char *content1);
 void add_red(t_redirection **head, t_redirection *new_cmd);
 
 t_all *update_all(char *cmd, char *arg, t_redirection *red);
-char *concat_1(char *tmp, char *tmp1);
+char *concat_space(char *tmp, char *tmp1);
 
+char *seperat_red(char *tmp);
+char *seperat_file_name(char *tmp);
+int condition_1(char **free_sp, int i);
+int condition_2(char **free_sp, int i);
+void condition_3(t_use *use, char ***free_sp);
+
+t_list_cmd *define_each1_01(t_list_cmd *lst, char *string, char *red);
+t_all *all_conditions(t_all *all, char **free_sp, int *i);
+t_list_cmd *redirection_sort(t_list_cmd *lst, char *cmd, char *arg, char *red);
+t_list_cmd *define_each1_02(t_list_cmd *lst, char *string, char *red);
+t_list_cmd *red_sort_02(t_list_cmd *lst, char *cmd, char *arg, char *red);
+t_list_cmd *sort_all_3(t_list_cmd *lst);
+int lstsize(t_list_cmd *lst);
+int lstsize_1(t_list_cmd *lst);
+void pipes_cmds(t_path *path, t_list_cmd *lst, t_cmd *cmd1,int s);
 #endif

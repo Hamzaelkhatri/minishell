@@ -6,13 +6,14 @@
 /*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/13 16:30:13 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/07 15:13:10 by ahaddad          ###   ########.fr       */
+/*   Updated: 2021/01/17 16:56:26 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void sh_initial(t_list_cmd *lst, t_shell *sh) {
+void sh_initial(t_list_cmd *lst, t_shell *sh)
+{
   sh = malloc(sizeof(t_shell));
   sh->pipe = 0;
   sh->comma = 0;
@@ -22,7 +23,8 @@ void sh_initial(t_list_cmd *lst, t_shell *sh) {
   ft_bzero(lst, sizeof(t_list_cmd));
 }
 
-void ch_comma_buil(t_cmd *cmd, char *comnd) {
+void ch_comma_buil(t_cmd *cmd, char *comnd)
+{
   cmd->cd = 0;
   cmd->pwd = 0;
   cmd->unset = 0;
@@ -38,34 +40,56 @@ void ch_comma_buil(t_cmd *cmd, char *comnd) {
     cmd->unset = 1;
   else if (ft_strcmp(comnd, "env") == 0)
     cmd->env = 1;
-  else if (ft_strcmp(comnd, "cexport") == 0)
+  else if (ft_strcmp(comnd, "export") == 0)
     cmd->export = 1;
   else if (ft_strcmp(comnd, "echo") == 0)
     cmd->echo = 1;
   else if (ft_strcmp(comnd, "exit") == 0)
     cmd->exit = 1;
+  // printf("\n{%d}\n",cmd->env);
 }
 
-void call_getprg(t_list_cmd *lst, t_path *path, t_cmd *cmd) {
+void call_getprg(t_list_cmd *lst, t_path *path, t_cmd *cmd)
+{
   t_list_cmd *tmp;
   t_all *tmp1;
   char *s;
   char *p;
 
   tmp = lst;
-  while (lst != NULL) {
+  while (lst != NULL)
+  {
+  //  puts("hola");
     tmp1 = lst->all;
-    while (lst->all != NULL) {
+    if (search(lst->cmd))
+    {
+      // printf("{%s}\n",lst->all->command);
+      // printf("{%s}\n",lst->all->argument);
+      // printf("{%s}\n",lst->all->red->sign);
+      //      printf("{%s}\n",lst->all->red->next->file_name);
+      shift_extra(lst->all->red->next->file_name,lst->all->red->sign, path, lst);
+    }
+    while (lst->all != NULL)
+    {
       ch_comma_buil(cmd, lst->all->command);
       if (cmd->pwd == 1)
+      {
         print_working_directory(path);
-      else if (cmd->export == 1)
+        // write(1,"\n",1);
+      }else if (cmd->export == 1)
+      {
+        // puts("hola");
         export_cmd(lst->all->argument, path->env->fullenv);
-      else if (cmd->cd == 1)
+        // show_env(path->env->fullenv);
+      }else if (cmd->cd == 1)
         cd_cmd(lst->all->argument, path);
-      else if (cmd->echo == 1) {
-      } else if (cmd->env == 1)
+      else if (cmd->echo == 1)
+      {
+      }
+      else if (cmd->env == 1)
+      {
         show_env(path->env->fullenv);
+      }
       else if (cmd->exit == 1)
         exit(0);
       else if (cmd->unset == 1)
@@ -101,7 +125,7 @@ void call_getprg(t_list_cmd *lst, t_path *path, t_cmd *cmd) {
 //   }
 //   lst = list1;
 // }
-void call_pipe(t_list_cmd *lst, t_path *path, t_shell *sh,t_cmd *cmd)
+void call_pipe(t_list_cmd *lst, t_path *path, t_shell *sh, t_cmd *cmd)
 {
   t_list_cmd *list1;
   t_pipe *pipe;
@@ -112,25 +136,28 @@ void call_pipe(t_list_cmd *lst, t_path *path, t_shell *sh,t_cmd *cmd)
   {
     if (pipe_e(lst->cmd) == 1)
     {
-      pipes_cmd(path, lst);
+      // printf("hola");
+      pipes_cmd(path, lst, cmd);
+      wait(0);
     }
     else
     {
-      tmp1 = lst->all;
-      while (lst->all != NULL)
-      {
-        call_getprg(lst,path,cmd);
-        // getprogramme(path, lst->all->command);
-        lst->all = lst->all->next;
-      }
-      lst->all = tmp1;
+      // tmp1 = lst->all;
+      // while (lst->all != NULL)
+      // {
+        // puts();
+        call_getprg(lst, path, cmd);
+      //   lst->all = lst->all->next;
+      // }
+      // lst->all = tmp1;
     }
     lst = lst->next;
   }
   lst = list1;
 }
 
-int main(int argc, char **argv, char **env) {
+int main(int argc, char **argv, char **env)
+{
   t_read rd;
   t_shell sh;
   t_list_cmd lst;
@@ -169,8 +196,12 @@ int main(int argc, char **argv, char **env) {
   {
     // puts("dkhal l tanya");
     call_pipe(&lst, &path, &sh, &cmd);
-  }else
+  }
+  else
+  {
+  //  printf("here"); 
     call_getprg(&lst, &path, &cmd);
+  }
   // show_env(env);
   /*--------------------------------------------------------------*/
 

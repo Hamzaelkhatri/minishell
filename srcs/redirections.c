@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 12:29:52 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/06 16:26:06 by zdnaya           ###   ########.fr       */
+/*   Updated: 2021/01/12 16:36:25 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int remenber_index(char *line) {
+int remenber_index(char *line)
+{
   int i;
   int index;
 
@@ -28,8 +29,8 @@ int remenber_index(char *line) {
   }
   return (index);
 }
-char *ft_substring(char *destination, const char *source, int start, int len) {
-
+char *ft_substring(char *destination, const char *source, int start, int len)
+{
   while (len > 0) {
     *destination = *(source + start);
     destination++;
@@ -40,7 +41,8 @@ char *ft_substring(char *destination, const char *source, int start, int len) {
   return destination;
 }
 
-char *is_after_redirection(char *line) {
+char *is_after_redirection(char *line)
+{
   char *tmp;
   int index;
   int len;
