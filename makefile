@@ -39,6 +39,7 @@ SRC_NAME=allocation.c\
 		ft_space_split_quote.c\
 		free_extended.c\
 		print.c\
+		echo.c\
 
 HDR_NAME=minishell.h 
 

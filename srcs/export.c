@@ -81,7 +81,7 @@ void	export_cmd(char *name,char **env)
 {
 	int line = 0; 
 
-		// name = ft_strtrim(name,"\n");
+	name = ft_strtrim(name,"\n");
 	if(!check_space(name))
 	{
 		ft_putstr_fd("bash$ : bad assignment",1);
@@ -99,5 +99,4 @@ void	export_cmd(char *name,char **env)
 	}
 	else
 		edit_env(env,get_befor_equal(name),get_after_equal(name));
-	// printf("[%s]",(name));
 }

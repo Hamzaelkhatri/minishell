@@ -74,11 +74,11 @@ void ft_check_line(char *line)
     i = 0;
     while (line[i])
     {
-        if (line[i] == ':')
-        {
-            ft_putstr_fd("syntax error\n", 2);
-            // exit(1);
-        }
+        // if (line[i] == ':')//TODO : URGENCE CHANGE THANKS EVERY BODY LOVE MY SEF
+        // {
+        //     ft_putstr_fd("syntax error\n", 2);
+        //     // exit(1);
+        // }
         if ((line[i] == '"' || line[i] == 39) && line[i - 1] != '\\')
         {
             quotes = line[i++];

@@ -1,5 +1,21 @@
 #include "minishell.h"
 
+char * word_tolower(char *str)
+{
+    int i;
+    char *ptr;
+
+    i = 0;
+    ptr = malloc(sizeof(char) * ft_strlen(str));
+    while (str[i])
+    {
+        ptr[i] = ft_tolower(str[i]);
+        i++;
+    }
+    ptr[i] = '\0';
+    return (ptr);
+}
+
 int get_cmd(char *cmd,t_path *path,t_command *l_cmd)
 {
     
@@ -52,16 +68,17 @@ int get_cmd_(char *cmd,t_path *path,t_command *l_cmd)
     char *cmds;
     
     a = 0;
-    // if(ft_strchr(cmd,'\n'))
-        cmd = ft_strtrim(cmd,"\n");
-    // puts(cmd);
+    cmd = ft_strtrim(cmd,"\n");
+    cmd = word_tolower(cmd);
    if(!ft_strncmp(cmd,"$",1) && get_var_env(path,cmd))
     {
         cmd = get_var_env(path,cmd);
         a = 1;
     }
     if(ft_strnstr(cmd,"$?",ft_strlen(cmd)))
-        ft_putnbr_fd(path->dollar,1);
+    {
+           ft_putendl_fd(ft_itoa(path->dollar),1);
+    }
     else if(ft_strnstr(cmd,"pwd",ft_strlen(cmd)))
         {
             print_working_directory(path);
@@ -97,6 +114,13 @@ int get_cmd_(char *cmd,t_path *path,t_command *l_cmd)
     {
         unset_cmd(l_cmd->s_left->right->l_element->argument,path);
     }
+    // else if(ft_strnstr(cmd,"echo",ft_strlen(cmd)))
+    // {
+    //     if(l_cmd->s_left->right == NULL)
+    //         echo(NULL,path,0);
+    //     else
+    //         echo(l_cmd->s_left->right->l_element->argument,path,0);
+    // }
     else
     {
         if(a)

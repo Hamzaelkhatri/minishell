@@ -220,4 +220,6 @@ int get_cmd(char *cmd,t_path *path,t_command *l_cmd);
 int get_cmd_(char *cmd,t_path *path,t_command *l_cmd);
 void free_lcommand(t_list_cmd **l_command);
 void bash_promp();
+void echo(char *line, t_path *path, int ret);
+void promp_bash(t_path *path, int ret, char **line);
 #endif
