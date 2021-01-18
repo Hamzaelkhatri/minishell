@@ -239,13 +239,14 @@ void loop_shell(t_path *path)
 	status = 1;
 	while (status)
 	{
+		path->dollar=0;
 		bash_promp();
 		ret = 0;
 		ret = read_line(path, &line);
 		if (line[0] == '\0')
 		{
 			exit(0);
-					break;
+			break;
 		}
 		ft_check_line(line);
     	cmd = add_list_cmd(cmd);

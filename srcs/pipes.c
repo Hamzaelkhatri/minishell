@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 10:32:55 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/01/09 16:55:39 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/01/18 11:52:08 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void    pipes_cmd(t_path * path, t_list_cmd *lst)
         pipe(fd);
 		if ((pid = fork()) == -1)
         {
-			perror("bash $ fork failed");
+			ft_putendl_fd(strerror(errno),1);
 			exit(1);
 		}
         else if (pid == 0) 

@@ -10,7 +10,8 @@ void cd_cmd(char *nextPath,t_path *path)
         nextPath = ft_strdup(get_var_env(path,nextPath));
     edit_env(path->env->fullenv,"OLDPWD",getcwd(NULL,100));
         // puts(nextPath);
-    nextPath=ft_strtrim(nextPath,"\n");
+    if(strchr(nextPath,'\n'))
+            nextPath=ft_strtrim(nextPath,"\n");
         // exit(0);
     chdir(nextPath);
         // perror("bash");

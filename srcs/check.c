@@ -77,7 +77,7 @@ void ft_check_line(char *line)
         if (line[i] == ':')
         {
             ft_putstr_fd("syntax error\n", 2);
-            exit(1);
+            // exit(1);
         }
         if ((line[i] == '"' || line[i] == 39) && line[i - 1] != '\\')
         {
@@ -88,28 +88,28 @@ void ft_check_line(char *line)
             if (!(line[i]))
             {
                 ft_putstr_fd("syntax error\n", 2);
-                exit(1);
+                // exit(1);
             }
         }
         else if (line[0] == '|' || (line[i] == '|' && check_operation(&line[i]) == 0))
         {
             ft_putstr_fd("syntax error\n", 2);
-            exit(1);
+            // exit(1);
         }
         else if (line[0] == ';' || (line[i] == ';' && check_operation(&line[i]) == 0))
         {
             ft_putstr_fd("syntax error\n", 2);
-            exit(1);
+            // exit(1);
         }
         else if (line[i] == '<' && check_operation(&line[i]) == 0)
         {
             ft_putstr_fd("syntax error\n", 2);
-            exit(1);
+            // exit(1);
         }
         else if (line[i] == '>' && check_operation(&line[i]) == 0)
         {
             ft_putstr_fd("syntax error\n", 2);
-            exit(1);
+            // exit(1);
         }
         else if (line[i] == '>' && line[i + 1] == '>')
             i++;

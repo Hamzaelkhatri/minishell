@@ -30,7 +30,7 @@ typedef struct s_env
 typedef struct s_path
 {
     char *path;
-    // char **env;
+    int dollar;
     t_key *key;
     char *cmds;
     char *pathcmd;

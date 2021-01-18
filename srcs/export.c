@@ -3,11 +3,13 @@
 int check_space(char *str)
 {
 	int i = 0;
-	while(str[++i] != '=')
+	
+	while(str[i] != '=' && str[i])
+	{
 		if(str[i] == ' ')
 			return (0);
-	if(str[i] != '=')
-		return (0);
+		i++;
+	}
 	i = 0;
 	while(str[++i] != '=')
 		if(!ft_isdigit(str[i]))
@@ -57,21 +59,39 @@ char *get_after_equal(char *str)
 	int i;
 
 	i = ft_strlen(get_befor_equal(str));
-
 	return(&str[i+1]);
+}
+
+int check_equal(char *str)
+{
+	int i;
+	
+	i = 0;
+	while (str[i])
+	{
+		if(str[i]=='=')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 
 void	export_cmd(char *name,char **env)
 {
 	int line = 0; 
-	
+
+		// name = ft_strtrim(name,"\n");
 	if(!check_space(name))
 	{
 		ft_putstr_fd("bash$ : bad assignment",1);
 		return ;
 	}
-	if(!search_env(env,get_befor_equal(name)))
+	if(!check_equal(name))
+		name = ft_strjoin(name, "=''");
+	if(name[ft_strlen(name) + 1] == '=')
+		name = ft_strjoin(name, "''");
+	if(!search_env(env, get_befor_equal(name)))
 	{
 		line = count_line(env);
 		env[line] = get_to_space(name);
@@ -79,4 +99,5 @@ void	export_cmd(char *name,char **env)
 	}
 	else
 		edit_env(env,get_befor_equal(name),get_after_equal(name));
+	// printf("[%s]",(name));
 }

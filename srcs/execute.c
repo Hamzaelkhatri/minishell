@@ -44,6 +44,9 @@ void exeute(t_path *path, char *cmd)
         char *const args[] = {binaryPath, "-c", cmd, NULL};
         if (execve(binaryPath, args, path->env->fullenv) == -1)
             ft_putendl_fd(strerror(errno),1);
+        else
+            path->dollar = 1;
+        
     }
     wait(0);
 }
