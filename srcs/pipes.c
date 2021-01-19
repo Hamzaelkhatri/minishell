@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 10:32:55 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/01/18 11:52:08 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/01/19 10:47:44 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ void    pipes_cmd(t_path * path, t_list_cmd *lst)
     int fd[2];
 	int _fd[2];
     int i;
+	int f;
     pid_t pid;
 	char *cmd;
 	i = 0;
 
+	f = 0;
 	int s = lstsize(lst);
     while (lst->command != NULL)
     {
@@ -84,6 +86,7 @@ void    pipes_cmd(t_path * path, t_list_cmd *lst)
 				dup2(fd[1],1);
 				dup2(_fd[0], 0);
 			}
+			lst->command->s_left->l_element->cmd=ft_strtrim(lst->command->s_left->l_element->cmd,"\n");
 			if(!cmdcheck(lst->command->s_left->l_element->cmd))
 			{
 				cmd = ft_strjoin_command(lst->command->s_left);

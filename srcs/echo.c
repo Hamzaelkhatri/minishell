@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 11:02:30 by zjamali           #+#    #+#             */
-/*   Updated: 2021/01/18 16:30:49 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/01/19 11:29:17 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void echo(char *line, t_path *path, int ret)
 				path->key->cntrd = 1;
 			else
 			{
-				puts("HELLO");
+				// puts("HELLO");
 				if (ft_strnstr(tab[1], "-n", 2) || ft_strnstr(tab[1], "-n\n", 3))
 				{
 					ft_nhaydo_nl(tab);
@@ -129,5 +129,4 @@ void echo(char *line, t_path *path, int ret)
 			ft_putstr_fd("check quotes", 1);
 			exit(0);
 		}
-	// promp_bash(path, ret, &line);
 }

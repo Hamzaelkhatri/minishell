@@ -117,27 +117,32 @@ void loop_shell(t_path *path)
 	if (signal(SIGQUIT, sigint_handler) == SIG_ERR)
 		ft_putstr_fd("\n can't catch cntrl-\\", 1);
 	status = 1;
+	path->dollar=0;
 	while (status)
 	{
-		path->dollar=0;
-		// write(1, "\033[6n", 4);
-		bash_promp();
-		ret = 0;
-		ret = read_line(path, &line);
-		if (line[0] == '\0')
+		if(!DEBUG_BOOL)
 		{
-			exit(0);
-			break;
+			bash_promp();
+			ret = 0;
+			ret = read_line(path, &line);
+			if (line[0] == '\0')
+			{
+				exit(0);
+				break;
+			}
+			path->cmds = line;
 		}
-		ft_check_line(line);
+		ft_check_line(path->cmds);
     	cmd = add_list_cmd(cmd);
-		cmd->line = ft_strdup(line);
+		cmd->line = ft_strdup(path->cmds);
     	parse_list_command(cmd, cmd->line);
-		ft_strdel(&line);
+		ft_strdel(&path->cmds);
     	sort(cmd);
     	quotes(cmd);
 		commande_effect(cmd,path);
 		var_glob = 0;
 		free_lcommand(&cmd);
+		if(DEBUG_BOOL)
+			break;
 	}
 }

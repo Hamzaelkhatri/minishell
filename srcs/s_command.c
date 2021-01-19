@@ -1,5 +1,25 @@
 #include "minishell.h"
 
+static void join(t_simple_command **cmd)
+{
+    t_simple_command *tmp;
+    t_simple_command *save;
+    tmp = *cmd;
+    // *cmd = (*cmd)->right;
+    if ((*cmd)->right->right != NULL && (*cmd)->right->l_element->indice == 2)
+    {
+        save = (*cmd)->right->right;
+        (*cmd)->l_element->cmd = ft_strjoin_free((*cmd)->l_element->cmd, " ");
+        (*cmd)->l_element->cmd = ft_strjoin_free((*cmd)->l_element->cmd, "-n");
+        *cmd = (*cmd)->right;
+        free_s_command(&(*cmd));
+        *cmd = save;
+        (*cmd)->parent = tmp;
+        tmp->right = *cmd;
+        *cmd = tmp;
+    }
+}
+
 static int check_n(char *str)
 {
 	int i;
@@ -15,29 +35,32 @@ static int check_n(char *str)
 	}
 	return (1);
 }
+
 static void check_echo(t_simple_command **cmd)
 {
-	t_simple_command *tmp;
-	t_simple_command *save;
-
-	tmp = *cmd;
-	*cmd = (*cmd)->right;
-
-	if (*cmd != NULL && check_n((*cmd)->l_element->argument))
-	{
-		while ((*cmd)->right != NULL &&
-			   check_n((*cmd)->right->l_element->argument))
-		{
-			save = (*cmd)->right;
-			free_s_command(&(*cmd));
-			*cmd = save;
-		}
-		(*cmd)->parent = tmp;
-		tmp->right = (*cmd);
-	}
-	*cmd = tmp;
+    t_simple_command *tmp;
+    t_simple_command *save;
+    int index;
+    tmp = *cmd;
+    *cmd = (*cmd)->right;
+    index = 0;
+    if (*cmd != NULL && check_n((*cmd)->l_element->argument))
+    {
+        while ((*cmd)->right != NULL &&
+               check_n((*cmd)->right->l_element->argument))
+        {
+            save = (*cmd)->right;
+            free_s_command(&(*cmd));
+            *cmd = save;
+        }
+        index = 1;
+        (*cmd)->parent = tmp;
+        tmp->right = (*cmd);
+    }
+    *cmd = tmp;
+    if (index == 1)
+        join(&(*cmd));
 }
-
 void check_scommand(t_list_cmd *l_cmd)
 {
 	t_list_cmd *tmp_l_command;

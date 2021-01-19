@@ -13,7 +13,9 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <limits.h>
 #include "get_next_line.h"
+#define DEBUG_BOOL 1
 
 typedef struct s_key
 {
