@@ -9,7 +9,8 @@ void show_env(char **env)
     while (env[i])
     {
         write(1, env[i], ft_strlen(env[i]));
-        write(1, "\n", 2);
+        int c = '\n';
+        write(1, &c, 1);
         i++;
     }
 }

@@ -6,7 +6,7 @@
 /*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/13 16:30:13 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/17 16:56:26 by ahaddad          ###   ########.fr       */
+/*   Updated: 2021/01/19 18:34:10 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void call_getprg(t_list_cmd *lst, t_path *path, t_cmd *cmd)
   tmp = lst;
   while (lst != NULL)
   {
-  //  puts("hola");
+    //  puts("hola");
     tmp1 = lst->all;
     if (search(lst->cmd))
     {
@@ -67,7 +67,7 @@ void call_getprg(t_list_cmd *lst, t_path *path, t_cmd *cmd)
       // printf("{%s}\n",lst->all->argument);
       // printf("{%s}\n",lst->all->red->sign);
       //      printf("{%s}\n",lst->all->red->next->file_name);
-      shift_extra(lst->all->red->next->file_name,lst->all->red->sign, path, lst);
+      shift_extra(lst->all->red->next->file_name, lst->all->red->sign, path, lst);
     }
     while (lst->all != NULL)
     {
@@ -76,12 +76,14 @@ void call_getprg(t_list_cmd *lst, t_path *path, t_cmd *cmd)
       {
         print_working_directory(path);
         // write(1,"\n",1);
-      }else if (cmd->export == 1)
+      }
+      else if (cmd->export == 1)
       {
         // puts("hola");
         export_cmd(lst->all->argument, path->env->fullenv);
         // show_env(path->env->fullenv);
-      }else if (cmd->cd == 1)
+      }
+      else if (cmd->cd == 1)
         cd_cmd(lst->all->argument, path);
       else if (cmd->echo == 1)
       {
@@ -145,8 +147,8 @@ void call_pipe(t_list_cmd *lst, t_path *path, t_shell *sh, t_cmd *cmd)
       // tmp1 = lst->all;
       // while (lst->all != NULL)
       // {
-        // puts();
-        call_getprg(lst, path, cmd);
+      // puts();
+      call_getprg(lst, path, cmd);
       //   lst->all = lst->all->next;
       // }
       // lst->all = tmp1;
@@ -166,51 +168,30 @@ int main(int argc, char **argv, char **env)
   t_cmd cmd;
   t_pipe pipe;
   t_all all;
-
-  ft_bzero(&pipe, sizeof(t_pipe));
-  ft_bzero(&all, sizeof(t_pipe));
-  (void)argc;
-  rd.fd = open("cmd.txt", O_RDONLY);
-  rd.line = malloc(sizeof(char) * BUFFER_SIZE);
-  read(rd.fd, rd.line, BUFFER_SIZE);
-  check_line_error(rd.line);
-  sh_initial(&lst, &sh);
-  init(&path, &key, &cmd);
-  path.env->fullenv = env;
-  // show_env(path.env->fullenv);
-  lst = *handle_line(&sh, &rd, &lst, env);
-  // print_all(&lst);
-  // print_working_directory(&path);
-  /*------------------check builtins commande--------------*/
-  // if (check_one(rd.line, &sh) == 3)
-  //   check_built_p(&lst, &cmd);
-  // else
-  //   check_built(&lst, &cmd);
-  // // // /*-----------------for the pipes commande----------------------*/
-  if (check_one(rd.line, &sh) == 1)
-  {
-    // puts("hola");
-    pipes_cmd1(&path, &lst, &cmd);
-  }
-  else if (check_one(rd.line, &sh) == 3)
-  {
-    // puts("dkhal l tanya");
-    call_pipe(&lst, &path, &sh, &cmd);
-  }
-  else
-  {
-  //  printf("here"); 
-    call_getprg(&lst, &path, &cmd);
-  }
-  // show_env(env);
-  /*--------------------------------------------------------------*/
-
-  // /*----------------end pars $$ begin execution------------------*/
-  // path.env->fullenv = env;
-  // export_cmd("myvar=300",path.env->fullenv);
-  // unset_cmd("_",&path);
-  // show_env(path.env->fullenv);
-  // cd_cmd("srcs",&path);
-  // get_directory(&path);
-  // loop_shell(&cmd,&path);
+  // while (1)
+  // {
+    // ft_putstr_fd("\e[1;32mbash$ \e[0;37m", 1);
+    ft_bzero(&pipe, sizeof(t_pipe));
+    ft_bzero(&all, sizeof(t_pipe));
+    (void)argc;
+    rd.fd = open("cmd.txt", O_RDONLY);
+    rd.line = malloc(sizeof(char) * BUFFER_SIZE);
+    read(rd.fd, rd.line, BUFFER_SIZE);
+    // {
+    //   write(1," \n",2);
+    //   exit(1);
+    // }
+    check_line_error(rd.line);
+    sh_initial(&lst, &sh);
+    init(&path, &key, &cmd);
+    path.env->fullenv = env;
+    lst = *handle_line(&sh, &rd, &lst, env);
+    // print_all(&lst);
+    if (check_one(rd.line, &sh) == 1)
+      pipes_cmd1(&path, &lst, &cmd);
+    else if (check_one(rd.line, &sh) == 3)
+      call_pipe(&lst, &path, &sh, &cmd);
+    else
+      call_getprg(&lst, &path, &cmd);
+  // }
 }
