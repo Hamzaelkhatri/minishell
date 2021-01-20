@@ -30,7 +30,7 @@ int cout_to_char(char *str,char c)
 	int i;
 
 	i = 0;
-	while(str[i] != c)
+	while(str[i] != c && str[i])
 		i++;
 	return (i);
 }
@@ -45,7 +45,7 @@ char *search_env(char **env,char *str)
     i = 0;
     while (env[i])
     {
-        if (ft_str_to_equal(env[i],str,ft_strlen(env[i])))
+        if(!ft_strncmp(env[i],str,ft_strlen(env[i])))
         {
             tmp = ft_str_to_equal(env[i],str,ft_strlen(env[i]));
             return &tmp[j];

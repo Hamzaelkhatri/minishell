@@ -127,6 +127,13 @@ long long ft_atoi_long(char* str)
 	return (result * sign);
 }
 
+void print_err_exite(char *s)
+{
+    ft_putstr_fd("minishell: exit: ",2);
+    ft_putstr_fd(s,2);
+    ft_putendl_fd(": numeric argument required",2);
+}
+
 int	check_int(char *str)
 {
 	int	i;
@@ -139,17 +146,17 @@ int	check_int(char *str)
         i++;
     if(ft_atoi_long(str) <= LLONG_MIN && str[i-1]!='-')
     {
-        printf("minishell: exit: %s: numeric argument required\n",str);
+        print_err_exite(str);
          return (255);
     }
     if (ft_atoi_long(str) < LLONG_MIN)
     {
-         printf("minishell: exit: %s: numeric argument required\n",str);
+         print_err_exite(str);
          return (0);
     }
     else if(ft_atoi_long(str) > LLONG_MAX)
     {
-         printf("minishell: exit: %s: numeric argument required\n",str);
+         print_err_exite(str);
          return (255);
     }
     else if(ft_atoi_long(str) <= LONG_MIN && count_digit(&str[i]) == 19)
@@ -158,7 +165,7 @@ int	check_int(char *str)
     }
     else if(count_digit(&str[i]) == 19 && str[i-1] == '-')
     {
-         printf("minishell: exit: %s: numeric argument required\n",str);
+         print_err_exite(str);
          return (255);
     }
 	while (str[i])
@@ -166,7 +173,7 @@ int	check_int(char *str)
         
 		if((!ft_isdigit(str[i]) && str[i] != 32 && str[i] != '\t' )||count_digit(&str[i])>19)
     	{
-            printf("minishell: exit: %s: numeric argument required\n",str);
+            print_err_exite(str);
             return (255);
         }
 		i++;
@@ -231,7 +238,7 @@ int get_cmd_(char *cmd,t_path *path,t_command *l_cmd)
 
         if(size_args(l_cmd)>1 && is_int(l_cmd->s_left->right->l_element->argument))
         {
-            printf("minishell: exit: too many arguments\n");
+            ft_putendl_fd("minishell: exit: too many arguments",2);
             exit(EXIT_FAILURE);
         }
         if(l_cmd->s_left->right)
@@ -248,12 +255,18 @@ int get_cmd_(char *cmd,t_path *path,t_command *l_cmd)
     {
         char **tmp = path->env->fullenv;
         ft_sortstr(tmp);
-        show_env(tmp);
+        show_export(tmp);
         path->dollar = 1;
     }
     else if(ft_strnstr(cmd,"export",ft_strlen(cmd)) && l_cmd->s_left->right != NULL)
     {
-        export_cmd(l_cmd->s_left->right->l_element->argument,path->env->fullenv);
+        while (l_cmd->s_left->right)
+        {
+            if(!export_cmd(l_cmd->s_left->right->l_element->argument,path->env->fullenv))
+                break;
+            l_cmd->s_left->right=l_cmd->s_left->right->right;
+        }
+        
     }
     else if(ft_strnstr(cmd,"unset",ft_strlen(cmd))&& l_cmd->s_left->right != NULL)
     {

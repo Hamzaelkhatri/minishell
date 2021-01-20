@@ -16,9 +16,7 @@ int read_line(t_path *key, char **line)
 	if ((ret = read(0, *line, BUFFER_SIZE)) == -1)
 	{
 		if (line[BUFFER_SIZE] == 0)
-		{
 			exit(0);
-		}
 		else
 			exit(1);
 	}
@@ -100,7 +98,7 @@ void check_pwd(t_cmd *cmd, char **line, t_path *path, int ret)
 void bash_promp()
 {
 
-	ft_putstr_fd("\e[1;32mbash$ \e[0;37m", 1);
+	ft_putstr_fd("\e[1;32mbash$ \e[0;37m", 2);
 }
 
 void loop_shell(t_path *path)
@@ -110,15 +108,16 @@ void loop_shell(t_path *path)
 	int status;
 	int salam;
 	t_list_cmd *cmd = NULL;
+	struct stat buff;
 	int i;
 
 	if (signal(SIGINT, sigint_handler) == SIG_ERR)
-		ft_putstr_fd("\n can't catch cnrtl-C", 1);
+		ft_putstr_fd("\n can't catch cnrtl-C", 2);
 	if (signal(SIGQUIT, sigint_handler) == SIG_ERR)
-		ft_putstr_fd("\n can't catch cntrl-\\", 1);
-	status = 1;
+		ft_putstr_fd("\n can't catch cntrl-\\", 2);
+	status = 0;
 	path->dollar=0;
-	while (status)
+	while (!status)
 	{
 		if(!DEBUG_BOOL)
 		{

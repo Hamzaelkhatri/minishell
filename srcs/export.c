@@ -1,5 +1,57 @@
 #include "minishell.h"
 
+
+char *get_befor_equal(char *str)
+{
+	char *ptr;
+	int i;
+
+	i = 0;
+	if(!(ptr = malloc(sizeof(char) * (cout_to_char(str,'=')==0 ? ft_strlen(str) : cout_to_char(str,'=')))))
+		return (NULL);
+	while(str[i] != '=' && str[i])
+	{
+		ptr[i] = str[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}
+
+char *get_after_equal(char *str)
+{
+	int i;
+
+	if(!check_equal(str))
+		return (NULL);
+	i = ft_strlen(get_befor_equal(str));
+	return(&str[i+1]);
+}
+
+void show_export(char **env)
+{
+    int i;
+
+    if (!env)
+        return;
+    i = 0;
+    while (env[i])
+    {
+		if(ft_strncmp("_",get_befor_equal(env[i]),ft_strlen(env[i])))
+		{
+			ft_putstr_fd("declare -x ",1);
+			ft_putstr_fd(get_befor_equal(env[i]),1);
+			if(get_after_equal(env[i]))
+			{	ft_putstr_fd("=\"",1);
+				ft_putstr_fd(get_after_equal(env[i]),1);
+				ft_putstr_fd("\"",1);
+			}
+			ft_putstr_fd("\n",1);
+		}
+        i++;
+    }
+}
+
 int check_space(char *str)
 {
 	int i = 0;
@@ -22,10 +74,10 @@ static char*  get_to_space(char *str)
 	char *ptr;
 	int i;
        	
+	i = 0;
 	if(!(ptr = malloc(sizeof(char) * ft_strlen(str))))
 		return (NULL);
 	ft_bzero(ptr,ft_strlen(str));
-	i = 0;
 	while(str[i])
 	{
 		ptr[i] = str[i];
@@ -34,32 +86,6 @@ static char*  get_to_space(char *str)
 		i++;
 	}
 	return (ptr);
-}
-
-char *get_befor_equal(char *str)
-{
-	char *ptr;
-	int i;
-
-	i = 0;
-	if(!(ptr = malloc(sizeof(char) * cout_to_char(str,'='))))
-		return (NULL);
-	while(str[i] != '=')
-	{
-		ptr[i] = str[i];
-		i++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
-}
-
-
-char *get_after_equal(char *str)
-{
-	int i;
-
-	i = ft_strlen(get_befor_equal(str));
-	return(&str[i+1]);
 }
 
 int check_equal(char *str)
@@ -76,21 +102,36 @@ int check_equal(char *str)
 	return (0);
 }
 
+int get_extern_value(char *str)
+{
+	int	i;
 
-void	export_cmd(char *name,char **env)
+	i = 0;
+	if(str[0] == '=')
+		return 0;
+	while (str[i])
+	{
+		if(str[i])
+		{
+
+		}
+		i++;
+	}
+	return 1;
+}
+
+int	export_cmd(char *name,char **env)
 {
 	int line = 0; 
 
 	name = ft_strtrim(name,"\n");
-	if(!check_space(name))
+	if(!get_extern_value(name))
 	{
-		ft_putstr_fd("bash$ : bad assignment",1);
-		return ;
+		ft_putstr_fd("bash$ : bad assignment\n",2);
+		return (0);
 	}
-	if(!check_equal(name))
-		name = ft_strjoin(name, "=''");
-	if(name[ft_strlen(name) + 1] == '=')
-		name = ft_strjoin(name, "''");
+	else if(!check_equal(name))
+		name = ft_strjoin(name, "");
 	if(!search_env(env, get_befor_equal(name)))
 	{
 		line = count_line(env);
@@ -99,4 +140,6 @@ void	export_cmd(char *name,char **env)
 	}
 	else
 		edit_env(env,get_befor_equal(name),get_after_equal(name));
+		
+	return (1);
 }
