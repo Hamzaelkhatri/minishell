@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   details.c                                          :+:      :+:    :+:   */
+/*   redirection_filename.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/27 21:44:38 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/19 18:28:52 by zdnaya           ###   ########.fr       */
+/*   Created: 2021/01/19 17:34:31 by zdnaya            #+#    #+#             */
+/*   Updated: 2021/01/19 17:34:52 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+char *seperat_file_name(char *tmp) {
+  int i;
+  int j;
+  char *res;
 
-
-char **check_each_node(char *line, t_shell *sh) {
-
-  char **tmp;
-  char **tmp1;
-  char **tmp2;
-
-  line = befor_direction(line, sh);
-  tmp = ft_space_split(line);
-
-  return (tmp);
+  i = 0;
+  j = 0;
+  if (!(res = malloc(sizeof(char) * (strlen(tmp)))))
+    return (NULL);
+  while (tmp[i] != '\0') {
+    if ((tmp[i] == '>' && tmp[i + 1] != '>') || tmp[i] == '<')
+      i++;
+    else if ((tmp[i] == '>' && tmp[i + 1] == '>'))
+      i = i + 2;
+    else {
+      res[j] = tmp[i];
+      j++;
+      i++;
+    }
+  }
+  res[j] = '\0';
+  return (no_quote(res));
 }
 

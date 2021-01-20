@@ -1,1 +1,1 @@
-export a=
+env > file

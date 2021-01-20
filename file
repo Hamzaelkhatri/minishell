@@ -1,8 +1,8 @@
 TMPDIR=/var/folders/zz/zyxvpxvq6csfxvn_n000c_zw0032qz/T/
 SHELL=/bin/zsh
 HOME=/Users/ahaddad
-SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.LNPKs19kft/Listeners
-Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.wILyKGy2lV/Render
+SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.pZlLnmbVgT/Listeners
+Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.kFVCqolZRr/Render
 LOGNAME=ahaddad
 PATH=/Users/ahaddad/.brew/bin:/Users/ahaddad/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/ahaddad/.brew/bin
 XPC_SERVICE_NAME=0
@@ -14,41 +14,20 @@ __CF_USER_TEXT_ENCODING=0x18AFF:0x0:0x0
 ORIGINAL_XDG_CURRENT_DESKTOP=undefined
 LESS=-R
 LSCOLORS=Gxfxcxdxbxegedabagacad
-OLDPWD=/Users/ahaddad/Desktop/amine_vrs
+OLDPWD=/Users/ahaddad/Desktop/mm2
 P9K_SSH=0
 PAGER=less
-PWD=/Users/ahaddad/Desktop/amine_vrs
+PWD=/Users/ahaddad/Desktop/mm2
 SHLVL=1
 ZSH=/Users/ahaddad/.oh-my-zsh
 TERM_PROGRAM=vscode
 TERM_PROGRAM_VERSION=1.46.1
 LANG=en_US.UTF-8
 COLORTERM=truecolor
-VSCODE_GIT_IPC_HANDLE=/var/folders/zz/zyxvpxvq6csfxvn_n000c_zw0032qz/T/vscode-git-3d3fadd695.sock
+VSCODE_GIT_IPC_HANDLE=/var/folders/zz/zyxvpxvq6csfxvn_n000c_zw0032qz/T/vscode-git-7c06c713e3.sock
 GIT_ASKPASS=/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh
 VSCODE_GIT_ASKPASS_NODE=/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Renderer).app/Contents/MacOS/Code Helper (Renderer)
 VSCODE_GIT_ASKPASS_MAIN=/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js
 TERM=xterm-256color
 P9K_TTY=old
-_=/Users/ahaddad/Desktop/amine_vrs/./minishell
-amine_vrs
-exam 03
-im.jpg
-last_lats1
-last_lats1.zip
-lhamdolilah.zip
-lst_vrs
-lst_vrs.zip
-mini
-mini zip
-mini1
-minishell
-pory
-sh
-sh 2
-sh 3
-sh 3.zip
-tkhlitta
-untitled folder
-update copy
-update copy.zip
+_=/Users/ahaddad/Desktop/mm2/./minishell

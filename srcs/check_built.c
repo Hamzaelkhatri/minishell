@@ -6,7 +6,7 @@
 /*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/24 16:34:39 by ahaddad           #+#    #+#             */
-/*   Updated: 2020/12/30 14:27:38 by zdnaya           ###   ########.fr       */
+/*   Updated: 2021/01/18 10:51:26 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void check_built(t_list_cmd *lst, t_cmd *cmd) {
 
   tmp = lst;
   while (lst != NULL) {
-      // puts("ana hna ");
+    // puts("ana hna ");
     all = lst->all;
     while (lst->all != NULL) {
       // printf("cmd : |%s|\n", lst->all->command);
@@ -55,7 +55,7 @@ void check_built(t_list_cmd *lst, t_cmd *cmd) {
   }
   lst = tmp;
 }
-void check_built_p(t_list_cmd *lst, t_cmd *cmd) {
+void check_built_p(t_list_cmd *lst, t_cmd *cmd, t_shell *sh) {
   t_pipe *tmp1;
   t_all *all;
   t_list_cmd *list1;
@@ -66,7 +66,7 @@ void check_built_p(t_list_cmd *lst, t_cmd *cmd) {
     // printf("cmd : |%s|\n", lst->cmd);
     // printf("%d\n", pipe_e(lst->cmd));
 
-    if (pipe_e(lst->cmd) == 1) {
+    if (pipe_e(lst->cmd, sh) == 1) {
       //   puts(" im here");
       tmp1 = lst->pipe;
       while (lst->pipe != NULL) {

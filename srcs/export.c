@@ -72,7 +72,6 @@ void sort_exp(char **env)
 
 void export_cmd(char *name, char **env)
 {
-	puts(name);
 	int line = 0;
 	if (!name)
 		sort_exp(env);

@@ -68,7 +68,10 @@ typedef struct s_shell {
   int both;
   int redirection;
   char *sh_direct;
+  int sp_quote;
+  int db_quote;
 } t_shell;
+
 typedef struct s_all {
   char *command;
   char *argument;
@@ -131,7 +134,7 @@ void getprogramme(t_path *path, char *cmd);
 t_token *ft_parse(char *line);
 char **ft_split_whitespaces(char *str);
 void shift(int fd);
-void shift_extra(char *file, char *shifts,t_path *path,t_list_cmd *lst);
+void shift_extra(char *file, char *shifts, t_path *path, t_list_cmd *lst);
 char *get_var_env(t_path *path, char *var);
 void cd_cmd(char *nextpath, t_path *path);
 int count_line(char **env);
@@ -150,7 +153,7 @@ char **ft_char_split(char const *s, char *set);
 int ft_strcmp(const char *s1, const char *s2);
 void add_cmd(t_list_cmd **head, t_list_cmd *new_obj);
 t_list_cmd *creat_node(char *content);
-t_list_cmd *define_each(t_list_cmd *lst);
+t_list_cmd *define_each(t_list_cmd *lst, t_shell *sh);
 // void search_all(char **env);
 int ft_strcmp(const char *s1, const char *s2);
 void add_pipe_list(t_pipe **head, t_pipe *new_cmd);
@@ -159,44 +162,44 @@ t_pipe *creat_node_p(char *content);
 void print_nested_lklist(t_list_cmd *lst);
 t_list_cmd *pipe_define_each(t_list_cmd *lst, t_shell *sh, char **env);
 void seperat_with_pipe(t_list_cmd *lst);
-void ft_check_comma(char *line, t_shell *sh);
-void ft_check_pipe(char *line, t_shell *sh);
+void ft_check_comma(char *line, t_shell *sh, char c);
+void ft_check_pipe(char *line, t_shell *sh, char c);
 void pipes_cmd1(t_path *path, t_list_cmd *lst, t_cmd *cmd);
 void check_built(t_list_cmd *lst, t_cmd *cmd);
-void check_built_p(t_list_cmd *lst, t_cmd *cmd);
-int pipe_e(char *line);
+void check_built_p(t_list_cmd *lst, t_cmd *cmd, t_shell *sh);
+int pipe_e(char *line, t_shell *sh);
 void ft_echo(char *str, int option);
 int check_one(char *line, t_shell *sh);
 void print(t_pipe *pipe, t_shell *sh);
-t_pipe *both(t_list_cmd *lst);
-void cmd_details(t_list_cmd *lst);
+t_pipe *both(t_list_cmd *lst, t_shell *sh);
+void comand_details(t_list_cmd *lst, t_shell *sh);
 void ch_comma_buil(t_cmd *cmd, char *comnd);
 int check_redirection(char *line);
-char *is_befor_redirection(char *line);
-char *befor_direction(char *line);
+char *is_befor_redirection(char *line, t_shell *sh);
+char *befor_direction(char *line, t_shell *sh);
 void add_all(t_all **head, t_all *new_cmd);
 char *in_direction(char *line);
 char **search_4_red(char *line);
 char **redir(char *line);
-char *is_after_redirection(char *line);
-void print_all(t_list_cmd *lst);
+char *is_after_redirection(char *line, t_shell *sh, char *one_part);
+void print_all(t_list_cmd *lst, t_shell *sh);
 char *ft_str_join(char *s1, char *s2, char *s3);
 t_all *s_cmd_details(char *s1, char *s2, char *s3);
 t_list_cmd *define_each1(char *line);
-char **check_each_node(char *line);
+char **check_each_node(char *line, t_shell *sh);
 int search(char *str);
 char **redir(char *line);
-void check_line_error(char *line);
+void check_line_error(char *line, t_shell *sh);
 int check_revers_check(char caract, char next_char, char one, char two);
 int count_array(char **tmp);
 char *concat(char **tmp, int i);
-void part_one(t_list_cmd *lst); // khashomite3awed0
-void part_two(t_list_cmd *lst); // khashom ite3awedo
-t_list_cmd *link_list(t_list_cmd *lst);
-
-t_list_cmd *sort_all_1(t_list_cmd *lst);
-t_list_cmd *sort_all_2(t_list_cmd *lst, t_all *all, char *red, char **free_sp);
-
+void part_one(t_list_cmd *lst, t_shell *sh);
+void part_two(t_list_cmd *lst, t_shell *sh);
+t_list_cmd *link_list(t_list_cmd *lst, t_shell *sh);
+void call_pipe(t_list_cmd *lst, t_path *path, t_shell *sh, t_cmd *cmd);
+t_list_cmd *sort_all_1(t_list_cmd *lst, t_shell *sh);
+t_list_cmd *sort_all_2(t_list_cmd *lst, t_all *all, char **free_sp);
+void call_getprg(t_list_cmd *lst, t_path *path, t_cmd *cmd);
 t_redirection *creat_node_r(char *content, char *content1);
 void add_red(t_redirection **head, t_redirection *new_cmd);
 
@@ -209,13 +212,33 @@ int condition_1(char **free_sp, int i);
 int condition_2(char **free_sp, int i);
 void condition_3(t_use *use, char ***free_sp);
 
-t_list_cmd *define_each1_01(t_list_cmd *lst, char *string, char *red);
+t_list_cmd *define_each1_01(t_list_cmd *lst, char *string, char *red,
+                            t_shell *sh);
 t_all *all_conditions(t_all *all, char **free_sp, int *i);
-t_list_cmd *redirection_sort(t_list_cmd *lst, char *cmd, char *arg, char *red);
-t_list_cmd *define_each1_02(t_list_cmd *lst, char *string, char *red);
-t_list_cmd *red_sort_02(t_list_cmd *lst, char *cmd, char *arg, char *red);
-t_list_cmd *sort_all_3(t_list_cmd *lst);
+t_list_cmd *redirection_sort(t_list_cmd *lst, char *cmd, char *arg,
+                             char **free_sp);
+t_list_cmd *define_each1_02(t_list_cmd *lst, char *string, char *red,
+                            t_shell *sh);
+t_list_cmd *red_sort_02(t_list_cmd *lst, char *cmd, char *arg, char *red,
+                        t_shell *sh);
+t_list_cmd *sort_all_3(t_list_cmd *lst, t_shell *sh);
 int lstsize(t_list_cmd *lst);
 int lstsize_1(t_list_cmd *lst);
-void pipes_cmds(t_path *path, t_list_cmd *lst, t_cmd *cmd1,int s);
+void pipes_cmds(t_path *path, t_list_cmd *lst, t_cmd *cmd1, int s);
+int escape_from_until(char *str, int start, char c);
+int check_quote1(char *str);
+int check_befor(char *str, int i, int o, char quote);
+int check_after(char *str);
+void witch_quote(char *str, t_shell *sh);
+char quote_char(char *s, t_shell *sh);
+char **ft_minishell_split(char const *s, char c, t_shell *sh);
+char **shell_space_split(char const *s, t_shell *sh);
+int quote_bfr_red(char *s);
+char *no_quote(char *str);
+void sh_initial(t_list_cmd *lst, t_shell *sh);
+t_all *s_cmd_details1(char *s1, char *s2);
+char *ft_substring(char *destination, const char *source, int start, int len);
+int space_or_no(char *line);
+t_list_cmd *simple_cmd(t_list_cmd *lst, char **simple_cmd);
+int we_have_quote(char *str);
 #endif
