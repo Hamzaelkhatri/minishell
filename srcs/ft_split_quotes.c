@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 18:58:00 by sqatim            #+#    #+#             */
-/*   Updated: 2019/11/08 22:40:49 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/01/21 16:07:38 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,6 @@ static int words(char *str, char c)
 		}
 	}
 	return (j);
-}
-
-static void *leak(char **spl, int j)
-{
-	j = j - 1;
-	while (spl[j])
-	{
-		free(spl[j]);
-		j--;
-	}
-	free(spl);
-	return (NULL);
 }
 
 static int carcts(char *str, char c)

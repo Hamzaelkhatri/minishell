@@ -29,7 +29,7 @@ void	free_lcommand(t_list_cmd **l_command)
 	if (*l_command != NULL)
 	{
 		free_command(&(*l_command)->command);
-		if((*l_command)->line != NULL)
+		if ((*l_command)->line != NULL)
 			ft_strdel(&(*l_command)->line);
 		free(*l_command);
 		*l_command = NULL;

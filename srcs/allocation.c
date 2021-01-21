@@ -3,12 +3,12 @@
 static void	allocation_lcmd(t_list_cmd **new, t_list_cmd **parent)
 {
 	if (!((*new) = (t_list_cmd *)malloc(sizeof(t_list_cmd))))
-		ft_exit(*parent,errno);
+		ft_exit(*parent, errno);
 	if (!((*new)->command = (t_command *)malloc(sizeof(t_command))))
-		ft_exit(*parent,errno);
+		ft_exit(*parent, errno);
 	if (!((*new)->command->s_left =\
 			(t_simple_command *)malloc(sizeof(t_simple_command))))
-		ft_exit(*parent,errno);
+		ft_exit(*parent, errno);
 }
 
 t_list_cmd	*add_list_cmd(t_list_cmd *parent)
@@ -39,9 +39,9 @@ t_command	*add_command(t_command *parent, t_list_cmd *l_cmd)
 
 	tmp = parent;
 	if (!(new = (t_command *)malloc(sizeof(t_command))))
-		ft_exit(l_cmd,errno);
+		ft_exit(l_cmd, errno);
 	if (!(new->s_left = (t_simple_command *)malloc(sizeof(t_simple_command))))
-		ft_exit(l_cmd,errno);
+		ft_exit(l_cmd, errno);
 	ft_bzero(&new->tool, sizeof(t_tool));
 	new->right = NULL;
 	new->s_left->l_element = NULL;
@@ -61,15 +61,15 @@ t_command	*add_simple_cmd(t_command *parent, int i, t_list_cmd *l_cmd)
 	{
 		if (!(parent->s_left->l_element =\
 			(t_elements *)malloc(sizeof(t_elements))))
-			ft_exit(l_cmd,errno);
+			ft_exit(l_cmd, errno);
 		init_simple_cmd(&parent->s_left, i);
 		return (parent);
 	}
 	tmp = parent->s_left;
 	if (!(new = (t_simple_command *)malloc(sizeof(t_simple_command))))
-		ft_exit(l_cmd,errno);
+		ft_exit(l_cmd, errno);
 	if (!(new->l_element = (t_elements *)malloc(sizeof(t_elements))))
-		ft_exit(l_cmd,errno);
+		ft_exit(l_cmd, errno);
 	init_simple_cmd(&new, i);
 	while (parent->s_left->right != NULL)
 		parent->s_left = parent->s_left->right;

@@ -23,7 +23,7 @@ static int		words(char *str)
 	return (j);
 }
 
-static void		*leak(char **spl, int j)
+void			*leak(char **spl, int j)
 {
 	j = j - 1;
 	while (spl[j])
