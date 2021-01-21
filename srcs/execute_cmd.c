@@ -139,6 +139,7 @@ int	check_int(char *str)
 	int	i;
 
 	i = 0;
+    str = ft_strtrim(str,"\n");
     str = ignoring_quote(str);
     while (str[i] && str[i] < 33)
         i++;
@@ -242,13 +243,9 @@ int get_cmd_(char *cmd,t_path *path,t_command *l_cmd)
             exit(EXIT_FAILURE);
         }
         if(l_cmd->s_left->right)
-        {
             exit(check_int(l_cmd->s_left->right->l_element->argument));
-        }
         else
-        {
             exit(EXIT_SUCCESS);
-        }
         
     }
     else if(ft_strnstr(cmd,"export",ft_strlen(cmd)) && l_cmd->s_left->right == NULL)

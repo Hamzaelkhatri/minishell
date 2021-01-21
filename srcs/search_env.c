@@ -45,9 +45,9 @@ char *search_env(char **env,char *str)
     i = 0;
     while (env[i])
     {
-        if(!ft_strncmp(env[i],str,ft_strlen(env[i])))
+        if(!ft_strncmp(env[i],str,ft_strlen(str)))
         {
-            tmp = ft_str_to_equal(env[i],str,ft_strlen(env[i]));
+            tmp = ft_str_to_equal(env[i],str,ft_strlen(str));
             return &tmp[j];
         }
         i++;
