@@ -6,7 +6,7 @@
 /*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/01/22 12:43:46 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/01/22 12:59:22 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,8 @@ typedef struct	s_tmp
 }				t_tmp;
 
 void			print(t_list_cmd *l_command);
-void			ft_putchar(char c);
-void			ft_putstr(char *str);
 char			**ft_space_split(char const *s);
-int				check(char *line, char **test);
 int				is_correct(char c);
-void			ft_wich(t_check *wich, int number);
 void			*leak(char **spl, int j);
 char			**ft_space_split(char const *s);
 char			**ft_space_split_quote(char const *s);
@@ -182,7 +178,6 @@ int				ft_2strlen(char **str);
 void			get_directory(t_path *path);
 int				check_path(char *path, char *cmd);
 void			getprogramme(t_path *path, char *cmd);
-char			**ft_split_whitespaces(char *str);
 void			shift(int fd);
 void			shift_extra(char *file, char *shifts);
 char			*get_var_env(t_path *path, char *var);
