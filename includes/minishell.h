@@ -127,6 +127,7 @@ char **ft_space_split(char const *s);
 int check(char *line, char **test);
 int is_correct(char c);
 void ft_wich(t_check *wich, int number);
+void			*leak(char **spl, int j);
 char **ft_space_split(char const *s);
 char **ft_space_split_quote(char const *s);
 
