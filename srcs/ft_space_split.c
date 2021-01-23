@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_space_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zdnaya <diyanazizo13@gmail.com>            +#+  +:+       +#+        */
+/*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:27:21 by zdnaya            #+#    #+#             */
-/*   Updated: 2020/12/16 23:27:27 by zdnaya           ###   ########.fr       */
+/*   Updated: 2021/01/19 17:15:08 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 static int		words(char *str)
 {

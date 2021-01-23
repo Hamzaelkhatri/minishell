@@ -1,1 +1,1 @@
-echo -n hello >> file0 bla <file1 ; pwd >>file2 sskkw <file3 | ls -la
+export a="fjosjfjoo  " liadjflkj

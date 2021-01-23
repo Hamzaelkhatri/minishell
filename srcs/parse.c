@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zdnaya <diyanazizo13@gmail.com>            +#+  +:+       +#+        */
+/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:18:58 by zjamali           #+#    #+#             */
-/*   Updated: 2020/12/27 21:45:37 by zdnaya           ###   ########.fr       */
+/*   Updated: 2021/01/23 12:50:27 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,5 @@ t_token	*ft_parse(char *line)
 		ft_lstadd_back(&tokens_list,tmp);
 		i++;
 	}
-	//ft_printf_tokens(tokens_list);
 	return (tokens_list);
 }

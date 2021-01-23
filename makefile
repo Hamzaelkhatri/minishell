@@ -28,20 +28,36 @@ SRC_NAME=init.c\
 		get_next_line_utils.c\
 		ft_space_split.c\
 		ft_char_split.c\
-		list.c\
 		pipe.c\
-		check_built.c\
 		echo.c\
-		check.c\
-		sort.c\
+		condition_check_0.c\
+		condition_check_1.c\
+		condition_check_2.c\
 		details.c\
-		redirection.c\
-		redirections.c\
+		is_in_redirection.c\
+		is_after_redirection.c\
+		is_before_redirection.c\
 		errors.c\
-		cmd_details.c\
-		sort_01.c\
-		sort_02.c\
-		sort_03.c\
+		comand_details.c\
+		redirection_filename.c\
+		sort_seperators_all.c\
+		test.c\
+		minishell_space.c\
+		minishell_split.c\
+		tools1.c\
+		redirections_quote.c\
+	 	list_creat.c\
+		list_add.c\
+		list_modify.c\
+		print.c\
+		simple_cmd_pars.c\
+		pars_conditions.c\
+		concats.c\
+		redirection_sign.c\
+		pipe_sort.c\
+		comma_or_pipe_sort.c\
+		main.c\
+
 
 HDR_NAME=minishell.h 
 

@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   details.c                                          :+:      :+:    :+:   */
+/*   comand_details.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/27 21:44:38 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/19 18:28:52 by zdnaya           ###   ########.fr       */
+/*   Created: 2021/01/20 17:00:25 by zdnaya            #+#    #+#             */
+/*   Updated: 2021/01/22 18:42:11 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void comand_details(t_list_cmd *lst, t_shell *sh) {
 
+  t_all *new1;
+  t_list_cmd *lstt;
+  t_pipe *pipes;
 
-char **check_each_node(char *line, t_shell *sh) {
+  lst = link_list(lst, sh);
+  lstt = lst;
+  while (lst != NULL) {
+    if (pipe_e(lst->cmd, sh) == 1) {
+      part_one(lst, sh);
 
-  char **tmp;
-  char **tmp1;
-  char **tmp2;
+    } else {
+      if (pipe_e(lst->cmd, sh) == 1)
+        lst = lst->next;
 
-  line = befor_direction(line, sh);
-  tmp = ft_space_split(line);
+      part_two(lst, sh);
 
-  return (tmp);
+    }
+    lst = lst->next;
+  }
+  lst = lstt;
 }
-
