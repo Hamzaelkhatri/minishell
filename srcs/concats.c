@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   concats.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 17:30:44 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/23 12:45:31 by ahaddad          ###   ########.fr       */
+/*   Updated: 2021/01/23 16:27:25 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ char *concat(char **tmp, int i) {
     return (NULL);
   }
   while (tmp[i] != NULL) {
-    result = concat_space(no_quote(tmp[i]), result);
+    result = concat_space((tmp[i]), result);
     i++;
   }
-  return (no_quote(result));
+  return (result);
 }
 
 char *concat_space(char *tmp, char *tmp1) {
@@ -69,6 +69,6 @@ char *concat_space(char *tmp, char *tmp1) {
     result = ft_str_join(tmp1, " ", tmp);
     tmp1 = strdup(result);
   }
-  return (no_quote(result));
+  return (ft_strtrim(result," "));
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 09:30:37 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/23 12:54:09 by ahaddad          ###   ########.fr       */
+/*   Updated: 2021/01/23 17:41:37 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,25 @@ int  witch_quote1(char *s, t_shell *sh) {
   // free(s);
 }
 
-int escape_from_until1(char *str, int start, char c) {
+int escape_from_until1(char *str, int i, char c) {
   int j;
   char *s;
-  int i;
 
-  i = start +1 ;
   s = strdup(str);
   j = 0;
-  while (s[i]) {
-    if (s[i] == c) {
-      j = i;
-      break;
+  static int index = 1;
+  while (s[i])
+  {
+      if (s[i] == c)
+         {
+           j = i;
+           break;
     }
     i++;
   }
-  if (j == 0) {
-    printf("Syntax Error: One quote_2");
+  if (j == 0)
+  {
+    printf("Syntax Error: first_error{One quote}");
     exit(1);
   }
   return (j);

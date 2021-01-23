@@ -6,7 +6,7 @@
 /*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 17:34:31 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/19 17:34:52 by zdnaya           ###   ########.fr       */
+/*   Updated: 2021/01/23 15:21:02 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ char *seperat_file_name(char *tmp) {
     }
   }
   res[j] = '\0';
-  return (no_quote(res));
+  return ((res));
 }
 

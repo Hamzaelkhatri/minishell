@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   condition_check_0.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 16:57:14 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/23 12:45:46 by ahaddad          ###   ########.fr       */
+/*   Updated: 2021/01/23 16:57:07 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,21 @@ void ft_check_comma(char *line, t_shell *sh) {
 
   i = 0;
   sh->comma = 0;
+  int index = 0;
+
   while (line[i]) {
 if (line[i] == '\'' || line[i] == '\"') {
-    if (line[i] == '\"') 
-        i = escape_from_until1(line, i, '\"') +1;
-    if ( line[i] == '\'')
-        i = escape_from_until1(line, i, '\'') +1;
+  if (line[i] == '\"') {
+      i = escape_from_until1(line, i +1, '\"') ;
+     }
+    else if ( line[i] == '\'')
+        i = escape_from_until1(line, i +1, '\'');
+      }
       if (line[i] == ';') {
         sh->comma = 1;
         break;
-      }
-    } else {
-      if (line[i] == ';') {
-        sh->comma = 1;
-        break;
-      }
-    }
-
+    } 
+    if(line[i])
     i++;
   }
 }
@@ -84,10 +82,10 @@ void ft_check_pipe(char *line, t_shell *sh) {
   sh->pipe = 0;
   while (line[i]) {
     if (line[i] == '\'' || line[i] == '\"') {
-    if (line[i] == '\"') 
-        i = escape_from_until1(line, i, '\"') +1;
-    if ( line[i] == '\'')
-        i = escape_from_until1(line, i, '\'') +1;
+      if (line[i] == '\"')
+        i = escape_from_until1(line, i + 1, '\"');
+      else if ( line[i] == '\'')
+          i = escape_from_until1(line, i+1, '\'') ;
       if (line[i] == '|') {
         sh->pipe = 1;
         break;
@@ -106,6 +104,7 @@ void ft_check_pipe(char *line, t_shell *sh) {
 int check_one(char *line, t_shell *sh) {
   sh->pipe = 0;
   sh->comma = 0;
+
   ft_check_comma(line, sh);
   ft_check_pipe(line, sh);
   if (sh->pipe == 1 && sh->comma == 0)

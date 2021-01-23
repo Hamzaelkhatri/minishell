@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_space.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 09:27:51 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/23 12:49:28 by ahaddad          ###   ########.fr       */
+/*   Updated: 2021/01/23 17:42:23 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,16 @@ static int wordsp1(char *str)
       j++;
     }
     if (str[i] == '\"' || str[i] == '\'')
-    {
-      if (str[i] == '\"')
-      {
-        i = escape_from_until1(str, i, '\"') + 1;
+    {      
+
+      if (str[i] == '\"') {
+
+        i = escape_from_until1(str, i + 1, '\"');
       }
       else if (str[i] == '\'')
-        i = escape_from_until1(str, i, '\'') + 1;
-      // i++;
+        i = escape_from_until1(str, i +1, '\'') ;
+      i++;
+
       if (str[i] && str[i] != ' ' && str[i] != '\t')
       {
         i++;
@@ -113,9 +115,11 @@ static int carcts_sp1(char *str, char quote)
 
   i = 0;
   while (str[i] && str[i] != ' ' && str[i] != '\t')
-  {
+  { 
     if (str[i] == quote)
-      i = escape_from_until1(str, i, quote);
+    {
+      i = escape_from_until1(str, i+1, quote);
+    }
     i++;
   }
   return (i);
@@ -230,6 +234,7 @@ char **shell_space_split(char const *s)
   str = (char *)s;
   if (check_quote1(str) == 1)
   {
+    // printf("==>%d", (wordsp1(str)));
     tab = malloc(sizeof(char *) * (wordsp1(str) + 1));
     if (!tab)
       return (NULL);

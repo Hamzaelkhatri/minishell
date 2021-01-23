@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_quote.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:03:28 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/23 11:10:49 by ahaddad          ###   ########.fr       */
+/*   Updated: 2021/01/23 15:38:58 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
 int quote_bfr_red(char *s)
 {
   int i;
@@ -68,19 +69,26 @@ char *no_quote(char *s)
   char *result;
   int j;
   char *str;
+  char quote;
 
+  quote = 0;
   if (s == NULL)
     return (NULL);
-  j = 0;
-  i = 0;
+
   str = ft_strdup(s);
-  result = malloc(sizeof(char) * ft_strlen(str)); 
-  if (we_have_quote(str) == 1 && exist_equal(str) == 0)
-  {
+  result = malloc(sizeof(char) * strlen(str));
+  // puts(str);
+  if (we_have_quote(str) == 1 && exist_equal(str) == 0) {
+    quote = 0;
+      j = 0;
+  i = 0;
     while (str[i])
     {
-      if (str[i] == '\"' || str[i] == '\'')
+      if ((str[i] == '\"' || str[i] == '\'') &&
+          (quote == str[i] || quote == 0)) {
+        quote = str[i];
         i++;
+          }
       else {
         result[j] = str[i];
         j++;
@@ -91,8 +99,6 @@ char *no_quote(char *s)
   }
    else
     result = ft_strdup(str);
-  // puts(result);
   result = ft_strtrim(result,"\n");
-    // puts(result);
   return (result);
 }

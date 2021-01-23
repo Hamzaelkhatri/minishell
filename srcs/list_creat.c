@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_creat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 17:05:19 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/23 12:48:38 by ahaddad          ###   ########.fr       */
+/*   Updated: 2021/01/23 15:25:39 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_all *s_cmd_details(char *s1, char *s2, char *s3) {
   t_all *all;
 
   all = malloc(sizeof(t_all));
-  all->command = no_quote(s1);
-  all->argument = no_quote(s2);
+  all->command = (s1);
+  all->argument = (s2);
   all->redirection = s3;
   all->next = NULL;
   return (all);

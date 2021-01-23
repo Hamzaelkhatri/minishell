@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   comma_or_pipe_sort.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 17:56:08 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/23 12:44:53 by ahaddad          ###   ########.fr       */
+/*   Updated: 2021/01/23 15:30:21 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void part_two(t_list_cmd *lst, t_shell *sh) {
   t_all *new1;
   char **tmp;
   t_use use;
-  int i= 0;//for test
 
   if (search(lst->cmd) == 1) {
 

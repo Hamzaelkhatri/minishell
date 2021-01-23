@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_modify.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zdnaya <zdnaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 17:18:59 by zdnaya            #+#    #+#             */
-/*   Updated: 2021/01/23 12:49:02 by ahaddad          ###   ########.fr       */
+/*   Updated: 2021/01/23 15:27:21 by zdnaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_all *s_cmd_details1(char *s1, char *s2)
 
   i = 0;
   all = malloc(sizeof(t_all));
-  all->command = no_quote(s1);
+  all->command =no_quote(s1);
   all->argument = no_quote(s2);
   all->redirection = NULL;
   all->red = NULL;
@@ -47,8 +47,8 @@ t_all *s_cmd_details2(char *s1, char *s2, t_redirection *red)
 
   i = 0;
   all = malloc(sizeof(t_all));
-  all->command = no_quote(s1);
-  all->argument = no_quote(s2);
+  all->command = (s1);
+  all->argument = (s2);
   all->red = red;
   add_red(&all->red, red);
   all->next = NULL;
