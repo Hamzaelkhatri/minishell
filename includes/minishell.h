@@ -6,7 +6,7 @@
 /*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/01/22 12:59:22 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/01/23 19:16:25 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ t_list_cmd		*add_list_cmd(t_list_cmd *parent);
 t_command		*add_command(t_command *parent, t_list_cmd *l_cmd);
 t_command		*add_simple_cmd(t_command *parent, int i, t_list_cmd *l_cmd);
 void			alloc_affect(t_list_cmd *l_cmd, char *command, int indice);
-void			ft_check_line(char *line);
+int				ft_check_line(char *line);
 int				check_type_element(char *line, int *check_i_o, int count);
 int				check_io_redirection(char *line, int *p, int *check_o_i);
 void			check_element(t_list_cmd *l_cmd);

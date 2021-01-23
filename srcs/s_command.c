@@ -45,7 +45,8 @@ static void	check_echo(t_simple_command **cmd)
 	tmp = *cmd;
 	*cmd = (*cmd)->right;
 	index = 0;
-	if (*cmd != NULL && check_n((*cmd)->l_element->argument))
+					ft_putendl_fd("fuck l ay wahad smito",1);
+	if (*cmd != NULL && (*cmd)->l_element->argument != NULL && check_n((*cmd)->l_element->argument))
 	{
 		while ((*cmd)->right != NULL &&
 				check_n((*cmd)->right->l_element->argument))

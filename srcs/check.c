@@ -11,7 +11,7 @@ static int	check_is_correct(char operation, char *line)
 	c = line[i];
 	if (operation == '|')
 	{
-		if (ft_isalnum(c) == 0 && (c == '|' || c == ';'))
+		if (ft_isalnum(c) == 0 && (c == '|' || c == ';' || c == '\0'))
 			return (0);
 	}
 	else if (operation == ';')
@@ -79,10 +79,11 @@ static void	ft_check_line_ex(char *line, int *i)
 		(*i)++;
 }
 
-void		ft_check_line(char *line)
+int		ft_check_line(char *line)
 {
 	int		i;
 	char	quotes;
+	int check = 0;
 
 	i = 0;
 	while (line[i])
@@ -90,10 +91,12 @@ void		ft_check_line(char *line)
 		if ((line[i] == '"' || line[i] == 39) && line[i - 1] != '\\')
 		{
 			quotes = line[i++];
-			while (line[i] != quotes && line[i])
+			while (((line[i] == quotes && line[i -1] == '\\' ) || line[i] != quotes) &&  line[i])
 				i++;
-			if (!(line[i]) && line[i - 1 ] != '"')
+			if (!(line[i]))
+			{
 				ft_putstr_fd("syntax error\n", 2);
+			}
 		}
 		else
 			ft_check_line_ex(line, &i);

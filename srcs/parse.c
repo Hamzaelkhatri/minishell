@@ -41,6 +41,7 @@ void	parse_list_command(t_list_cmd *l_cmd, char *line)
 	int		index;
 
 	index = 0;
+
 	tab = ft_split_quotes(line, ';');
 	while (tab[index])
 		parse_command(l_cmd, tab[index++]);

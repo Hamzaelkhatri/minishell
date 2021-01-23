@@ -6,9 +6,11 @@ static int	words(char *str, char c)
 	int		i;
 	int		j;
 	char	quote;
+	static int index;
 
 	i = 0;
 	j = 0;
+	// printf("index{%d}\n",++index);
 	while (str[i])
 	{
 		while (str[i] == c && str[i])
@@ -20,10 +22,13 @@ static int	words(char *str, char c)
 			if ((str[i] == 34 || str[i] == 39) && str[i - 1] != '\\')
 			{
 				quote = str[i++];
-				while ((str[i] == quote && str[i - 1] == '\\') ||\
-						str[i] != quote)
+				while (((str[i] == quote && str[i - 1] == '\\') ||\
+						str[i] != quote )&& str[i])
+						{
 					i++;
+						}
 			}
+			if(str[i])
 			i++;
 		}
 	}
@@ -42,9 +47,12 @@ static int	carcts(char *str, char c)
 		{
 			quote = str[i];
 			i++;
-			while ((str[i] == quote && str[i - 1] == '\\') || str[i] != quote)
+			while (((str[i] == quote && str[i - 1] == '\\') || str[i] != quote) && str[i])
+			{
 				i++;
+			}
 		}
+		if(str[i])
 		i++;
 	}
 	return (i);
@@ -57,7 +65,8 @@ static void	check_affec(char ***tab, char *src, int *o, int wich[2])
 
 	i = 0;
 	while (src[*o] != wich[1] && src[*o])
-	{
+	{						
+
 		if ((src[*o] == 34 || src[*o] == 39) && src[*o - 1] != '\\')
 		{
 			quote = src[*o];
