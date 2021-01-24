@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 10:32:55 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/01/19 10:47:44 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/01/24 19:00:12 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,8 @@ void    pipes_cmd(t_path * path, t_list_cmd *lst)
 				dup2(_fd[0], 0);
 			}
 			lst->command->s_left->l_element->cmd=ft_strtrim(lst->command->s_left->l_element->cmd,"\n");
-			if(!cmdcheck(lst->command->s_left->l_element->cmd))
-			{
-				cmd = ft_strjoin_command(lst->command->s_left);
-				getprogramme(path,cmd);
-				exit(0);
-			}
-			else
-			{
-				get_cmd(lst->command->s_left->l_element->cmd,path,lst->command);
-				exit(0);
-			}
+			get_cmd_(lst->command->s_left->l_element->cmd,path,lst->command);
+			exit(0);
 		}
         else 
         {

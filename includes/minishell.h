@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/01/23 19:16:25 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/01/24 18:59:39 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,5 +204,5 @@ void			echo(char *line, t_path *path, int ret);
 void			promp_bash(t_path *path, int ret, char **line);
 void			show_export(char **env);
 int				check_equal(char *str);
-
+int				ft_strcmp(const char *s1, const char *s2);
 #endif

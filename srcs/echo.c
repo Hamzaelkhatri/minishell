@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 11:02:30 by zjamali           #+#    #+#             */
-/*   Updated: 2021/01/19 11:29:17 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/01/24 18:56:57 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void echo(char *line, t_path *path, int ret)
 					ft_putstr_fd(tab[i++], 1);
 						if (i < ft_2strlen(tab))
 							write(1, " ", 1);
-					}
+				}
 				}
 			}
 		}

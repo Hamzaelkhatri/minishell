@@ -114,10 +114,14 @@ int		ft_check_line(char *line)
 			}
 		}
 		else
+	{
 			check = ft_check_line_ex(line, &i);
+			if(check == 0)
+				return(0);
+	}
 		i++;
 	}
-	return(check);
+	return(1);
 }
 
 int			check_type_element(char *line, int *check_i_o, int count)
