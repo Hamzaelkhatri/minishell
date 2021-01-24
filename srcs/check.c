@@ -63,20 +63,33 @@ static int	check_operation(char *line)
 	return (1);
 }
 
-static void	ft_check_line_ex(char *line, int *i)
+static int	ft_check_line_ex(char *line, int *i)
 {
 	if ((line[*i] == '|' && *i == 0) || (line[*i] == '|' &&\
 		check_operation(&line[*i]) == 0))
+		{
 		ft_putstr_fd("syntax error\n", 2);
+		return(0);
+		}
 	else if ((line[*i] == ';' && *i == 0) || (line[*i] == ';'\
 		&& check_operation(&line[*i]) == 0))
+		{
 		ft_putstr_fd("syntax error\n", 2);
+		return(0);
+		}
 	else if (line[*i] == '<' && check_operation(&line[*i]) == 0)
+	{
 		ft_putstr_fd("syntax error\n", 2);
+		return(0);
+	}
 	else if (line[*i] == '>' && check_operation(&line[*i]) == 0)
+	{
 		ft_putstr_fd("syntax error\n", 2);
+		return(0);
+	}
 	else if (line[*i] == '>' && line[*i + 1] == '>')
 		(*i)++;
+	return(1);
 }
 
 int		ft_check_line(char *line)
@@ -96,12 +109,15 @@ int		ft_check_line(char *line)
 			if (!(line[i]))
 			{
 				ft_putstr_fd("syntax error\n", 2);
+				// ft_putendl_fd("zwin",1);
+				return(0);
 			}
 		}
 		else
-			ft_check_line_ex(line, &i);
+			check = ft_check_line_ex(line, &i);
 		i++;
 	}
+	return(check);
 }
 
 int			check_type_element(char *line, int *check_i_o, int count)

@@ -6,6 +6,7 @@ int read_line(t_path *key, char **line)
 {
 	int ret;
 	ret = 0;
+	int fd = open("text.txt",O_RDWR);
 
 	*line = (char *)ft_calloc(BUFFER_SIZE, sizeof(char));
 	if (!line)
@@ -110,6 +111,7 @@ void loop_shell(t_path *path)
 	t_list_cmd *cmd = NULL;
 	struct stat buff;
 	int i;
+	int check;
 
 	if (signal(SIGINT, sigint_handler) == SIG_ERR)
 		ft_putstr_fd("\n can't catch cnrtl-C", 2);
@@ -131,17 +133,25 @@ void loop_shell(t_path *path)
 			}
 			path->cmds = line;
 		}
-		ft_check_line(path->cmds);
+		check = ft_check_line(path->cmds);
+		if(check == 1)
+		{
     	cmd = add_list_cmd(cmd);
 		cmd->line = ft_strdup(path->cmds);
+
     	parse_list_command(cmd, cmd->line);
 		ft_strdel(&path->cmds);
     	sort(cmd);
     	quotes(cmd);
+		check_scommand(cmd);
+
+		// print(cmd);
 		commande_effect(cmd,path);
 		var_glob = 0;
 		free_lcommand(&cmd);
 		if(DEBUG_BOOL)
 			break;
+		}
 	}
 }
+//ls >>>ffl
