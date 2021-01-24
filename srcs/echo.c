@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 11:02:30 by zjamali           #+#    #+#             */
-/*   Updated: 2021/01/24 18:56:57 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/01/24 19:26:57 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,42 +91,14 @@ void ft_nhaydo_nl(char **tab)
 	tab[count - 1][len - 1] = '\0';
 }
 
-void echo(char *line, t_path *path, int ret)
+void echo(char *line, t_path *path)
 {
-	int i;
-	char **tab;
-
-	i = 1;
-	if(line == NULL && !ret)
-		ft_putendl_fd("",1);
-	else
-	if (check_quote(line))
-	{
-		tab = ft_space_split(line);
-		tab = delete_quote(tab);
-		{
-			if (tab[1] == 0)
-				path->key->cntrd = 1;
-			else
-			{
-				// puts("HELLO");
-				if (ft_strnstr(tab[1], "-n", 2) || ft_strnstr(tab[1], "-n\n", 3))
-				{
-					ft_nhaydo_nl(tab);
-					i++;
-				}
-				while (i < ft_2strlen(tab))
-				{
-					ft_putstr_fd(tab[i++], 1);
-						if (i < ft_2strlen(tab))
-							write(1, " ", 1);
-				}
-				}
-			}
-		}
-		else
-		{
-			ft_putstr_fd("check quotes", 1);
-			exit(0);
-		}
+	// line = ft_strtrim(line,"\n");
+	// if(!ft_strncmp(line,"$",1))
+	// 	ft_putstr_fd(search_env(path->env->fullenv,line),1);
+	// else
+	// {
+		ft_putstr_fd(line,1);
+	// }
+	
 }

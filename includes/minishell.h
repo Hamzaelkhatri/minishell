@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/01/24 18:59:39 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/01/24 19:05:33 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,9 +200,10 @@ int				get_cmd(char *cmd, t_path *path, t_command *l_cmd);
 int				get_cmd_(char *cmd, t_path *path, t_command *l_cmd);
 void			free_lcommand(t_list_cmd **l_command);
 void			bash_promp();
-void			echo(char *line, t_path *path, int ret);
+void			echo(char *line, t_path *patht);
 void			promp_bash(t_path *path, int ret, char **line);
 void			show_export(char **env);
 int				check_equal(char *str);
 int				ft_strcmp(const char *s1, const char *s2);
+char			*get_befor_equal(char *str);
 #endif

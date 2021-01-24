@@ -98,7 +98,6 @@ void check_pwd(t_cmd *cmd, char **line, t_path *path, int ret)
 
 void bash_promp()
 {
-
 	ft_putstr_fd("\e[1;32mbash$ \e[0;37m", 2);
 }
 
@@ -144,8 +143,6 @@ void loop_shell(t_path *path)
     	sort(cmd);
     	quotes(cmd);
 		check_scommand(cmd);
-
-		// print(cmd);
 		commande_effect(cmd,path);
 		var_glob = 0;
 		free_lcommand(&cmd);
@@ -154,4 +151,3 @@ void loop_shell(t_path *path)
 		}
 	}
 }
-//ls >>>ffl

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char * word_tolower(char *str)
+char *word_tolower(char *str)
 {
     int i;
     char *ptr;
@@ -37,100 +37,98 @@ int is_int(char *str)
     i = 0;
     while (str[i])
     {
-        if(!ft_isdigit(str[i]))
+        if (!ft_isdigit(str[i]))
             return 0;
         i++;
     }
     return 1;
 }
 
-long long ft_atoi_long(char* str)
+long long ft_atoi_long(char *str)
 {
     int i;
-	int sign;
-	long long result;
-	int counter;
+    int sign;
+    long long result;
+    int counter;
 
-	i = 0;
-	sign = 1;
-	result = 0;
-	counter = 0;
+    i = 0;
+    sign = 1;
+    result = 0;
+    counter = 0;
 
-	while (str[i] == ' ' || str[i] == '\r' || str[i] == '\f' || str[i] == '\n'
-			|| str[i] == '\v' || str[i] == '\t')
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			sign = -1 * sign;
-		i++;
-	}
-	while (str[i]=='0')
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = result * 10 + str[i] - '0';
-		i++;
-		counter++;
-	}
-	return (result * sign);
+    while (str[i] == ' ' || str[i] == '\r' || str[i] == '\f' || str[i] == '\n' || str[i] == '\v' || str[i] == '\t')
+        i++;
+    if (str[i] == '+' || str[i] == '-')
+    {
+        if (str[i] == '-')
+            sign = -1 * sign;
+        i++;
+    }
+    while (str[i] == '0')
+        i++;
+    while (str[i] >= '0' && str[i] <= '9')
+    {
+        result = result * 10 + str[i] - '0';
+        i++;
+        counter++;
+    }
+    return (result * sign);
 }
 
 void print_err_exite(char *s)
 {
-    ft_putstr_fd("minishell: exit: ",2);
-    ft_putstr_fd(s,2);
-    ft_putendl_fd(": numeric argument required",2);
+    ft_putstr_fd("minishell: exit: ", 2);
+    ft_putstr_fd(s, 2);
+    ft_putendl_fd(": numeric argument required", 2);
 }
 
-int	check_int(char *str)
+int check_int(char *str)
 {
-	int	i;
+    int i;
 
-	i = 0;
-    str = ft_strtrim(str,"\n");
+    i = 0;
+    str = ft_strtrim(str, "\n");
     str = ignoring_quote(str);
     while (str[i] && str[i] < 33)
         i++;
-    if(str[i] == '-' || str[i] == '+')
+    if (str[i] == '-' || str[i] == '+')
         i++;
-    if(ft_atoi_long(str) <= LLONG_MIN && str[i-1]!='-')
+    if (ft_atoi_long(str) <= LLONG_MIN && str[i - 1] != '-')
     {
         print_err_exite(str);
-         return (255);
+        return (255);
     }
     if (ft_atoi_long(str) < LLONG_MIN)
     {
-         print_err_exite(str);
-         return (0);
+        print_err_exite(str);
+        return (0);
     }
-    else if(ft_atoi_long(str) > LLONG_MAX)
+    else if (ft_atoi_long(str) > LLONG_MAX)
     {
-         print_err_exite(str);
-         return (255);
+        print_err_exite(str);
+        return (255);
     }
-    else if(ft_atoi_long(str) <= LONG_MIN && count_digit(&str[i]) == 19)
+    else if (ft_atoi_long(str) <= LONG_MIN && count_digit(&str[i]) == 19)
     {
-         return (0);
+        return (0);
     }
-    else if(count_digit(&str[i]) == 19 && str[i-1] == '-')
+    else if (count_digit(&str[i]) == 19 && str[i - 1] == '-')
     {
-         print_err_exite(str);
-         return (255);
+        print_err_exite(str);
+        return (255);
     }
-	while (str[i])
-	{
-        
-		if((!ft_isdigit(str[i]) && str[i] != 32 && str[i] != '\t' )||count_digit(&str[i])>19)
-    	{
+    while (str[i])
+    {
+
+        if ((!ft_isdigit(str[i]) && str[i] != 32 && str[i] != '\t') || count_digit(&str[i]) > 19)
+        {
             print_err_exite(str);
             return (255);
         }
-		i++;
-	}
-	return (ft_atoi(str));
+        i++;
+    }
+    return (ft_atoi(str));
 }
-
 
 int size_args(t_command *l_cmd)
 {
@@ -144,86 +142,101 @@ int size_args(t_command *l_cmd)
         i++;
         tmp = tmp->right;
     }
-    return (i);    
+    return (i);
 }
 
-int get_cmd_(char *cmd,t_path *path,t_command *l_cmd)
+int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
 {
     int a;
     char *cmds;
-    
+
     a = 0;
-    cmd = ft_strtrim(cmd,"\n");
-   if(!ft_strncmp(cmd,"$",1) && get_var_env(path,cmd))
+    cmd = ft_strtrim(cmd, "\n");
+    if (!ft_strncmp(cmd, "$", 1) && get_var_env(path, cmd))
     {
-        cmd = get_var_env(path,cmd);
+        cmd = get_var_env(path, cmd);
         a = 1;
     }
-    if(!!ft_strcmp("exit",word_tolower(cmd)))
+    if (!!ft_strcmp("exit", word_tolower(cmd)))
         cmd = word_tolower(cmd);
-    if(!ft_strcmp(cmd,"$?"))
+    if (!ft_strcmp(cmd, "$?"))
     {
-        ft_putendl_fd(ft_itoa(path->dollar),1);
+        ft_putendl_fd(ft_itoa(path->dollar), 1);
     }
-    else if(!ft_strcmp(cmd,"pwd"))
-        {
-            print_working_directory(path);
-            path->dollar = 1;
-        }
-     else if(!ft_strcmp(cmd,"env"))
+    else if (!ft_strcmp(cmd, "pwd"))
+    {
+        print_working_directory(path);
+        path->dollar = 1;
+    }
+    else if (!ft_strcmp(cmd, "env"))
     {
         show_env(path->env->fullenv);
         path->dollar = 1;
     }
-     else if(!ft_strcmp(cmd,"cd"))
-    {  
-        if(l_cmd->s_left->right != NULL)
-            cd_cmd(l_cmd->s_left->right->l_element->argument,path);
+    else if (!ft_strcmp(cmd, "cd"))
+    {
+        if (l_cmd->s_left->right != NULL)
+            cd_cmd(l_cmd->s_left->right->l_element->argument, path);
         else
-           cd_cmd(NULL,path);
+            cd_cmd(NULL, path);
         path->dollar = 1;
     }
-    else if(!ft_strcmp(cmd,"exit"))
+    else if (!ft_strcmp(cmd, "exit"))
     {
 
-        if(size_args(l_cmd)>1 && is_int(l_cmd->s_left->right->l_element->argument))
+        if (size_args(l_cmd) > 1 && is_int(l_cmd->s_left->right->l_element->argument))
         {
-            ft_putendl_fd("minishell: exit: too many arguments",2);
+            ft_putendl_fd("minishell: exit: too many arguments", 2);
             exit(EXIT_FAILURE);
         }
-        if(l_cmd->s_left->right)
+        if (l_cmd->s_left->right)
             exit(check_int(l_cmd->s_left->right->l_element->argument));
         else
             exit(EXIT_SUCCESS);
-        
     }
-    else if(!ft_strcmp(cmd,"export") && l_cmd->s_left->right == NULL)
+    else if (!ft_strcmp(cmd, "export") && l_cmd->s_left->right == NULL)
     {
         char **tmp = path->env->fullenv;
         ft_sortstr(tmp);
         show_export(tmp);
         path->dollar = 1;
     }
-    else if(!ft_strcmp(cmd,"export") && l_cmd->s_left->right != NULL)
+    else if (!ft_strcmp(cmd, "export") && l_cmd->s_left->right != NULL)
     {
         while (l_cmd->s_left->right)
         {
-            if(!export_cmd(l_cmd->s_left->right->l_element->argument,path->env->fullenv))
+            if (!export_cmd(l_cmd->s_left->right->l_element->argument, path->env->fullenv))
                 break;
-            l_cmd->s_left->right=l_cmd->s_left->right->right;
+            l_cmd->s_left->right = l_cmd->s_left->right->right;
         }
-        
     }
-    else if(!ft_strcmp(cmd,"unset")&& l_cmd->s_left->right != NULL)
+    else if (!ft_strcmp(cmd, "unset") && l_cmd->s_left->right != NULL)
     {
-        unset_cmd(l_cmd->s_left->right->l_element->argument,path);
+        unset_cmd(l_cmd->s_left->right->l_element->argument, path);
+    }
+    else if (!ft_strcmp(cmd, "echo -n") || !ft_strcmp(cmd, "echo"))
+    {
+        if (l_cmd->s_left->right)
+            if (!ft_strcmp(l_cmd->s_left->right->l_element->argument, "-n\n"))
+            {
+                cmd = ft_strjoin(cmd, " -n");
+                l_cmd->s_left->right = l_cmd->s_left->right->right;
+            }
+        while (l_cmd->s_left->right)
+        {
+            echo(l_cmd->s_left->right->l_element->argument, path);
+            l_cmd->s_left->right = l_cmd->s_left->right->right;
+            // ft_putstr_fd("", 1);
+        }
+        if (ft_strcmp(cmd, "echo -n"))
+            ft_putendl_fd("", 1);
     }
     else
     {
-        if(a)
-           l_cmd->s_left->l_element->cmd = ft_strdup(cmd);
+        if (a)
+            l_cmd->s_left->l_element->cmd = ft_strdup(cmd);
         cmds = ft_strjoin_command(l_cmd->s_left);
-        getprogramme(path,cmds);
+        getprogramme(path, cmds);
         wait(0);
     }
     wait(0);
