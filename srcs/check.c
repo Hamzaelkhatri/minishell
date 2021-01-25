@@ -6,6 +6,7 @@ static int	check_is_correct(char operation, char *line)
 	char	c;
 
 	i = 0;
+	
 	while ((line[i] == ' ' || line[i] == '\t') && line[i])
 		i++;
 	c = line[i];
@@ -26,8 +27,12 @@ static int	check_is_correct(char operation, char *line)
 	}
 	else if (operation == '>')
 	{
+		// ft_putchar_fd(c,1);
 		if (ft_isalnum(c) == 0 && (c == '\0' || c == '>' || c == '<' || c == '|' || c == ';'))
+		{
 			return (0);
+		}
+			// ft_putendl_fd("hamza zwiin",1);
 	}
 	return (1);
 }

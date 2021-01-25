@@ -1,18 +1,35 @@
 #include "minishell.h"
 
-void shift(int fd)
-{
-    dup2(fd, 1);
-}
-
-void shift_extra(char *file,char *shifts)
+void shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
 {
     int file_desc;
+    char *cmds;
 
-    
-    if(!ft_strncmp(">>",shifts,2))
-        file_desc = open(file,O_WRONLY | O_CREAT | O_APPEND, 644); // O_APPEND : >> O_TRUNC >
-    else if(!ft_strncmp(shifts,">",1))
-        file_desc = open(file,O_WRONLY | O_CREAT | O_TRUNC, 644); // O_APPEND : >> O_TRUNC >
-   shift(file_desc);
+    int pid = 0;
+    if (pid == 0)
+    {        
+        file_desc = open(file, O_WRONLY);
+        if (dup2(1, file_desc) < 0)
+        {
+            ft_putstr_fd(file, 2);
+            ft_putendl_fd(": No such file or directory", 2);
+        }
+        if (!ft_strcmp(">>", shifts))
+            file_desc = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
+        else if (!ft_strcmp(shifts, ">"))
+            file_desc = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+        if (dup2(file_desc, 1) < 0)
+        {
+            ft_putstr_fd(file, 2);
+            ft_putendl_fd(": No such file or directory", 2);
+        }
+        close(file_desc);
+        if (cmdcheck(cmd->s_left->l_element->cmd))
+            commandes(cmd->s_left->l_element->cmd, path, cmd);
+        else
+        {
+            cmds = ft_strjoin_command(cmd->s_left);
+            getprogramme(path, cmd->s_left->l_element->cmd);
+        }
+    }
 }

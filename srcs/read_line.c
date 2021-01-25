@@ -6,12 +6,12 @@ int read_line(t_path *key, char **line)
 {
 	int ret;
 	ret = 0;
-	int fd = open("text.txt",O_RDWR);
+	int fd = open("text.txt", O_RDWR);
 
 	*line = (char *)ft_calloc(BUFFER_SIZE, sizeof(char));
 	if (!line)
 	{
-		ft_putendl_fd("\e[0;31m bash$ : allocation error\e[0;37m",1);
+		ft_putendl_fd("\e[0;31m bash$ : allocation error\e[0;37m", 1);
 		exit(1);
 	}
 	if ((ret = read(0, *line, BUFFER_SIZE)) == -1)
@@ -30,9 +30,9 @@ void sigint_handler(int sig)
 
 	if (sig == SIGINT)
 	{
-		// ft_putendl_fd("",1);
-		// bash_promp();
-		ft_putstr_fd("\n\e[1;32mbash$ \e[0;37m",1);
+
+		ft_putstr_fd("\n\e[1;32mbash$ \e[0;37m", 1);
+
 		var_glob = 1;
 		a = fork();
 		if (!a)
@@ -44,10 +44,7 @@ void sigint_handler(int sig)
 		}
 	}
 	if (sig == SIGQUIT)
-	{
-		pid_t iPid = getpid(); /* Process gets its id.*/
-		kill(iPid, SIGINT);
-	}
+		ft_putendl_fd("QUIT : 3", 1);
 }
 
 int search_cmd(t_cmd *cmd)
@@ -95,7 +92,6 @@ void check_pwd(t_cmd *cmd, char **line, t_path *path, int ret)
 		print_working_directory(path);
 }
 
-
 void bash_promp()
 {
 	ft_putstr_fd("\e[1;32mbash$ \e[0;37m", 2);
@@ -117,10 +113,11 @@ void loop_shell(t_path *path)
 	if (signal(SIGQUIT, sigint_handler) == SIG_ERR)
 		ft_putstr_fd("\n can't catch cntrl-\\", 2);
 	status = 0;
-	path->dollar=0;
+	path->dollar = 0;
 	while (!status)
 	{
-		if(!DEBUG_BOOL)
+		check = -1;
+		if (!DEBUG_BOOL)
 		{
 			bash_promp();
 			ret = 0;
@@ -130,24 +127,30 @@ void loop_shell(t_path *path)
 				exit(0);
 				break;
 			}
+			else if (line[0] == '\n')
+				check = 0;
 			path->cmds = line;
 		}
-		check = ft_check_line(path->cmds);
-		if(check == 1)
+		if (check != 0)
 		{
-    	cmd = add_list_cmd(cmd);
-		cmd->line = ft_strdup(path->cmds);
+			path->cmds = ft_strtrim(path->cmds, "\n");
+			check = ft_check_line(path->cmds);
+		}
+		if (check == 1)
+		{
+			cmd = add_list_cmd(cmd);
+			cmd->line = ft_strdup(path->cmds);
 
-    	parse_list_command(cmd, cmd->line);
-		ft_strdel(&path->cmds);
-    	sort(cmd);
-    	quotes(cmd);
-		check_scommand(cmd);
-		commande_effect(cmd,path);
-		var_glob = 0;
-		free_lcommand(&cmd);
-		if(DEBUG_BOOL)
-			break;
+			parse_list_command(cmd, cmd->line);
+			ft_strdel(&path->cmds);
+			sort(cmd);
+			quotes(cmd);
+			check_scommand(cmd);
+			commande_effect(cmd, path);
+			var_glob = 0;
+			free_lcommand(&cmd);
+			if (DEBUG_BOOL)
+				break;
 		}
 	}
 }

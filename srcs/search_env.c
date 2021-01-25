@@ -45,7 +45,7 @@ char *search_env(char **env,char *str)
     i = 0;
     while (env[i])
     {
-        if(!ft_strcmp(env[i],str))
+        if(!ft_strcmp(get_befor_equal(env[i]),str))
         {
             tmp = ft_str_to_equal(env[i],str,ft_strlen(str));
             return &tmp[j];

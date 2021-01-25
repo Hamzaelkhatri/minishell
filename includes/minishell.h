@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/01/24 19:05:33 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/01/25 12:57:32 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ void			get_directory(t_path *path);
 int				check_path(char *path, char *cmd);
 void			getprogramme(t_path *path, char *cmd);
 void			shift(int fd);
-void			shift_extra(char *file, char *shifts);
+void			shift_extra(char *file, char *shifts, t_path *path,t_command *cmd);
 char			*get_var_env(t_path *path, char *var);
 void			cd_cmd(char *nextpath, t_path *path);
 int				count_line(char **env);
@@ -201,6 +201,7 @@ int				get_cmd_(char *cmd, t_path *path, t_command *l_cmd);
 void			free_lcommand(t_list_cmd **l_command);
 void			bash_promp();
 void			echo(char *line, t_path *patht);
+void			commandes(char *cmd, t_path *path, t_command *l_cmd);
 void			promp_bash(t_path *path, int ret, char **line);
 void			show_export(char **env);
 int				check_equal(char *str);

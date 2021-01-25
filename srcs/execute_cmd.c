@@ -145,19 +145,13 @@ int size_args(t_command *l_cmd)
     return (i);
 }
 
-int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
+void commandes(char *cmd, t_path *path, t_command *l_cmd)
 {
-    int a;
-    char *cmds;
-
-    a = 0;
-    cmd = ft_strtrim(cmd, "\n");
     if (!ft_strncmp(cmd, "$", 1) && get_var_env(path, cmd))
     {
         cmd = get_var_env(path, cmd);
-        a = 1;
     }
-    if (!!ft_strcmp("exit", word_tolower(cmd)))
+    if (!ft_strcmp("exit", word_tolower(cmd)))
         cmd = word_tolower(cmd);
     if (!ft_strcmp(cmd, "$?"))
     {
@@ -165,8 +159,16 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
     }
     else if (!ft_strcmp(cmd, "pwd"))
     {
-        print_working_directory(path);
-        path->dollar = 1;
+        if (size_args(l_cmd) >= 1)
+        {
+            ft_putendl_fd("pwd: too many arguments", 1);
+            path->dollar = 0;
+        }
+        else
+        {
+            print_working_directory(path);
+            path->dollar = 1;
+        }
     }
     else if (!ft_strcmp(cmd, "env"))
     {
@@ -183,16 +185,21 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
     }
     else if (!ft_strcmp(cmd, "exit"))
     {
-
         if (size_args(l_cmd) > 1 && is_int(l_cmd->s_left->right->l_element->argument))
         {
             ft_putendl_fd("minishell: exit: too many arguments", 2);
             exit(EXIT_FAILURE);
         }
-        if (l_cmd->s_left->right)
+        if (l_cmd->s_left->right && l_cmd->s_left->right->l_element->argument)
+        {
+            ft_putendl_fd("exit", 1);
             exit(check_int(l_cmd->s_left->right->l_element->argument));
+        }
         else
+        {
+            ft_putendl_fd("exit", 1);
             exit(EXIT_SUCCESS);
+        }
     }
     else if (!ft_strcmp(cmd, "export") && l_cmd->s_left->right == NULL)
     {
@@ -214,7 +221,7 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
     {
         unset_cmd(l_cmd->s_left->right->l_element->argument, path);
     }
-    else if (!ft_strcmp(cmd, "echo -n") || !ft_strcmp(cmd, "echo"))
+    else if (!ft_strcmp(cmd, "echo"))
     {
         if (l_cmd->s_left->right)
             if (!ft_strcmp(l_cmd->s_left->right->l_element->argument, "-n\n"))
@@ -226,15 +233,38 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
         {
             echo(l_cmd->s_left->right->l_element->argument, path);
             l_cmd->s_left->right = l_cmd->s_left->right->right;
-            // ft_putstr_fd("", 1);
+            if (l_cmd->s_left->right)
+                ft_putstr_fd(" ", 1);
         }
         if (ft_strcmp(cmd, "echo -n"))
             ft_putendl_fd("", 1);
     }
+}
+
+int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
+{
+    char *cmds;
+
+    cmd = ft_strtrim(cmd, "\n");
+    if (!ft_strncmp(cmd, "$", 1) && get_var_env(path, cmd))
+    {
+        cmd = get_var_env(path, cmd);
+        l_cmd->s_left->l_element->cmd = ft_strdup(cmd);
+    }
+    if (l_cmd->s_left->right && l_cmd->s_left->right->l_element->redirection.i_o)
+    {
+        if (l_cmd->s_left->right->l_element->redirection.file)
+            shift_extra(l_cmd->s_left->right->l_element->redirection.file, l_cmd->s_left->right->l_element->redirection.i_o, path, l_cmd);
+        else
+        {
+            puts("JDEIJDIEJDIJEI");
+        }
+        
+    }
+    else if (cmdcheck(cmd))
+        commandes(cmd, path, l_cmd);
     else
     {
-        if (a)
-            l_cmd->s_left->l_element->cmd = ft_strdup(cmd);
         cmds = ft_strjoin_command(l_cmd->s_left);
         getprogramme(path, cmds);
         wait(0);
