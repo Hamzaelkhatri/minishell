@@ -46,6 +46,7 @@ void exeute(t_path *path, char *cmd)
             ft_putendl_fd(strerror(errno),1);
         else
             path->dollar = 1;
+        exit(0);
     }
     wait(0);
 }

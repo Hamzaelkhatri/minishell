@@ -192,12 +192,12 @@ void commandes(char *cmd, t_path *path, t_command *l_cmd)
         }
         if (l_cmd->s_left->right && l_cmd->s_left->right->l_element->argument)
         {
-            ft_putendl_fd("exit", 2);
+            ft_putendl_fd("exit", 1);
             exit(check_int(l_cmd->s_left->right->l_element->argument));
         }
         else
         {
-            ft_putendl_fd("exit", 2);
+            ft_putendl_fd("exit", 1);
             exit(EXIT_SUCCESS);
         }
     }

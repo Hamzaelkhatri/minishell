@@ -31,7 +31,7 @@ void sigint_handler(int sig)
 
 	if (sig == SIGINT)
 	{
-		ft_putstr_fd("\n\e[1;32mbash$ \e[0;37m", 1);
+		ft_putstr_fd("\n\e[1;32mbash$ \e[0;37m", 2);
 		var_glob = 1;
 		a = fork();
 		if (!a)
