@@ -124,8 +124,8 @@ void loop_shell(t_path *path)
 			ret = read_line(path, &line);
 			if (line[0] == '\0')
 			{
+				ft_putstr_fd("exit",1);
 				exit(0);
-				break;
 			}
 			else if (line[0] == '\n')
 				check = 0;

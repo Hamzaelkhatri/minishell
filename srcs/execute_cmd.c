@@ -192,12 +192,12 @@ void commandes(char *cmd, t_path *path, t_command *l_cmd)
         }
         if (l_cmd->s_left->right && l_cmd->s_left->right->l_element->argument)
         {
-            ft_putendl_fd("exit", 1);
+            ft_putendl_fd("exit", 2);
             exit(check_int(l_cmd->s_left->right->l_element->argument));
         }
         else
         {
-            ft_putendl_fd("exit", 1);
+            ft_putendl_fd("exit", 2);
             exit(EXIT_SUCCESS);
         }
     }
@@ -246,25 +246,25 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
     char *cmds;
 
     cmd = ft_strtrim(cmd, "\n");
-    if (!ft_strncmp(cmd, "$", 1) && get_var_env(path, cmd))
+
+    if ((l_cmd->s_left->right && l_cmd->s_left->right->l_element->redirection.i_o))
     {
-        cmd = get_var_env(path, cmd);
-        l_cmd->s_left->l_element->cmd = ft_strdup(cmd);
+        shift_extra(l_cmd->s_left->right->l_element->redirection.file, l_cmd->s_left->right->l_element->redirection.i_o, path, l_cmd);
     }
-    if (l_cmd->s_left->right && l_cmd->s_left->right->l_element->redirection.i_o)
+    else if (l_cmd->s_left->l_element->redirection.i_o)
     {
-        if (l_cmd->s_left->right->l_element->redirection.file)
-            shift_extra(l_cmd->s_left->right->l_element->redirection.file, l_cmd->s_left->right->l_element->redirection.i_o, path, l_cmd);
-        else
-        {
-            puts("JDEIJDIEJDIJEI");
-        }
-        
+        if (l_cmd->s_left->l_element->redirection.file)
+            shift_extra(l_cmd->s_left->l_element->redirection.file, l_cmd->s_left->l_element->redirection.i_o, path, l_cmd);
     }
     else if (cmdcheck(cmd))
         commandes(cmd, path, l_cmd);
     else
     {
+        if (!ft_strnstr(cmd, "$", 1) && search_env(path->env->fullenv, cmd))
+        {
+            cmd = get_var_env(path, cmd);
+            l_cmd->s_left->l_element->cmd = ft_strdup(cmd);
+        }
         cmds = ft_strjoin_command(l_cmd->s_left);
         getprogramme(path, cmds);
         wait(0);

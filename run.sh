@@ -1,5 +1,5 @@
 #!/bin/bash
 while :
 do
-	./minishell
+	cat makefile;
 done
