@@ -1,5 +1,6 @@
 #include "minishell.h"
-int var_glob = 0; /* hadi zadtha ha9ash fach kanktab shi haja o kandir ctrl + d o n annuli dakshi li ktabt b ctrl + c 
+int var_glob = 0;
+ /* hadi zadtha ha9ash fach kanktab shi haja o kandir ctrl + d o n annuli dakshi li ktabt b ctrl + c 
 		     makat3awdsh tkhdam ctrl + d*/
 
 int read_line(t_path *key, char **line)
@@ -30,9 +31,7 @@ void sigint_handler(int sig)
 
 	if (sig == SIGINT)
 	{
-
 		ft_putstr_fd("\n\e[1;32mbash$ \e[0;37m", 1);
-
 		var_glob = 1;
 		a = fork();
 		if (!a)
@@ -116,6 +115,7 @@ void loop_shell(t_path *path)
 	path->dollar = 0;
 	while (!status)
 	{
+		
 		check = -1;
 		if (!DEBUG_BOOL)
 		{
@@ -146,11 +146,13 @@ void loop_shell(t_path *path)
 			sort(cmd);
 			quotes(cmd);
 			check_scommand(cmd);
+			// print(cmd);
 			commande_effect(cmd, path);
 			var_glob = 0;
 			free_lcommand(&cmd);
 			if (DEBUG_BOOL)
 				break;
 		}
+		
 	}
 }

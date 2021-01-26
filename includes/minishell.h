@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/01/25 12:57:32 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/01/26 16:12:10 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 typedef struct	s_key
 {
 	int cntrd;
+	int cntrc;
 }				t_key;
 
 typedef struct	s_env

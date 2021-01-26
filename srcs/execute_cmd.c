@@ -159,7 +159,7 @@ void commandes(char *cmd, t_path *path, t_command *l_cmd)
     }
     else if (!ft_strcmp(cmd, "pwd"))
     {
-        if (size_args(l_cmd) >= 1)
+        if (size_args(l_cmd) >= 1 && !l_cmd->s_left->right->l_element->redirection.i_o)
         {
             ft_putendl_fd("pwd: too many arguments", 1);
             path->dollar = 0;
@@ -247,14 +247,23 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
 
     cmd = ft_strtrim(cmd, "\n");
 
-    if ((l_cmd->s_left->right && l_cmd->s_left->right->l_element->redirection.i_o))
+    if ((l_cmd->s_left->right && l_cmd->s_left->right->l_element->redirection.i_o && l_cmd->s_left->l_element->cmd))
     {
-        shift_extra(l_cmd->s_left->right->l_element->redirection.file, l_cmd->s_left->right->l_element->redirection.i_o, path, l_cmd);
+        while (l_cmd->s_left->right)
+        {
+            if (l_cmd->s_left->right->l_element->redirection.i_o)
+                shift_extra(l_cmd->s_left->right->l_element->redirection.file, l_cmd->s_left->right->l_element->redirection.i_o, path, l_cmd);
+            l_cmd->s_left->right = l_cmd->s_left->right->right;
+        }
     }
     else if (l_cmd->s_left->l_element->redirection.i_o)
     {
-        if (l_cmd->s_left->l_element->redirection.file)
-            shift_extra(l_cmd->s_left->l_element->redirection.file, l_cmd->s_left->l_element->redirection.i_o, path, l_cmd);
+        while (l_cmd->s_left)
+        {
+            if (l_cmd->s_left->l_element->redirection.file)
+                 shift_extra(l_cmd->s_left->l_element->redirection.file, l_cmd->s_left->l_element->redirection.i_o, path, l_cmd);
+            l_cmd->s_left = l_cmd->s_left->right;
+        }
     }
     else if (cmdcheck(cmd))
         commandes(cmd, path, l_cmd);
@@ -266,6 +275,7 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
             l_cmd->s_left->l_element->cmd = ft_strdup(cmd);
         }
         cmds = ft_strjoin_command(l_cmd->s_left);
+        // puts(cmds);
         getprogramme(path, cmds);
         wait(0);
     }

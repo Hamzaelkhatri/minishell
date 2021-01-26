@@ -6,7 +6,7 @@ int cmdcheck(char *str)
     int i;
     
     i = 0;
-    cmd[0] = "echos";
+    cmd[0] = "echo";
     cmd[1] = "exit";
     cmd[2] = "env";
     cmd[3] = "export";

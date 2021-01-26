@@ -7,6 +7,7 @@ void init(t_path *path, t_key *key, t_cmd *cmd)
     path->key = malloc(sizeof(t_key));
     path->env = malloc(sizeof(t_env));
     path->dollar = 0;
+	path->key->cntrc=0;
 }
 
 void	init_simple_cmd(t_simple_command **parent, int i)

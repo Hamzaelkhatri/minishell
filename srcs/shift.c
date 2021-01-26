@@ -29,7 +29,7 @@ void shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
         }
         else if (cmdcheck(cmd->s_left->l_element->cmd))
             commandes(cmd->s_left->l_element->cmd, path, cmd);
-        else
+        else if(cmd->s_left->l_element->cmd)
         {
             cmds = ft_strjoin_command(cmd->s_left);
             getprogramme(path, cmd->s_left->l_element->cmd);
