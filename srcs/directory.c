@@ -1,61 +1,64 @@
 #include "minishell.h"
 
-int ft_strtospace(char *cmd)
+int check_link(char *cmd)
 {
     int i;
+
     i = 0;
-    while (cmd[i] != ' ')
+    while (cmd[i])
     {
+        if (cmd[i] == '/')
+            return (1);
         i++;
     }
-    return i;
+    return (0);
 }
 
-int check_path(char *path,char *cmd)
+void bash_err(char *cmd)
 {
-    int i;
-    char **tmp;
-    i = 0;
-    tmp = ft_split(path,'-');
-    while (tmp[i])
-    {
-        if(ft_strnstr(tmp[i],ft_split(cmd,' ')[0],ft_strtospace(cmd)))
-            return i;
-        i++;
-    }
-    return 0;
+    ft_putstr_fd("bash: ", 2);
+    ft_putstr_fd("no such file or directory: ", 2);
+    ft_putendl_fd(cmd, 2);
 }
 
-void get_directory(t_path *path)
+char *get_directory(t_path *path, char *cmd)
 {
-    DIR *dir;
-    struct dirent *sd;
     char *tmp;
+    char *link;
     char **paths;
-    int i = 0;
-    
-    tmp = search_env(path->env->fullenv,"PATH");
-    paths = ft_split(tmp,':');
-    while (paths[i])
-        i++;
-    i =0;
-    ft_bzero(tmp,ft_strlen(tmp));
-    while (paths[i])
+    int i;
+
+    i = 0;
+    tmp = search_env(path->env->fullenv, "PATH");
+    if (tmp && !check_link(cmd))
     {
-            dir  = opendir(paths[i]);
-            if(dir != NULL && !ft_strchr(paths[i],'.'))
-            {
-                tmp = ft_strjoin(tmp,"+");
-                tmp = ft_strjoin(tmp,paths[i]);               
-                tmp = ft_strjoin(tmp,"-");
-                while ((sd = readdir(dir)) != NULL )
-                {
-                    tmp = ft_strjoin(tmp,sd->d_name);
-                    tmp = ft_strjoin(tmp,"-");
-                }
-                closedir(dir);
-            }
+        paths = ft_split(tmp, ':');
+        while (paths[i])
+        {
+            link = ft_strjoin(paths[i], "/");
+            link = ft_strjoin(link, ft_space_split(cmd)[0]);
+            if (check_paths(link))
+                return (link);
+            if (link)
+                free(link);
             i++;
+        }
+        bash_err(cmd);
     }
-    path->cmds= ft_strdup(tmp);
+    else if (check_link(cmd))
+    {
+        if (check_paths(ft_space_split(cmd)[0]))
+            return (ft_space_split(cmd)[0]);
+        bash_err(cmd);
+    }
+    else
+    {
+        link = ft_strjoin(getcwd(NULL, 100), "/");
+        link = ft_strjoin(link, ft_space_split(cmd)[0]);
+        if (check_paths(link))
+            return (link);
+        else
+            bash_err(cmd);
+    }
+    return (NULL);
 }

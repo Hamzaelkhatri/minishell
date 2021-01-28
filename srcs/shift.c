@@ -4,7 +4,6 @@ void shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
 {
     int file_desc;
     char *cmds;
-    int current_in;
 
     int pid = fork();
     if (pid == 0)
@@ -22,16 +21,7 @@ void shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
                 ft_putendl_fd(": No such file or directory", 2);
                 exit(EXIT_FAILURE);
             }
-            cmds = ft_strjoin_command(cmd->s_left);
-            if (cmdcheck(cmd->s_left->l_element->cmd))
-                commandes(cmd->s_left->l_element->cmd, path, cmd);
-            else if (cmd->s_left->l_element->cmd)
-            {
-                cmds = ft_strjoin_command(cmd->s_left);
-                getprogramme(path, cmd->s_left->l_element->cmd);
-            }
-            // getprogramme(path, "cat");
-            exit(EXIT_SUCCESS);
+            close(file_desc);
         }
         else
         {
@@ -39,26 +29,24 @@ void shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
             {
                 ft_putstr_fd(file, 2);
                 ft_putendl_fd(": No such file or directory", 2);
+                exit(EXIT_FAILURE);
             }
-            close(file_desc);
             if (!ft_strcmp(cmd->s_left->l_element->cmd, "exit"))
             {
-                ft_putendl_fd("exit", 1);
+                ft_putendl_fd("exit", 2);
                 kill(0, SIGPIPE);
             }
             if (!cmd->s_left->l_element->cmd)
-            {
                 ft_putstr_fd("", 1);
-            }
-            else if (cmdcheck(cmd->s_left->l_element->cmd))
-                commandes(cmd->s_left->l_element->cmd, path, cmd);
-            else if (cmd->s_left->l_element->cmd)
-            {
-                cmds = ft_strjoin_command(cmd->s_left);
-                getprogramme(path, cmd->s_left->l_element->cmd);
-            }
-            exit(0);
         }
+        if (cmdcheck(cmd->s_left->l_element->cmd))
+            commandes(cmd->s_left->l_element->cmd, path, cmd);
+        else if (cmd->s_left->l_element->cmd)
+        {
+            cmds = ft_strjoin_command(cmd->s_left);
+            getprogramme(path, cmd->s_left->l_element->cmd);
+        }
+        exit(EXIT_SUCCESS);
     }
     wait(0);
 }

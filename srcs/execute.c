@@ -35,18 +35,35 @@ void getprogramme(t_path *path, char *cmd)
     exeute(path, cmd);
 }
 
+int check_paths(char *path)
+{
+    struct stat sb;
+
+    if (stat(path, &sb) == -1)
+        return (0);
+    return (1);
+}
+
+char **args(char *cmd)
+{
+    return (ft_split(cmd, ' '));
+}
+
 void exeute(t_path *path, char *cmd)
 {
-    pid_t a = fork();
+    char *binaryPath;
+    pid_t a;
+
+    a = fork();
+    if (a < 0)
+        ft_putendl_fd(strerror(errno), 1);
     if (!a)
     {
-        char *binaryPath = "/bin/bash";
-        char *const args[] = {binaryPath, "-c", cmd, NULL};
-        if (execve(binaryPath, args, path->env->fullenv) != 0)
-            ft_putendl_fd(strerror(errno),1);
-        else
-            path->dollar = 1;
-        exit(0);
+        binaryPath = get_directory(path, cmd);
+        if (binaryPath)
+            if (execve(binaryPath, args(cmd), path->env->fullenv) != 0)
+                ft_putendl_fd(strerror(errno), 1);
+        exit(a);
     }
-    wait(0);
+    wait(&a);
 }

@@ -6,7 +6,7 @@
 /*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/01/26 16:12:10 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/01/28 16:09:47 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ char			**ft_split_quotes(char const *s, char c);
 char			**ft_space_split(char const *s);
 char			*ft_str_in_str(const char *s1, const char *s2);
 int				ft_2strlen(char **str);
-void			get_directory(t_path *path);
+char			*get_directory(t_path *path,char *cmd);
 int				check_path(char *path, char *cmd);
 void			getprogramme(t_path *path, char *cmd);
 void			shift(int fd);
@@ -208,4 +208,5 @@ void			show_export(char **env);
 int				check_equal(char *str);
 int				ft_strcmp(const char *s1, const char *s2);
 char			*get_befor_equal(char *str);
+int				check_paths(char *path);
 #endif

@@ -50,9 +50,7 @@ int search_cmd(t_cmd *cmd)
 {
 	if (cmd->echo != 0 || cmd->cd != 0 || cmd->env != 0 ||
 		cmd->exit != 0 || cmd->export != 0 || cmd->pwd != 0)
-	{
 		return (0);
-	}
 	return (1);
 }
 
@@ -115,8 +113,8 @@ void loop_shell(t_path *path)
 	path->dollar = 0;
 	while (!status)
 	{
-		
 		check = -1;
+		i = 0;
 		if (!DEBUG_BOOL)
 		{
 			bash_promp();
@@ -124,8 +122,8 @@ void loop_shell(t_path *path)
 			ret = read_line(path, &line);
 			if (line[0] == '\0')
 			{
-				ft_putstr_fd("exit",1);
-				exit(0);
+				ft_putendl_fd("exit",1);
+				exit(EXIT_SUCCESS);
 			}
 			else if (line[0] == '\n')
 				check = 0;
@@ -133,8 +131,13 @@ void loop_shell(t_path *path)
 		}
 		if (check != 0)
 		{
-			path->cmds = ft_strtrim(path->cmds, "\n");
-			check = ft_check_line(path->cmds);
+			while (line[i] && line[i] == ' ')
+				i++;
+			if(line[i] != '\n')
+			{
+				path->cmds = ft_strtrim(path->cmds, "\n");
+				check = ft_check_line(path->cmds);
+			}
 		}
 		if (check == 1)
 		{
@@ -146,7 +149,6 @@ void loop_shell(t_path *path)
 			sort(cmd);
 			quotes(cmd);
 			check_scommand(cmd);
-			// print(cmd);
 			commande_effect(cmd, path);
 			var_glob = 0;
 			free_lcommand(&cmd);
