@@ -35,7 +35,7 @@ void show_env(char **env)
     i = 0;
     while (env[i])
     {
-        if(check_equal(env[i]))
+        // if(check_equal(env[i]))
             ft_putendl_fd(env[i],1);
         i++;
     }

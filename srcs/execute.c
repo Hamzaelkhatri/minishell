@@ -44,9 +44,11 @@ int check_paths(char *path)
     return (1);
 }
 
-char **args(char *cmd)
+char **args(char *cmd,t_path *path)
 {
-    return (ft_split(cmd, ' '));
+    char **split;
+    split = ft_split(cmd, ' ');
+    return (split);
 }
 
 void exeute(t_path *path, char *cmd)
@@ -61,7 +63,7 @@ void exeute(t_path *path, char *cmd)
     {
         binaryPath = get_directory(path, cmd);
         if (binaryPath)
-            if (execve(binaryPath, args(cmd), path->env->fullenv) != 0)
+            if (execve(binaryPath, args(cmd,path), path->env->fullenv) != 0)
                 ft_putendl_fd(strerror(errno), 1);
         exit(a);
     }

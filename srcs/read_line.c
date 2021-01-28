@@ -42,8 +42,8 @@ void sigint_handler(int sig)
 			execve(cmd[0], cmd_args, env);
 		}
 	}
-	if (sig == SIGQUIT)
-		ft_putendl_fd("QUIT : 3", 1);
+	// if (sig == SIGQUIT)
+	// 	ft_putendl_fd("QUIT : 3", 1);
 }
 
 int search_cmd(t_cmd *cmd)

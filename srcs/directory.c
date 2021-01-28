@@ -28,9 +28,10 @@ char *get_directory(t_path *path, char *cmd)
     char **paths;
     int i;
 
+
     i = 0;
     tmp = search_env(path->env->fullenv, "PATH");
-    if (tmp && !check_link(cmd))
+    if (tmp && !check_link(ft_space_split(cmd)[0]))
     {
         paths = ft_split(tmp, ':');
         while (paths[i])
@@ -43,9 +44,10 @@ char *get_directory(t_path *path, char *cmd)
                 free(link);
             i++;
         }
+        
         bash_err(cmd);
     }
-    else if (check_link(cmd))
+    else if (check_link(ft_space_split(cmd)[0]))
     {
         if (check_paths(ft_space_split(cmd)[0]))
             return (ft_space_split(cmd)[0]);
