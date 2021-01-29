@@ -11,13 +11,14 @@ void shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
         if (!ft_strcmp(">>", shifts))
             file_desc = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
         else if (!ft_strcmp(shifts, ">"))
+        {
             file_desc = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+        }
         if (!ft_strcmp(shifts, "<"))
         {
             file_desc = open(file, O_RDONLY);
             if (dup2(file_desc, 0) < 0)
             {
-                
                 ft_putstr_fd(file, 2);
                 ft_putendl_fd(": No such file or directory", 2);
                 exit(EXIT_FAILURE);
@@ -45,7 +46,8 @@ void shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
         else if (cmd->s_left->l_element->cmd)
         {
             cmds = ft_strjoin_command(cmd->s_left);
-            getprogramme(path, cmd->s_left->l_element->cmd);
+
+            getprogramme(path, cmds);
         }
         exit(EXIT_SUCCESS);
     }

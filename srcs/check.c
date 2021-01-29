@@ -32,7 +32,6 @@ static int	check_is_correct(char operation, char *line)
 		{
 			return (0);
 		}
-			// ft_putendl_fd("hamza zwiin",1);
 	}
 	return (1);
 }

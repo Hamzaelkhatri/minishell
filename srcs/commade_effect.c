@@ -2,6 +2,7 @@
 
 int commande_effect(t_list_cmd *lst,t_path *path)
 {
+
     while (lst)
     {
         if(lstsize(lst)>1)

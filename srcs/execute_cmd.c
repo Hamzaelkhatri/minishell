@@ -229,9 +229,9 @@ void commandes(char *cmd, t_path *path, t_command *l_cmd)
                 cmd = ft_strjoin(cmd, " -n");
                 l_cmd->s_left->right = l_cmd->s_left->right->right;
             }
-        while (l_cmd->s_left->right )
+        while (l_cmd->s_left->right)
         {
-            echo(l_cmd->s_left->right->l_element->argument, path);//error here
+            echo(l_cmd->s_left->right->l_element->argument, path);
             l_cmd->s_left->right = l_cmd->s_left->right->right;
             if (l_cmd->s_left->right)
                 ft_putstr_fd(" ", 1);
@@ -241,25 +241,50 @@ void commandes(char *cmd, t_path *path, t_command *l_cmd)
     }
 }
 
+char *get_file(t_command *lcmd)
+{
+    t_simple_command *cmd = lcmd->s_left;
+    while (cmd)
+    {
+        if (cmd->l_element->indice == 3 && cmd->right == NULL)
+            return (cmd->l_element->redirection.file);
+        cmd = cmd->right;
+    }
+    return (NULL);
+}
+
+char *get_shift(t_command *lcmd)
+{
+    t_simple_command *cmd;
+    cmd = lcmd->s_left;
+    int fd;
+
+    while (cmd)
+    {
+        if (cmd->l_element->indice == 3 && cmd->right == NULL)
+            return (cmd->l_element->redirection.i_o);
+        else if (cmd->l_element->indice == 3 && ft_strcmp(cmd->l_element->redirection.i_o, "<"))
+        {
+            fd = open(cmd->l_element->redirection.file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+            ft_putstr_fd("", fd);
+            close(fd);
+        }
+        cmd = cmd->right;
+    }
+    return (NULL);
+}
+
 int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
 {
     char *cmds;
+    t_command *tmp;
+    t_simple_command *s_tmp = l_cmd->s_left;
 
     cmd = ft_strtrim(cmd, "\n");
-
- if ((l_cmd->s_left->right && l_cmd->s_left->right->l_element->redirection.i_o && l_cmd->s_left->l_element->cmd))
+    if (get_shift(l_cmd))
     {
-        while (l_cmd->s_left->right)
-        {
-            if (l_cmd->s_left->right->right && !ft_strcmp(l_cmd->s_left->right->l_element->redirection.i_o, "<") && !ft_strcmp(l_cmd->s_left->right->right->l_element->redirection.i_o, "<"))
-            {
-                l_cmd->s_left->right = l_cmd->s_left->right->right;
-                continue;
-            }
-            if (l_cmd->s_left->right->l_element->redirection.i_o)
-                shift_extra(l_cmd->s_left->right->l_element->redirection.file, l_cmd->s_left->right->l_element->redirection.i_o, path, l_cmd);
-            l_cmd->s_left->right = l_cmd->s_left->right->right;
-        }
+        tmp = l_cmd;
+        shift_extra(get_file(tmp), get_shift(tmp), path, tmp);
     }
     else if (l_cmd->s_left->l_element->redirection.i_o)
     {
@@ -280,7 +305,6 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
             l_cmd->s_left->l_element->cmd = ft_strdup(cmd);
         }
         cmds = ft_strjoin_command(l_cmd->s_left);
-        // puts(cmds);
         getprogramme(path, cmds);
         wait(0);
     }

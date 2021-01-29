@@ -151,11 +151,13 @@ void loop_shell(t_path *path)
 			sort(cmd);
 			quotes(cmd);
 			check_scommand(cmd);
+            // puts(ft_strjoin_command(cmd->command->s_left));
+			// puts(cmd->command->s_left->right->l_element->redirection.file);
 			commande_effect(cmd, path);
 			var_glob = 0;
 			free_lcommand(&cmd);
-			if (DEBUG_BOOL)
-				break;
+			// if (DEBUG_BOOL)
+				// break;
 		}
 		
 	}

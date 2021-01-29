@@ -64,13 +64,13 @@ void	ft_strjoin_cmd_ext(t_simple_command *cmd, char **line)
 		if (cmd->right != NULL)
 			*line = ft_strjoin_free(*line, " ");
 	}
-	else if (cmd->l_element->indice == 3)
-	{
-		*line = ft_strjoin_free(*line, cmd->l_element->redirection.i_o);
-		*line = ft_strjoin_free(*line, cmd->l_element->redirection.file);
-		if (cmd->right != NULL)
-			*line = ft_strjoin_free(*line, " ");
-	}
+	// else if (cmd->l_element->indice == 3)
+	// {
+	// 	*line = ft_strjoin_free(*line, cmd->l_element->redirection.i_o);
+	// 	*line = ft_strjoin_free(*line, cmd->l_element->redirection.file);
+	// 	if (cmd->right != NULL)
+	// 		*line = ft_strjoin_free(*line, " ");
+	// }
 }
 
 char	*ft_strjoin_command(t_simple_command *cmd)
