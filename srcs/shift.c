@@ -17,6 +17,7 @@ void shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
             file_desc = open(file, O_RDONLY);
             if (dup2(file_desc, 0) < 0)
             {
+                
                 ft_putstr_fd(file, 2);
                 ft_putendl_fd(": No such file or directory", 2);
                 exit(EXIT_FAILURE);

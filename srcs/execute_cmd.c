@@ -229,9 +229,9 @@ void commandes(char *cmd, t_path *path, t_command *l_cmd)
                 cmd = ft_strjoin(cmd, " -n");
                 l_cmd->s_left->right = l_cmd->s_left->right->right;
             }
-        while (l_cmd->s_left->right)
+        while (l_cmd->s_left->right )
         {
-            echo(l_cmd->s_left->right->l_element->argument, path);
+            echo(l_cmd->s_left->right->l_element->argument, path);//error here
             l_cmd->s_left->right = l_cmd->s_left->right->right;
             if (l_cmd->s_left->right)
                 ft_putstr_fd(" ", 1);
@@ -247,10 +247,15 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
 
     cmd = ft_strtrim(cmd, "\n");
 
-    if ((l_cmd->s_left->right && l_cmd->s_left->right->l_element->redirection.i_o && l_cmd->s_left->l_element->cmd))
+ if ((l_cmd->s_left->right && l_cmd->s_left->right->l_element->redirection.i_o && l_cmd->s_left->l_element->cmd))
     {
         while (l_cmd->s_left->right)
         {
+            if (l_cmd->s_left->right->right && !ft_strcmp(l_cmd->s_left->right->l_element->redirection.i_o, "<") && !ft_strcmp(l_cmd->s_left->right->right->l_element->redirection.i_o, "<"))
+            {
+                l_cmd->s_left->right = l_cmd->s_left->right->right;
+                continue;
+            }
             if (l_cmd->s_left->right->l_element->redirection.i_o)
                 shift_extra(l_cmd->s_left->right->l_element->redirection.file, l_cmd->s_left->right->l_element->redirection.i_o, path, l_cmd);
             l_cmd->s_left->right = l_cmd->s_left->right->right;
@@ -261,7 +266,7 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
         while (l_cmd->s_left)
         {
             if (l_cmd->s_left->l_element->redirection.file)
-                 shift_extra(l_cmd->s_left->l_element->redirection.file, l_cmd->s_left->l_element->redirection.i_o, path, l_cmd);
+                shift_extra(l_cmd->s_left->l_element->redirection.file, l_cmd->s_left->l_element->redirection.i_o, path, l_cmd);
             l_cmd->s_left = l_cmd->s_left->right;
         }
     }
