@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/01/28 16:09:47 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/01 12:28:50 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <limits.h>
 # include "get_next_line.h"
 # define DEBUG_BOOL 0
+# define FLAG S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR
 
 typedef struct	s_key
 {
@@ -47,12 +48,13 @@ typedef struct	s_env
 typedef struct	s_path
 {
 	char	*path;
+	char	*file1;
+	char	*file2;
 	int		dollar;
 	t_key	*key;
 	char	*cmds;
 	char	*pathcmd;
 	t_env	*env;
-	char	*p;
 }				t_path;
 
 typedef struct	s_cmd
@@ -209,4 +211,15 @@ int				check_equal(char *str);
 int				ft_strcmp(const char *s1, const char *s2);
 char			*get_befor_equal(char *str);
 int				check_paths(char *path);
+char			**args(char *cmd,t_path *path);
+char			*get_file(t_command *lcmd);
+char			*get_file_shift(t_command *lcmd,char *shift);
+int				double_red(char *file1, char *file2,char *shift);
+int				create_file(char *file);
+void			exit_exec(t_command *l_cmd);
+long long		ft_atoi_long(char *str);
+void			print_err_exite(char *s);
+int				is_int(char *str);
+int				count_digit(char *str);
+int				size_args(t_command *l_cmd);
 #endif

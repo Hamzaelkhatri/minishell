@@ -42,6 +42,7 @@ SRC_NAME=allocation.c\
 		echo.c\
 		tools2.c\
 		tools3.c\
+		tools4.c\
 
 HDR_NAME=minishell.h 
 
@@ -63,7 +64,7 @@ all: lib  $(NAME)
 $(NAME) : $(LIB_PATH)/$(LIB) $(OBJ)
 	@rm -rf minishell
 	@$(COMP) -g $(H_FLAG) $(OBJ) $(LLIB_FLAG) -o $@
-	@echo "													 Made by : \033[1;91mSqatim\033[m"
+	@echo "													 Made by : \033[1;91mSqatim && helkhatr\033[m"
 	@echo "      ___                       ___                       ___           ___           ___                                  "
 	@echo "     /__/\        ___          /__/\        ___          /  /\         /__/\         /  /\                                 "
 	@echo "    |  |::\      /  /\         \  \:\      /  /\        /  /:/_        \  \:\       /  /:/_                                "

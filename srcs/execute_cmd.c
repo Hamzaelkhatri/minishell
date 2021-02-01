@@ -16,134 +16,7 @@ char *word_tolower(char *str)
     return (ptr);
 }
 
-int count_digit(char *str)
-{
-    int i = 0;
-    int c = 0;
-    while (str[i] == '0')
-        i++;
-    while (str[i])
-    {
-        c++;
-        i++;
-    }
-    return (c);
-}
 
-int is_int(char *str)
-{
-    int i;
-
-    i = 0;
-    while (str[i])
-    {
-        if (!ft_isdigit(str[i]))
-            return 0;
-        i++;
-    }
-    return 1;
-}
-
-long long ft_atoi_long(char *str)
-{
-    int i;
-    int sign;
-    long long result;
-    int counter;
-
-    i = 0;
-    sign = 1;
-    result = 0;
-    counter = 0;
-
-    while (str[i] == ' ' || str[i] == '\r' || str[i] == '\f' || str[i] == '\n' || str[i] == '\v' || str[i] == '\t')
-        i++;
-    if (str[i] == '+' || str[i] == '-')
-    {
-        if (str[i] == '-')
-            sign = -1 * sign;
-        i++;
-    }
-    while (str[i] == '0')
-        i++;
-    while (str[i] >= '0' && str[i] <= '9')
-    {
-        result = result * 10 + str[i] - '0';
-        i++;
-        counter++;
-    }
-    return (result * sign);
-}
-
-void print_err_exite(char *s)
-{
-    ft_putstr_fd("minishell: exit: ", 2);
-    ft_putstr_fd(s, 2);
-    ft_putendl_fd(": numeric argument required", 2);
-}
-
-int check_int(char *str)
-{
-    int i;
-
-    i = 0;
-    str = ft_strtrim(str, "\n");
-    str = ignoring_quote(str);
-    while (str[i] && str[i] < 33)
-        i++;
-    if (str[i] == '-' || str[i] == '+')
-        i++;
-    if (ft_atoi_long(str) <= LLONG_MIN && str[i - 1] != '-')
-    {
-        print_err_exite(str);
-        return (255);
-    }
-    if (ft_atoi_long(str) < LLONG_MIN)
-    {
-        print_err_exite(str);
-        return (0);
-    }
-    else if (ft_atoi_long(str) > LLONG_MAX)
-    {
-        print_err_exite(str);
-        return (255);
-    }
-    else if (ft_atoi_long(str) <= LONG_MIN && count_digit(&str[i]) == 19)
-    {
-        return (0);
-    }
-    else if (count_digit(&str[i]) == 19 && str[i - 1] == '-')
-    {
-        print_err_exite(str);
-        return (255);
-    }
-    while (str[i])
-    {
-
-        if ((!ft_isdigit(str[i]) && str[i] != 32 && str[i] != '\t') || count_digit(&str[i]) > 19)
-        {
-            print_err_exite(str);
-            return (255);
-        }
-        i++;
-    }
-    return (ft_atoi(str));
-}
-
-int size_args(t_command *l_cmd)
-{
-    int i;
-    t_simple_command *tmp;
-
-    tmp = l_cmd->s_left->right;
-    i = 0;
-    while (tmp)
-    {
-        i++;
-        tmp = tmp->right;
-    }
-    return (i);
-}
 
 void commandes(char *cmd, t_path *path, t_command *l_cmd)
 {
@@ -185,21 +58,7 @@ void commandes(char *cmd, t_path *path, t_command *l_cmd)
     }
     else if (!ft_strcmp(cmd, "exit"))
     {
-        if (size_args(l_cmd) > 1 && is_int(l_cmd->s_left->right->l_element->argument))
-        {
-            ft_putendl_fd("minishell: exit: too many arguments", 2);
-            exit(EXIT_FAILURE);
-        }
-        if (l_cmd->s_left->right && l_cmd->s_left->right->l_element->argument)
-        {
-            ft_putendl_fd("exit", 1);
-            exit(check_int(l_cmd->s_left->right->l_element->argument));
-        }
-        else
-        {
-            ft_putendl_fd("exit", 1);
-            exit(EXIT_SUCCESS);
-        }
+        exit_exec(l_cmd);
     }
     else if (!ft_strcmp(cmd, "export") && l_cmd->s_left->right == NULL)
     {
@@ -241,6 +100,24 @@ void commandes(char *cmd, t_path *path, t_command *l_cmd)
     }
 }
 
+char *get_file_shift(t_command *lcmd, char *shift)
+{
+    int fd;
+
+    t_simple_command *cmd = lcmd->s_left;
+    while (cmd)
+    {
+        if (cmd->l_element->indice == 3 && !ft_strcmp(cmd->l_element->redirection.i_o, shift) && ft_strcmp("<", shift) && cmd->right == NULL)
+            return (cmd->l_element->redirection.file);
+        else if (cmd->l_element->indice == 3 && !ft_strcmp(cmd->l_element->redirection.i_o, shift) && !ft_strcmp("<", shift) && ft_strcmp(cmd->right->l_element->redirection.i_o, "<"))
+            return (cmd->l_element->redirection.file);
+        else if (cmd->l_element->indice == 3 && ft_strcmp(cmd->l_element->redirection.i_o, "<"))
+            create_file(cmd->l_element->redirection.file);
+        cmd = cmd->right;
+    }
+    return (NULL);
+}
+
 char *get_file(t_command *lcmd)
 {
     t_simple_command *cmd = lcmd->s_left;
@@ -253,22 +130,29 @@ char *get_file(t_command *lcmd)
     return (NULL);
 }
 
+int create_file(char *file)
+{
+    int fd;
+    fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, FLAG);
+    ft_putstr_fd("", fd);
+    close(fd);
+    return (0);
+}
+
 char *get_shift(t_command *lcmd)
 {
     t_simple_command *cmd;
-    cmd = lcmd->s_left;
     int fd;
 
+    cmd = lcmd->s_left;
     while (cmd)
     {
         if (cmd->l_element->indice == 3 && cmd->right == NULL)
-            return (cmd->l_element->redirection.i_o);
-        else if (cmd->l_element->indice == 3 && ft_strcmp(cmd->l_element->redirection.i_o, "<"))
         {
-            fd = open(cmd->l_element->redirection.file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-            ft_putstr_fd("", fd);
-            close(fd);
+            return (cmd->l_element->redirection.i_o);
         }
+        else if (cmd->l_element->indice == 3 && ft_strcmp(cmd->l_element->redirection.i_o, "<"))
+            create_file(cmd->l_element->redirection.file);
         cmd = cmd->right;
     }
     return (NULL);
