@@ -16,8 +16,6 @@ char *word_tolower(char *str)
     return (ptr);
 }
 
-
-
 void commandes(char *cmd, t_path *path, t_command *l_cmd)
 {
     if (!ft_strncmp(cmd, "$", 1) && get_var_env(path, cmd))
@@ -171,23 +169,16 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
         shift_extra(get_file(tmp), get_shift(tmp), path, tmp);
     }
     else if (l_cmd->s_left->l_element->redirection.i_o)
-    {
         while (l_cmd->s_left)
         {
             if (l_cmd->s_left->l_element->redirection.file)
                 shift_extra(l_cmd->s_left->l_element->redirection.file, l_cmd->s_left->l_element->redirection.i_o, path, l_cmd);
             l_cmd->s_left = l_cmd->s_left->right;
         }
-    }
     else if (cmdcheck(cmd))
         commandes(cmd, path, l_cmd);
     else
     {
-        if (!ft_strnstr(cmd, "$", 1) && search_env(path->env->fullenv, cmd))
-        {
-            cmd = get_var_env(path, cmd);
-            l_cmd->s_left->l_element->cmd = ft_strdup(cmd);
-        }
         cmds = ft_strjoin_command(l_cmd->s_left);
         getprogramme(path, cmds);
         wait(0);

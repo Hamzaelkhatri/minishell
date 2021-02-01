@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 10:32:55 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/02/01 10:23:05 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/01 18:28:43 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void    pipes_cmd(t_path * path, t_list_cmd *lst)
 			}
 			lst->command->s_left->l_element->cmd=ft_strtrim(lst->command->s_left->l_element->cmd,"\n");
 			get_cmd_(lst->command->s_left->l_element->cmd,path,lst->command);
+			// shift_extra(get_file(lst->command), get_shift(lst->command), path, lst->command);
 			exit(0);
 		}
         else 

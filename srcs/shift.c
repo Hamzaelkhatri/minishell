@@ -50,6 +50,7 @@ static void executing_red(t_command *cmd, t_path *path)
     else if (cmd->s_left->l_element->cmd)
     {
         cmds = ft_strjoin_command(cmd->s_left);
+        // ft_putstr_fd(cmds,2);
         getprogramme(path, cmd->s_left->l_element->cmd);
     }
 }

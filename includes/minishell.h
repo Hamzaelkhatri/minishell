@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/01 12:28:50 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/01 18:27:17 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,4 +222,5 @@ void			print_err_exite(char *s);
 int				is_int(char *str);
 int				count_digit(char *str);
 int				size_args(t_command *l_cmd);
+char			*get_shift(t_command *lcmd);
 #endif

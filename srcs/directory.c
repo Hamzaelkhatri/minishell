@@ -28,7 +28,6 @@ char *get_directory(t_path *path, char *cmd)
     char **paths;
     int i;
 
-
     i = 0;
     tmp = search_env(path->env->fullenv, "PATH");
     if (tmp && !check_link(ft_space_split(cmd)[0]))
