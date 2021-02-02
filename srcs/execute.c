@@ -65,7 +65,7 @@ void exeute(t_path *path, char *cmd)
         if (binaryPath)
             if (execve(binaryPath, args(cmd,path), path->env->fullenv) != 0)
                 ft_putendl_fd(strerror(errno), 1);
-        exit(a);
+        exit(0);
     }
-    wait(&a);
+    wait(0);
 }

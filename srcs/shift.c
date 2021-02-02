@@ -33,25 +33,10 @@ void duping_file(int fd, t_command *cmd, char *file)
         ft_putendl_fd(": No such file or directory", 2);
         exit(EXIT_FAILURE);
     }
-    close(fd);
     if (!ft_strcmp(cmd->s_left->l_element->cmd, "exit"))
     {
         ft_putendl_fd("exit", 2);
         kill(0, SIGPIPE);
-    }
-}
-
-static void executing_red(t_command *cmd, t_path *path)
-{
-    char *cmds;
-
-    if (cmdcheck(cmd->s_left->l_element->cmd))
-        commandes(cmd->s_left->l_element->cmd, path, cmd);
-    else if (cmd->s_left->l_element->cmd)
-    {
-        cmds = ft_strjoin_command(cmd->s_left);
-        // ft_putstr_fd(cmds,2);
-        getprogramme(path, cmd->s_left->l_element->cmd);
     }
 }
 
@@ -85,15 +70,20 @@ void shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
     char *cmds;
 
     int pid = fork();
-    if (pid < 0)
-        ft_putstr_fd(strerror(errno), 2);
     if (pid == 0)
     {
         if ((get_file_shift(cmd, ">") || get_file_shift(cmd, ">>")) && (get_file_shift(cmd, "<")))
-            double_red(get_file_shift(cmd, ">") ? get_file_shift(cmd, ">") : get_file_shift(cmd, ">>"), get_file_shift(cmd, "<"), shifts);
+            double_red(get_file_shift(cmd, ">") ? get_file_shift(cmd, ">") : get_file_shift(cmd, ">>"),
+                       get_file_shift(cmd, "<"), shifts);
         else
             opening_files(file, shifts, cmd);
-        executing_red(cmd, path);
+        if (cmdcheck(cmd->s_left->l_element->cmd))
+            commandes(cmd->s_left->l_element->cmd, path, cmd);
+        else if (cmd->s_left->l_element->cmd)
+        {
+            cmds = ft_strjoin_command(cmd->s_left);
+            getprogramme(path, cmds);
+        }
         exit(EXIT_SUCCESS);
     }
     wait(0);
