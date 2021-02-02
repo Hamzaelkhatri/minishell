@@ -55,7 +55,7 @@ void exit_exec(t_command *l_cmd)
 {
 	if (size_args(l_cmd) > 1 && is_int(l_cmd->s_left->right->l_element->argument))
 	{
-		ft_putendl_fd("minishell: exit: too many arguments", 2);
+		ft_putendl_fd("\e[1;31mminishell: exit: too many arguments", 2);
 		exit(EXIT_FAILURE);
 	}
 	if (l_cmd->s_left->right && l_cmd->s_left->right->l_element->argument)

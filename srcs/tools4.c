@@ -33,7 +33,7 @@ long long ft_atoi_long(char *str)
 
 void print_err_exite(char *s)
 {
-    ft_putstr_fd("minishell: exit: ", 2);
+    ft_putstr_fd("\e[1;31m exit ~>", 2);
     ft_putstr_fd(s, 2);
     ft_putendl_fd(": numeric argument required", 2);
 }

@@ -8,12 +8,11 @@ int read_line(t_path *key, char **line)
 {
 	int ret;
 	ret = 0;
-	int fd = open("text.txt", O_RDWR);
 
 	*line = (char *)ft_calloc(BUFFER_SIZE, sizeof(char));
 	if (!line)
 	{
-		ft_putendl_fd("\e[0;31m bash$ : allocation error\e[0;37m", 1);
+		ft_putendl_fd("\e[1;31m bash$ : allocation error\e[0;37m", 1);
 		exit(1);
 	}
 	if ((ret = read(0, *line, BUFFER_SIZE)) == -1)
@@ -99,9 +98,9 @@ void loop_shell(t_path *path)
 	int check;
 
 	if (signal(SIGINT, sigint_handler) == SIG_ERR)
-		ft_putstr_fd("\n can't catch cnrtl-C", 2);
+		ft_putstr_fd("\n\e[1;31m can't catch cnrtl-C", 2);
 	if (signal(SIGQUIT, sigint_handler) == SIG_ERR)
-		ft_putstr_fd("\n can't catch cntrl-\\", 2);
+		ft_putstr_fd("\n\e[1;31m can't catch cntrl-\\", 2);
 	status = 0;
 	var_glob = 0;
 	path->dollar = 0;

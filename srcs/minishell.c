@@ -11,6 +11,7 @@ int main(int argc, char **argv, char **env)
     init(&path, &key, &cmd);
     path.env->fullenv = env;
     loop_shell(&path);
+
     return (0);
 }
 
