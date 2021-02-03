@@ -55,7 +55,7 @@ void sigint_handler(int sig)
 	}
 	if (sig == SIGQUIT)
 	{
-		var_glob =  111;
+		var_glob = 111;
 	}
 }
 
@@ -108,7 +108,9 @@ void loop_shell(t_path *path)
 	bash_promp();
 	while (!status)
 	{
-		check = -1;
+		if (check > 0)
+			path->dollar = check;
+		check = 0;
 		i = 0;
 		ret = 0;
 		ret = read_line(path, &line);
@@ -118,7 +120,7 @@ void loop_shell(t_path *path)
 			exit(EXIT_SUCCESS);
 		}
 		else if (line[0] == '\n')
-			check = 0;
+			check = -1;
 		path->cmds = line;
 		if (check != 0)
 			while (line[i] && line[i] == ' ')
@@ -128,7 +130,7 @@ void loop_shell(t_path *path)
 			path->cmds = ft_strtrim(path->cmds, "\n");
 			check = ft_check_line(path->cmds);
 		}
-		if (check == 1)
+		if (!check)
 		{
 			var_glob = 0;
 			cmd = add_list_cmd(cmd);
@@ -137,8 +139,9 @@ void loop_shell(t_path *path)
 			ft_strdel(&path->cmds);
 			sort(cmd);
 			quotes(cmd);
-			check_scommand(cmd);
+			// check_scommand(cmd);
 			commande_effect(cmd, path);
+			// print(cmd);
 			free_lcommand(&cmd);
 		}
 		if (var_glob == 111 && line[0] != '\n')

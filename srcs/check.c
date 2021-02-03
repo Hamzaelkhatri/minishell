@@ -113,19 +113,18 @@ int		ft_check_line(char *line)
 			if (!(line[i]))
 			{
 				ft_putstr_fd("syntax error\n", 2);
-				// ft_putendl_fd("zwin",1);
-				return(0);
+				return(258);
 			}
 		}
 		else
 	{
 			check = ft_check_line_ex(line, &i);
 			if(check == 0)
-				return(0);
+				return(258);
 	}
 		i++;
 	}
-	return(1);
+	return(0);
 }
 
 int			check_type_element(char *line, int *check_i_o, int count)

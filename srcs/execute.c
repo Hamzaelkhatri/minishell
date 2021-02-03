@@ -29,9 +29,8 @@ char *search_prev(char *str, char c, int i)
     return (NULL);
 }
 
-void getprogramme(t_path *path, char *cmd)
+void getprogramme(t_path *path, t_command *cmd)
 {
-    int i;
     exeute(path, cmd);
 }
 
@@ -40,32 +39,49 @@ int check_paths(char *path)
     struct stat sb;
 
     if (stat(path, &sb) == -1)
-        return (0);
-    return (1);
+        return (127);
+    return (0);
 }
 
-char **args(char *cmd,t_path *path)
+char **args(char *cmd, t_path *path)
 {
     char **split;
     split = ft_split(cmd, ' ');
     return (split);
 }
 
-void exeute(t_path *path, char *cmd)
+int _status_cmd(int status, t_path *path)
+{
+    if (WIFEXITED(status))
+        path->dollar = WEXITSTATUS(status);
+    else if (WIFSIGNALED(status))
+        path->dollar = WIFSIGNALED(status);
+    else if (WIFSTOPPED(status))
+        path->dollar = WIFSTOPPED(status);
+    else
+        path->dollar = 127;
+    return (path->dollar);
+}
+
+int exeute(t_path *path, t_command *cmd)
 {
     char *binaryPath;
     pid_t a;
+    char *cmds;
+    int status;
 
+    binaryPath = get_directory(path, cmd->s_left->l_element->cmd);
+    cmds = ft_strjoin_command(cmd->s_left);
     a = fork();
     if (a < 0)
         ft_putendl_fd(strerror(errno), 1);
     if (!a)
     {
-        binaryPath = get_directory(path, cmd);
         if (binaryPath)
-            if (execve(binaryPath, args(cmd,path), path->env->fullenv) != 0)
+            if (execve(binaryPath, args(cmds, path), path->env->fullenv) != 0)
                 ft_putendl_fd(strerror(errno), 1);
-        exit(0);
+        exit(EXIT_SUCCESS);
     }
     wait(0);
+    return (path->dollar);
 }

@@ -67,6 +67,7 @@ static void opening_files(char *file, char *shifts, t_command *cmd)
 void shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
 {
     int file_desc;
+    int status;
     char *cmds;
 
     int pid = fork();
@@ -80,10 +81,7 @@ void shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
         if (cmdcheck(cmd->s_left->l_element->cmd))
             commandes(cmd->s_left->l_element->cmd, path, cmd);
         else if (cmd->s_left->l_element->cmd)
-        {
-            cmds = ft_strjoin_command(cmd->s_left);
-            getprogramme(path, cmds);
-        }
+            getprogramme(path, cmd);
         exit(EXIT_SUCCESS);
     }
     wait(0);

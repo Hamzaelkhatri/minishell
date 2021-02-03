@@ -18,33 +18,18 @@ char *word_tolower(char *str)
 
 void commandes(char *cmd, t_path *path, t_command *l_cmd)
 {
-    if (!ft_strncmp(cmd, "$", 1) && get_var_env(path, cmd))
-    {
-        cmd = get_var_env(path, cmd);
-    }
+    // puts(cmd);
     if (!ft_strcmp("exit", word_tolower(cmd)))
         cmd = word_tolower(cmd);
-    if (!ft_strcmp(cmd, "$?"))
+    if (!ft_strcmp(cmd, "pwd"))
     {
-        ft_putendl_fd(ft_itoa(path->dollar), 1);
-    }
-    else if (!ft_strcmp(cmd, "pwd"))
-    {
-        if (size_args(l_cmd) >= 1 && !l_cmd->s_left->right->l_element->redirection.i_o)
-        {
-            ft_putendl_fd("pwd: too many arguments", 1);
-            path->dollar = 0;
-        }
-        else
-        {
-            print_working_directory(path);
-            path->dollar = 1;
-        }
+        print_working_directory(path);
+        path->dollar = 0;
     }
     else if (!ft_strcmp(cmd, "env"))
     {
         show_env(path->env->fullenv);
-        path->dollar = 1;
+        path->dollar = 0;
     }
     else if (!ft_strcmp(cmd, "cd"))
     {
@@ -52,24 +37,21 @@ void commandes(char *cmd, t_path *path, t_command *l_cmd)
             cd_cmd(l_cmd->s_left->right->l_element->argument, path);
         else
             cd_cmd(NULL, path);
-        path->dollar = 1;
     }
     else if (!ft_strcmp(cmd, "exit"))
-    {
         exit_exec(l_cmd);
-    }
     else if (!ft_strcmp(cmd, "export") && l_cmd->s_left->right == NULL)
     {
         char **tmp = path->env->fullenv;
         ft_sortstr(tmp);
         show_export(tmp);
-        path->dollar = 1;
+        path->dollar = 0;
     }
     else if (!ft_strcmp(cmd, "export") && l_cmd->s_left->right != NULL)
     {
         while (l_cmd->s_left->right)
         {
-            if (!export_cmd(l_cmd->s_left->right->l_element->argument, path->env->fullenv))
+            if (!export_cmd(l_cmd->s_left->right->l_element->argument, path))
                 break;
             l_cmd->s_left->right = l_cmd->s_left->right->right;
         }
@@ -77,6 +59,7 @@ void commandes(char *cmd, t_path *path, t_command *l_cmd)
     else if (!ft_strcmp(cmd, "unset") && l_cmd->s_left->right != NULL)
     {
         unset_cmd(l_cmd->s_left->right->l_element->argument, path);
+        path->dollar = 0;
     }
     else if (!ft_strcmp(cmd, "echo"))
     {
@@ -95,6 +78,7 @@ void commandes(char *cmd, t_path *path, t_command *l_cmd)
         }
         if (ft_strcmp(cmd, "echo -n"))
             ft_putendl_fd("", 1);
+        path->dollar = 0;
     }
 }
 
@@ -162,7 +146,10 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
     t_command *tmp;
     t_simple_command *s_tmp = l_cmd->s_left;
 
+    // puts(cmd);
     cmd = ft_strtrim(cmd, "\n");
+    if (!ft_strcmp("$?", cmd))
+        ft_putnbr_fd(path->dollar, 2);
     if (get_shift(l_cmd))
     {
         tmp = l_cmd;
@@ -176,12 +163,12 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
             l_cmd->s_left = l_cmd->s_left->right;
         }
     else if (cmdcheck(cmd))
+    {
         commandes(cmd, path, l_cmd);
+    }
     else
     {
-        cmds = ft_strjoin_command(l_cmd->s_left);
-        getprogramme(path, cmds);
-        wait(0);
+        getprogramme(path, l_cmd);
     }
     wait(0);
     return 0;

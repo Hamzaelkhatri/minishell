@@ -118,7 +118,7 @@ int get_extern_value(char *str)
 	return (1);
 }
 
-int export_cmd(char *name, char **env)
+int export_cmd(char *name, t_path *path)
 {
 	int line = 0;
 
@@ -128,19 +128,21 @@ int export_cmd(char *name, char **env)
 		ft_putstr_fd("\e[1;31mexport :\e[1;31m", 2);
 		ft_putstr_fd(get_befor_equal(name), 2);
 		ft_putstr_fd(" bad assignment\n", 2);
+		path->dollar = 127;
 	}
 	else
 	{
 		if (!check_equal(name))
 			name = ft_strjoin(name, "");
-		if (!search_env(env, get_befor_equal(name)))
+		if (!search_env(path->env->fullenv, get_befor_equal(name)))
 		{
-			line = count_line(env);
-			env[line] = name;
-			env[line + 1] = NULL;
+			line = count_line(path->env->fullenv);
+			path->env->fullenv[line] = name;
+			path->env->fullenv[line + 1] = NULL;
 		}
 		else if (check_equal(name))
-			edit_env(env, get_befor_equal(name), get_after_equal(name));
+			edit_env(path->env->fullenv, get_befor_equal(name), get_after_equal(name));
+		path->dollar = 0;
 	}
 	return (1);
 }

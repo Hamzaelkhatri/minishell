@@ -4,7 +4,7 @@ int cmdcheck(char *str)
 {
     char *cmd[9];
     int i;
-    
+    // puts(str);
     i = 0;
     cmd[0] = "echo";
     cmd[1] = "exit";

@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/02 14:24:43 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/03 19:11:51 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,20 +173,20 @@ void			init(t_path *path, t_key *key, t_cmd *cmd);
 void			show_env(char **path);
 char			*search_env(char **env, char *str);
 void			print_working_directory(t_path *path);
-void			exeute(t_path *path, char *cmd);
+int				exeute(t_path *path, t_command *cmd);
 char			**ft_split_quotes(char const *s, char c);
 char			**ft_space_split(char const *s);
 char			*ft_str_in_str(const char *s1, const char *s2);
 int				ft_2strlen(char **str);
 char			*get_directory(t_path *path,char *cmd);
 int				check_path(char *path, char *cmd);
-void			getprogramme(t_path *path, char *cmd);
+void			getprogramme(t_path *path, t_command *cmd);
 void			shift(int fd);
 void			shift_extra(char *file, char *shifts, t_path *path,t_command *cmd);
 char			*get_var_env(t_path *path, char *var);
 void			cd_cmd(char *nextpath, t_path *path);
 int				count_line(char **env);
-int				export_cmd(char *name, char **env);
+int				export_cmd(char *name, t_path *path);
 void			unset_cmd(char *name, t_path *path);
 int				search_str(char *str1, char *str2, int l1, int l2);
 char			*ft_str_to_equal(const char *s1, const char *s2, int len);
@@ -223,4 +223,5 @@ int				is_int(char *str);
 int				count_digit(char *str);
 int				size_args(t_command *l_cmd);
 char			*get_shift(t_command *lcmd);
+int				_status_cmd(int status,t_path *path);
 #endif
