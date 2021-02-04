@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 10:32:55 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/02/03 19:35:13 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/04 15:47:03 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,11 @@ void pipes_cmd(t_path *path, t_list_cmd *lst)
 	int fd[2];
 	int _fd[2];
 	int i;
-	int f;
 	pid_t pid[4000];
 	int status;
 
 	i = 0;
-	f = 0;
 	int s = lstsize(lst);
-	// printf("%i",s);
-	// if(s==2)
-	// if(!ft_strcmp(lst->command->s_left->l_element->cmd,"cat"))
-	{
-		// pipe(fd);
-		// f = 1;
-	}
 	while (lst->command != NULL)
 	{
 		// if(f != 1)
@@ -51,7 +42,7 @@ void pipes_cmd(t_path *path, t_list_cmd *lst)
 		if ((pid[i] = fork()) == -1)
 		{
 			ft_putendl_fd(strerror(errno), 1);
-			exit(1);
+			exit(0);
 		}
 		else if (pid[i] == 0)
 		{
@@ -74,11 +65,12 @@ void pipes_cmd(t_path *path, t_list_cmd *lst)
 			}
 			lst->command->s_left->l_element->cmd = ft_strtrim(lst->command->s_left->l_element->cmd, "\n");
 			get_cmd_(lst->command->s_left->l_element->cmd, path, lst->command);
-			exit(0);
+			exit(path->dollar);//
 		}
 		else
 		{
-			if(i>0)
+			_status_cmd(pid[i], path);
+			if (i > 0)
 				close(_fd[0]);
 			close(fd[1]);
 			_fd[0] = fd[0];
@@ -87,10 +79,11 @@ void pipes_cmd(t_path *path, t_list_cmd *lst)
 			i++;
 		}
 	}
-	while (f < i)
+	while (0 < i)
 	{
 		wait(&status);
-		_status_cmd(status,path);
 		i--;
+		if (status && !path->dollar)
+			path->dollar= _status_cmd(status,path);
 	}
 }

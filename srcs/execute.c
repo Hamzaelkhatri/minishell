@@ -54,12 +54,8 @@ int _status_cmd(int status, t_path *path)
 {
     if (WIFEXITED(status))
         path->dollar = WEXITSTATUS(status);
-    else if (WIFSIGNALED(status))
-        path->dollar = WIFSIGNALED(status);
-    else if (WIFSTOPPED(status))
-        path->dollar = WIFSTOPPED(status);
     else
-        path->dollar = 127;
+        path->dollar = 0;
     return (path->dollar);
 }
 
@@ -82,6 +78,8 @@ int exeute(t_path *path, t_command *cmd)
                 ft_putendl_fd(strerror(errno), 1);
         exit(EXIT_SUCCESS);
     }
-    wait(0);
+    wait(&status);
+    if (!path->dollar)
+        _status_cmd(status, path);
     return (path->dollar);
 }

@@ -170,6 +170,5 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
     {
         getprogramme(path, l_cmd);
     }
-    wait(0);
-    return 0;
+    return (path->dollar);
 }
