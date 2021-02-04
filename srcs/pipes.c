@@ -37,10 +37,17 @@ void pipes_cmd(t_path *path, t_list_cmd *lst)
 	i = 0;
 	f = 0;
 	int s = lstsize(lst);
-	pipe(fd);
+	// printf("%i",s);
+	// if(s==2)
+	// if(!ft_strcmp(lst->command->s_left->l_element->cmd,"cat"))
+	{
+		// pipe(fd);
+		// f = 1;
+	}
 	while (lst->command != NULL)
 	{
-
+		// if(f != 1)
+		pipe(fd);
 		if ((pid[i] = fork()) == -1)
 		{
 			ft_putendl_fd(strerror(errno), 1);
@@ -71,17 +78,19 @@ void pipes_cmd(t_path *path, t_list_cmd *lst)
 		}
 		else
 		{
+			if(i>0)
+				close(_fd[0]);
+			close(fd[1]);
 			_fd[0] = fd[0];
 			_fd[1] = fd[1];
 			lst->command = lst->command->right;
 			i++;
 		}
 	}
-	close(_fd[0]);
-	close(_fd[1]);
 	while (f < i)
 	{
 		wait(&status);
+		_status_cmd(status,path);
 		i--;
 	}
 }
