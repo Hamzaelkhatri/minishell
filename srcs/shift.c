@@ -84,5 +84,7 @@ void shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
             getprogramme(path, cmd);
         exit(EXIT_SUCCESS);
     }
-    wait(0);
+    wait(&status);
+    if (status && !path->dollar)
+        _status_cmd(status, path);
 }

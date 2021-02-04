@@ -79,7 +79,7 @@ int exeute(t_path *path, t_command *cmd)
         exit(EXIT_SUCCESS);
     }
     wait(&status);
-    if (!path->dollar)
+    if (status && !path->dollar)
         _status_cmd(status, path);
     return (path->dollar);
 }
