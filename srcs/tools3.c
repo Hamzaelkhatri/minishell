@@ -1,5 +1,14 @@
 #include "minishell.h"
 
+void frees(char **str)
+{
+	if(*str)
+	{
+		free(*str);
+		*str = NULL;
+	}
+}
+
 char	*ft_str_in_str(const char *s1, const char *s2)
 {
 	size_t i;
@@ -23,15 +32,6 @@ char	*ft_str_in_str(const char *s1, const char *s2)
 		i++;
 	}
 	return (NULL);
-}
-
-void frees(char **str)
-{
-	if(*str)
-	{
-		free(*str);
-		*str = NULL;
-	}
 }
 
 int		count_line(char **env)

@@ -43,6 +43,8 @@ SRC_NAME=allocation.c\
 		tools2.c\
 		tools3.c\
 		tools4.c\
+		variables.c\
+		back_slash.c\
 
 HDR_NAME=minishell.h 
 

@@ -61,14 +61,8 @@ void commandes(char *cmd, t_path *path, t_command *l_cmd)
         unset_cmd(l_cmd->s_left->right->l_element->argument, path);
         path->dollar = 0;
     }
-    else if (!ft_strcmp(cmd, "echo"))
+    else if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "echo -n") )
     {
-        if (l_cmd->s_left->right)
-            if (!ft_strcmp(l_cmd->s_left->right->l_element->argument, "-n\n"))
-            {
-                cmd = ft_strjoin(cmd, " -n");
-                l_cmd->s_left->right = l_cmd->s_left->right->right;
-            }
         while (l_cmd->s_left->right)
         {
             echo(l_cmd->s_left->right->l_element->argument, path);

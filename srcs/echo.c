@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr < helkhatr@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 11:02:30 by zjamali           #+#    #+#             */
-/*   Updated: 2021/01/29 12:50:38 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/05 12:49:50 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,5 @@ void ft_nhaydo_nl(char **tab)
 void echo(char *line, t_path *path)
 {
 	line = ft_strtrim(line,"\n");
-	if(!ft_strncmp(line,"$",1) && get_var_env(path,line))
-	{
-		ft_putstr_fd(get_var_env(path,line),1);
-	}
-	else
-	{
-		ft_putstr_fd(line,1);
-	}
-	
+	ft_putstr_fd(line,1);
 }

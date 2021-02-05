@@ -63,10 +63,9 @@ void loop_shell(t_path *path)
 
 	i = 0;
 	var_glob = 0;
-	path->dollar = 0;
 	lines = NULL;
 	var_glob1 = 0;
-
+	check = 0;
 	signals();
 	bash_promp();
 	while (1)
@@ -116,6 +115,7 @@ void loop_shell(t_path *path)
 			{
 				path->cmds = ft_strtrim(path->cmds, "\n");
 				check = ft_check_line(path->cmds);
+				ft_putnbr_fd(check,2);
 			}
 			if (!check)
 			{
@@ -124,7 +124,9 @@ void loop_shell(t_path *path)
 				parse_list_command(cmd, cmd->line);
 				ft_strdel(&path->cmds);
 				sort(cmd);
-				quotes(cmd);
+				variables(cmd, path);
+				print(cmd);
+				check_scommand(cmd);
 				commande_effect(cmd, path);
 				free_lcommand(&cmd);
 			}

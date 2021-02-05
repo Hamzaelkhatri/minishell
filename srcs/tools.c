@@ -12,21 +12,24 @@ int		search_str(char *str1, char *str2, int l1, int l2)
 	return (0);
 }
 
+
 void	ignoring_quote_ext(char *line, int *i, int *index)
 {
 	char	wich;
+	int p = 0;
 
-	wich = (line[*i] == 34) ? 34 : 39;
+	// printf("sassaas\n");
+	wich = line[*i];
 	(*i)++;
-	while (((line[*i] == '\\' && line[*i + 1] == wich) ||\
-				line[*i] != wich) && line[*i])
+	// printf("{%c}\n",wich);
+	while ((((line[*i] == wich && count_antislach(line, *i - 2) == 0)) || line[*i] != wich) && line[*i])
 	{
-		if (line[*i] == '\\' && line[*i + 1] == wich)
-			(*i)++;
 		line[(*index)++] = line[(*i)++];
 	}
-	if (line[*i] == '\0')
-		line[(*index)] = '\0';
+	if(line[*i] == wich)
+		line[(*index)] = line[++(*i)];
+	// if (line[*i] == '\0')
+	// 	line[(*index)] = '\0';
 	else
 		(*i)++;
 }
@@ -41,16 +44,21 @@ char	*ignoring_quote(char *line)
 	index = 0;
 	while (line[i])
 	{
-		while ((line[i] == '\\' && (line[i + 1] == 34 || line[i + 1] == 39))\
+		while ((count_antislach(line, i - 1) == 0 && (line[i] == 34 || line[i] == 39))\
 				|| (line[i] != 34 && line[i] != 39 && line[i]))
 		{
-			if (line[i] == '\\' && (line[i + 1] == 34 || line[i + 1] == 39))
-				i++;
+			// printf("line[%d] ==> %c\n",i,line[i]);
 			line[index++] = line[i++];
 		}
-		if ((line[i] == 34 || line[i] == 39) && line[i])
+		if (line[i] == 34  && line[i])
 			ignoring_quote_ext(line, &i, &index);
-		if (line[i] == '\0')
+		if(line[i] == 39 && line[i])
+		{
+			line[index++] = line[i++];
+			while(line[i] != 39 && line[i])
+				line[index++] = line[i++];
+		}
+		else if (line[i] == '\0')
 			line[index] = '\0';
 	}
 	return (line);
@@ -64,13 +72,13 @@ void	ft_strjoin_cmd_ext(t_simple_command *cmd, char **line)
 		if (cmd->right != NULL)
 			*line = ft_strjoin_free(*line, " ");
 	}
-	// else if (cmd->l_element->indice == 3)
-	// {
-	// 	*line = ft_strjoin_free(*line, cmd->l_element->redirection.i_o);
-	// 	*line = ft_strjoin_free(*line, cmd->l_element->redirection.file);
-	// 	if (cmd->right != NULL)
-	// 		*line = ft_strjoin_free(*line, " ");
-	// }
+	else if (cmd->l_element->indice == 3)
+	{
+		*line = ft_strjoin_free(*line, cmd->l_element->redirection.i_o);
+		*line = ft_strjoin_free(*line, cmd->l_element->redirection.file);
+		if (cmd->right != NULL)
+			*line = ft_strjoin_free(*line, " ");
+	}
 }
 
 char	*ft_strjoin_command(t_simple_command *cmd)

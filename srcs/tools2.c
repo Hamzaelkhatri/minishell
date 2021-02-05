@@ -44,22 +44,17 @@ void	quotes(t_list_cmd *l_cmd)
 	l_cmd = tmp_l_command;
 }
 
-void	alloc_affect_extended(t_list_cmd **l_cmd, char *command, int indice)
+void	alloc_affect_extended(t_list_cmd **l_cmd, char *command, int indice, t_save *save)
 {
-	(*l_cmd)->command->tool.argument = 3;
+	(*l_cmd)->command->tool.redirection = 1;
 	(*l_cmd)->command = add_simple_cmd((*l_cmd)->command, 3, (*l_cmd));
 	if ((*l_cmd)->command->s_left->right != NULL)
 		(*l_cmd)->command->s_left = (*l_cmd)->command->s_left->right;
 	(*l_cmd)->command->s_left->l_element->redirection.file = ft_strdup(command);
-	if (wich_redirection((*l_cmd)->command->tool.check_io) == 2)
-		(*l_cmd)->command->s_left->l_element->redirection.i_o = ft_strdup(">>");
-	else if (wich_redirection((*l_cmd)->command->tool.check_io) == 1)
-		(*l_cmd)->command->s_left->l_element->redirection.i_o = ft_strdup(">");
-	else if (wich_redirection((*l_cmd)->command->tool.check_io) == 3)
-		(*l_cmd)->command->s_left->l_element->redirection.i_o = ft_strdup("<");
+		(*l_cmd)->command->s_left->l_element->redirection.i_o = ft_strdup(save->red);
 }
 
-void	alloc_affect(t_list_cmd *l_cmd, char *command, int indice)
+void	alloc_affect(t_list_cmd *l_cmd, char *command, int indice, t_save *save)
 {
 	if (indice == 1)
 	{
@@ -71,14 +66,14 @@ void	alloc_affect(t_list_cmd *l_cmd, char *command, int indice)
 	}
 	else if (indice == 2)
 	{
-		l_cmd->command->tool.argument = 2;
+		l_cmd->command->tool.argument = 1;
 		l_cmd->command = add_simple_cmd(l_cmd->command, 2, l_cmd);
 		if (l_cmd->command->s_left->right != NULL)
 			l_cmd->command->s_left = l_cmd->command->s_left->right;
 		l_cmd->command->s_left->l_element->argument = ft_strdup(command);
 	}
 	else if (indice == 3)
-		alloc_affect_extended(&l_cmd, command, indice);
+		alloc_affect_extended(&l_cmd, command, indice, save);
 }
 
 int		ft_2strlen(char **str)

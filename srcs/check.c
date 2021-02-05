@@ -6,7 +6,6 @@ static int	check_is_correct(char operation, char *line)
 	char	c;
 
 	i = 0;
-	
 	while ((line[i] == ' ' || line[i] == '\t') && line[i])
 		i++;
 	c = line[i];
@@ -27,11 +26,8 @@ static int	check_is_correct(char operation, char *line)
 	}
 	else if (operation == '>')
 	{
-		// ft_putchar_fd(c,1);
 		if (ft_isalnum(c) == 0 && (c == '\0' || c == '>' || c == '<' || c == '|' || c == ';'))
-		{
 			return (0);
-		}
 	}
 	return (1);
 }
@@ -69,6 +65,13 @@ static int	check_operation(char *line)
 
 static int	ft_check_line_ex(char *line, int *i)
 {
+	if(line[*i] == '\\')
+	{
+		if(count_antislach(line, *i) == 0 && line[*i + 1] == '\0')
+			ft_putstr_fd("syntax error\n", 2);
+		return(0);
+	}
+
 	if ((line[*i] == '|' && *i == 0) || (line[*i] == '|' &&\
 		check_operation(&line[*i]) == 0))
 		{
@@ -96,6 +99,8 @@ static int	ft_check_line_ex(char *line, int *i)
 	return(1);
 }
 
+
+
 int		ft_check_line(char *line)
 {
 	int		i;
@@ -105,10 +110,10 @@ int		ft_check_line(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if ((line[i] == '"' || line[i] == 39) && line[i - 1] != '\\')
+		if ((line[i] == '"' || line[i] == 39) && count_antislach(line, i - 1))
 		{
 			quotes = line[i++];
-			while (((line[i] == quotes && line[i -1] == '\\' ) || line[i] != quotes) &&  line[i])
+			while (((quotes == 34 && line[i] == quotes && count_antislach(line, i - 1) == 0) || line[i] != quotes) &&  line[i])
 				i++;
 			if (!(line[i]))
 			{
@@ -120,7 +125,10 @@ int		ft_check_line(char *line)
 	{
 			check = ft_check_line_ex(line, &i);
 			if(check == 0)
+			{
+				ft_putstr_fd("syntax error\n", 2);
 				return(258);
+			}
 	}
 		i++;
 	}
@@ -141,24 +149,20 @@ int			check_type_element(char *line, int *check_i_o, int count)
 	{
 		if (line[i] == 34 || line[i] == 39)
 			quotes = (quotes == 0) ? 1 : 0;
-		if ((line[i] == '>' || line[i] == '<') && quotes == 0)
-			redirection = check_io_redirection(line, &i, check_i_o);
+		if ((line[i] == '>' || line[i] == '<') && quotes == 0 &&  line[i - 1] != '\\')
+		{
+			// ft_putendl_fd("sahbi amine",1);
+			return(2);
+		}
 		i++;
 	}
 	if (count == 0 && redirection == -1)
-		return (1);
-	else if (redirection == 1 && (*check_i_o == 1 || *check_i_o == 5 || *check_i_o == 9))
-		return (2);
-	else if (redirection == 1 && (*check_i_o == 3 || *check_i_o == 7 || *check_i_o == 11))
-		return (3);
-	else if (redirection == 1 && (*check_i_o == 2 || *check_i_o == 6 || *check_i_o == 10))
-		return (4);
-	else if (redirection == 1 && (*check_i_o == 4 || *check_i_o == 8 || *check_i_o == 12))
-		return (5);                                       
+		return (1);                         
 	else if (count != 0 && redirection == -1)
-		return (6);
-	return (7);
+		return (3);
+	return (0);
 }
+
 
 void		check_element(t_list_cmd *l_cmd)
 {
@@ -171,15 +175,15 @@ void		check_element(t_list_cmd *l_cmd)
 	{
 		l_cmd->command->tool.check_io = -1;
 		l_cmd->command->tool.result = check_type_element(l_cmd->command->tool.tab[l_cmd->command->tool.i], &l_cmd->command->tool.check_io, l_cmd->command->tool.i);
-		if (l_cmd->command->tool.result == 1 || l_cmd->command->tool.result == 6)
+		if (l_cmd->command->tool.result == 1 || l_cmd->command->tool.result == 3)
 		{
 			if (l_cmd->command->tool.cmd == 0)
-				alloc_affect(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i], 1);
+				alloc_affect(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i], 1, NULL);
 			else
-				alloc_affect(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i], 2);
+				alloc_affect(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i], 2, NULL);
 		}
-		else if (l_cmd->command->tool.result >= 2 && l_cmd->command->tool.result <= 5)
-			affect_redirection(l_cmd);
+		else if (l_cmd->command->tool.result == 2)
+			affect_redirection(l_cmd, l_cmd->command->tool.tab[l_cmd->command->tool.i]);
 		l_cmd->command->tool.i++;
 	}
 	l_cmd->command->s_left = tmp;

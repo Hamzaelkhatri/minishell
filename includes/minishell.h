@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/05 11:50:36 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/05 12:33:43 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,17 @@ typedef struct	s_cmd
 	int	unset;
 	int	cd;
 }				t_cmd;
+
+typedef struct s_save
+{
+	int check;
+	char *cmd_arg;
+	char *file;
+	int check_io;
+	int result;
+	char *red;
+	struct s_save *next;
+}				t_save;
 
 typedef struct	s_redirection
 {
@@ -132,6 +143,11 @@ typedef struct	s_tmp
 }				t_tmp;
 
 void			print(t_list_cmd *l_command);
+char 			*ft_ignoring(char *line);
+void			back_slash(t_list_cmd *l_cmd);
+void			variables(t_list_cmd *l_cmd, t_path *path);
+int				count_antislach(char *line,int i);
+char *get_var_env1(t_path *path, char *var);
 char			**ft_space_split(char const *s);
 int				is_correct(char c);
 void			*leak(char **spl, int j);
@@ -140,15 +156,14 @@ char			**ft_space_split_quote(char const *s);
 t_list_cmd		*add_list_cmd(t_list_cmd *parent);
 t_command		*add_command(t_command *parent, t_list_cmd *l_cmd);
 t_command		*add_simple_cmd(t_command *parent, int i, t_list_cmd *l_cmd);
-void			alloc_affect(t_list_cmd *l_cmd, char *command, int indice);
+void			alloc_affect(t_list_cmd *l_cmd, char *command, int indice, t_save *save);
 int				ft_check_line(char *line);
 int				check_type_element(char *line, int *check_i_o, int count);
-int				check_io_redirection(char *line, int *p, int *check_o_i);
+int				check_io_redirection(char *line, int *p);
 void			check_element(t_list_cmd *l_cmd);
 int				check_what_after(char c);
-void			affect_redirection(t_list_cmd *l_cmd);
+void			affect_redirection(t_list_cmd *l_cmd, char *line);
 int				wich_redirection(int check);
-int				check_io_redirection(char *line, int *p, int *check_o_i);
 int				check_redirection(char *line, int *i);
 void			sort(t_list_cmd *l_cmd);
 void			check_scommand(t_list_cmd *l_cmd);

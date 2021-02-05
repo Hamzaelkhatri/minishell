@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int			wich_redirection(int check)
+int wich_redirection(int check)
 {
 	if (check == 5 || check == 6 || check == 7 || check == 8)
 		return (2);
@@ -11,22 +11,15 @@ int			wich_redirection(int check)
 	return (0);
 }
 
-int			check_io_redirection(char *line, int *p, int *check_o_i)
+int check_io_redirection(char *line, int *p)
 {
 	int redirection;
 
 	redirection = check_redirection(line, p);
-	if (redirection == 5 || redirection == 7 ||
-			redirection == 8 || redirection == 6)
-		(*p)++;
-	*check_o_i = redirection;
-	if (redirection > 0)
-		return (1);
-	else
-		return (0);
+	return (redirection);
 }
 
-int			check_redirection(char *line, int *i)
+int check_redirection(char *line, int *i)
 {
 	if (line[*i] == '>' && line[*i + 1] == '>')
 	{
@@ -52,44 +45,237 @@ int			check_redirection(char *line, int *i)
 	return (0);
 }
 
-static void	affect_redirection_ex(t_list_cmd *l_cmd,
-		int result, char ***tab_split)
+static void affect_redirection_ex(t_list_cmd *l_cmd, int result, t_save *save)
 {
-	if (wich_redirection(l_cmd->command->tool.check_io) == 2\
-			|| wich_redirection(l_cmd->command->tool.check_io) == 1)
-		*tab_split = ft_split(l_cmd->command->tool.tab[l_cmd->command->tool.i]\
-			, '>');
-	else
-		*tab_split = ft_split(l_cmd->command->tool.tab[l_cmd->command->tool.i]\
-			, '<');
 	if (result == 3)
-		alloc_affect(l_cmd, (*tab_split)[0], 3);
+		alloc_affect(l_cmd, save->file, 3, save);
 	else if (result == 4 || result == 5)
 	{
-		if (l_cmd->command->tool.cmd == 0)
-			alloc_affect(l_cmd, (*tab_split)[0], 1);
-		else
-			alloc_affect(l_cmd, (*tab_split)[0], 2);
+			if (l_cmd->command->tool.cmd == 0)
+				alloc_affect(l_cmd, save->cmd_arg, 1, NULL);
+			else
+				alloc_affect(l_cmd, save->cmd_arg, 2, NULL);
 		if (result == 4)
-			alloc_affect(l_cmd,\
-				l_cmd->command->tool.tab[++l_cmd->command->tool.i], 3);
+		{
+			alloc_affect(l_cmd, save->file, 3, save);
+			l_cmd->command->tool.i++;
+		}
 		else if (result == 5)
-			alloc_affect(l_cmd, (*tab_split)[1], 3);
+			alloc_affect(l_cmd, save->file, 3, save);
 	}
 }
 
-void		affect_redirection(t_list_cmd *l_cmd)
+int redirection(int check_i_o)
 {
-	char	**tab_split;
-	int		result;
-
-	tab_split = NULL;
-	result = l_cmd->command->tool.result;
-	if (result == 3 || result == 4 || result == 5)
-		affect_redirection_ex(l_cmd, result, &tab_split);
-	if (result == 2)
-		alloc_affect(l_cmd,\
-			l_cmd->command->tool.tab[++l_cmd->command->tool.i], 3);
-	if (tab_split != NULL)
-		free_tab(&tab_split);
+	if (check_i_o == 1 || check_i_o == 5 || check_i_o == 9)
+		return (2);
+	else if (check_i_o == 3 || check_i_o == 7 || check_i_o == 11)
+		return (3);
+	else if (check_i_o == 2 || check_i_o == 6 || check_i_o == 10)
+		return (4);
+	else if (check_i_o == 4 || check_i_o == 8 || check_i_o == 12)
+		return (5);
+	return (0);
 }
+
+
+
+t_save *alloc_store(t_save *save, char *red, int which, int check_io)
+{
+	t_save *tmp;
+	t_save *new;
+
+	if (!(new = (t_save *)malloc(sizeof(t_save))))
+		return (NULL);
+	new->check = which;
+	new->cmd_arg = NULL;
+	new->file = NULL;
+	new->check_io = check_io;
+	new->result = 0;
+	new->red = ft_strdup(red);
+	new->next = NULL;
+	if (save == NULL)
+		return (new);
+	tmp = save;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	return (save);
+}
+
+
+void store(t_list_cmd *l_cmd, t_save **save, char **tab_split)
+{
+	int i = 0;
+	int result;
+	t_save *tmp;
+
+	tmp = *save;
+	while (*save)
+	{
+		result = redirection((*save)->check_io);
+		(*save)->result = result;
+		if (result == 2)
+			(*save)->file = ft_strdup(l_cmd->command->tool.tab[l_cmd->command->tool.i + 1]);
+		else if (result == 3)
+			(*save)->file = ft_strdup(tab_split[i++]);
+			// i++;
+		else if (result == 4)
+		{
+			(*save)->cmd_arg = ft_strdup(tab_split[i++]);
+			(*save)->file = ft_strdup(l_cmd->command->tool.tab[l_cmd->command->tool.i + 1]);
+			// i++;
+		}
+		else if (result == 5)
+		{
+			(*save)->cmd_arg = ft_strdup(tab_split[i++]);
+			// i++;
+			(*save)->file = ft_strdup(tab_split[i++]);
+			// i++;
+		}
+		*save = (*save)->next;
+	}
+	*save = tmp;
+}
+
+void save_redirection(t_list_cmd *l_cmd, t_save *save)
+{
+	t_save *tmp;
+
+	tmp = save;
+	while (save)
+	{
+		if (save->result == 3 || save->result == 4 || save->result == 5)
+			affect_redirection_ex(l_cmd, save->result, save);
+		else if (save->result == 2)
+		{
+			alloc_affect(l_cmd, save->file, 3, save);
+			l_cmd->command->tool.i++;
+		}
+		save = save->next;
+	}
+	save = tmp;
+}
+
+static int check_end(char *line)
+{
+	int i;
+
+	i = 0;
+	while(line[i])
+		i++;
+	if(line[i - 1] == '>' || line[i - 1] == '<')
+		return(1);
+	else
+		return(0);
+}
+static int check_if_redirection(char *line)
+{
+	int i;
+
+	i = 0;
+	while(line[i])
+	{
+		if(line[i] == '>' || line[i] == '<')
+			return(1);
+			i++;
+	}
+	return(0);
+}
+
+void affect_redirection(t_list_cmd *l_cmd, char *line)
+{
+	char **tab_split;
+	t_save *tmp;
+	int i;
+	char quotes;
+	int check_i_o;
+	t_save *save = NULL;
+	int index = 0;
+	int end;
+
+	i = 0;
+	quotes = 0;
+	tab_split = NULL;
+	
+	if(check_end(line))
+	{
+		line = ft_strjoin_free(line, l_cmd->command->tool.tab[++l_cmd->command->tool.i]);
+		while(l_cmd->command->tool.tab[l_cmd->command->tool.i + 1] && check_end(l_cmd->command->tool.tab[l_cmd->command->tool.i + 1]))
+			line = ft_strjoin_free(line, l_cmd->command->tool.tab[++l_cmd->command->tool.i]);
+	}
+	while (line[i])
+	{
+		if (line[i] == 34 || line[i] == 39)
+			quotes = (quotes == 0) ? 1 : 0;
+		if ((line[i] == '>' || line[i] == '<') && quotes == 0 && line[i - 1] != '\\')
+		{
+			check_i_o = check_redirection(line, &i);
+			if (check_i_o == 1 || check_i_o == 2 || check_i_o == 3 || check_i_o == 4)
+			{
+				if ((check_i_o == 2 || check_i_o == 4) && index == 1)
+					check_i_o = (check_i_o == 2) ? 1 : 3;
+				if ((check_i_o == 2 || check_i_o == 4) && index == 0)
+				{
+					save = alloc_store(save, ">", 1, check_i_o);
+					printf("check_io{%d}\n",check_i_o);
+				}
+				else
+					save = alloc_store(save, ">", 2, check_i_o);
+				index = 1;
+			}
+			else if (check_i_o == 5 || check_i_o == 6 || check_i_o == 7 || check_i_o == 8)
+			{
+				line[i++] = ' ';
+				if ((check_i_o == 6 || check_i_o == 8) && index == 1)
+					check_i_o = (check_i_o == 6) ? 5 : 7;
+				if ((check_i_o == 6 || check_i_o == 8) && index == 0)
+					save = alloc_store(save, ">>", 1, check_i_o);
+				else
+					save = alloc_store(save, ">>", 2, check_i_o);
+				index = 1;
+			}
+			else
+			{
+				if ((check_i_o == 10 || check_i_o == 12) && index == 1)
+					check_i_o = (check_i_o == 10) ? 9 : 11;
+				if ((check_i_o == 10 || check_i_o == 12) && index == 0)
+					save = alloc_store(save, "<", 1, check_i_o);
+				else
+					save = alloc_store(save, "<", 2, check_i_o);
+				index = 1;
+			}
+			line[i] = ' ';
+		}
+		i++;
+	}
+	tab_split = ft_space_split_quote(line);
+	i = 0;
+	// while(tab_split[i])
+	// 	printf("{%s}\n",tab_split[i++]);
+
+	store(l_cmd, &save, tab_split);
+	save_redirection(l_cmd, save);
+// while (save)
+// {
+// 	if (save->result == 2)
+// 		printf("result 2 |%s|\t|%s|\n", save->red, save->file);
+// 	else if (save->result == 3)
+// 		printf("result 3 |%s|\t|%s|\n", save->red, save->file);
+// 	else if (save->result == 4)
+// 		printf("result 4 |argument ==> %s||%s|\t|%s|\n", save->cmd_arg, save->red, save->file);
+// 	else if (save->result == 5)
+// 		printf("result 5 |argument ==> %s||%s|\t|%s|\n", save->cmd_arg, save->red, save->file);
+// 	save = save->next;
+// }
+}
+
+// 3/4
+// 7/8
+// 11/12
+// arguements 2/4 6/8 10/12
+
+// result 2  no argument without file
+// result 3  no argument with file
+// result 4	 with argument and without file
+// result 5  with arguement and with file
