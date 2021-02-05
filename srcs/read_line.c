@@ -3,9 +3,6 @@
 int var_glob;
 int var_glob1;
 
-/* hadi zadtha ha9ash fach kanktab shi haja o kandir ctrl + d o n annuli dakshi li ktabt b ctrl + c 
-		     makat3awdsh tkhdam ctrl + d*/
-
 int read_line(t_path *key, char **line)
 {
 	int ret;
@@ -24,25 +21,7 @@ int read_line(t_path *key, char **line)
 		else
 			exit(1);
 	}
-	// if(ret)
-	// ft_putstr_fd(*line,2);
 	return (ret);
-}
-
-void avoid_cntc()
-{
-	int a;
-
-	a = fork();
-	if (!a)
-	{
-		char *cmd[] = {"/bin/stty", 0};
-		char *cmd_args[] = {"stty", "-echoctl", 0};
-		char *env[] = {" ", "env", 0};
-		execve(cmd[0], cmd_args, env);
-		exit(0);
-	}
-	wait(0);
 }
 
 void sigint_handler(int sig)
@@ -51,42 +30,26 @@ void sigint_handler(int sig)
 
 	if (sig == SIGINT)
 	{
-		// var_glob = 100;
 		if (var_glob)
 			ft_putstr_fd("\n\e[1;32mbash$ \e[0;37m", 2);
 		var_glob = 111;
 		var_glob1 = 0;
-		avoid_cntc();
 	}
 	if (sig == SIGQUIT)
 		var_glob = 111;
 }
 
-void promp_bash(t_path *path, int ret, char **line)
-{
-	if (var_glob == 1)
-		path->key->cntrd = 0;
-	if (ret == 0 && path->key->cntrd != 1)
-	{
-		ft_putstr_fd("exit", 1);
-		exit(1);
-	}
-	if (ft_strrchr(*line, '\n'))
-	{
-		bash_promp();
-		path->key->cntrd = 0;
-	}
-	else if (ft_strrchr(*line, '\n'))
-	{
-		bash_promp();
-		path->key->cntrd = 0;
-	}
-	if (ret > 0 && !ft_strrchr(*line, '\n'))
-		path->key->cntrd = 1;
-}
 void bash_promp()
 {
 	ft_putstr_fd("\e[1;32mbash$ \e[0;37m", 2);
+}
+
+void signals()
+{
+	if (signal(SIGINT, sigint_handler) == SIG_ERR)
+		ft_putstr_fd("\n\e[1;31m can't catch cnrtl-C", 2);
+	if (signal(SIGQUIT, sigint_handler) == SIG_ERR)
+		ft_putstr_fd("\n\e[1;31m can't catch cntrl-\\", 2);
 }
 
 void loop_shell(t_path *path)
@@ -99,29 +62,28 @@ void loop_shell(t_path *path)
 	int check;
 
 	i = 0;
-	if (signal(SIGINT, sigint_handler) == SIG_ERR)
-		ft_putstr_fd("\n\e[1;31m can't catch cnrtl-C", 2);
-	if (signal(SIGQUIT, sigint_handler) == SIG_ERR)
-		ft_putstr_fd("\n\e[1;31m can't catch cntrl-\\", 2);
 	var_glob = 0;
 	path->dollar = 0;
 	lines = NULL;
-	bash_promp();
 	var_glob1 = 0;
+
+	signals();
+	bash_promp();
 	while (1)
 	{
 		i = 0;
 		if (check > 0)
 			path->dollar = check;
-
 		check = 0;
 		ret = 0;
 		ret = read_line(path, &line);
 		if (line[0] == '\0' && !var_glob1)
 		{
+			frees(&line);
 			ft_putendl_fd("exit", 1);
 			exit(EXIT_SUCCESS);
 		}
+
 		if (line[ret - 1] != '\n')
 		{
 			if (lines)
@@ -130,18 +92,18 @@ void loop_shell(t_path *path)
 				lines = ft_strdup(line);
 			var_glob1 = 1;
 		}
-		else if (lines)
+		else if (lines && var_glob1)
 		{
 			lines = ft_strjoin(lines, line);
 			line = ft_strdup(lines);
-			free(lines);
-			lines = NULL;
+			frees(&lines);
 			var_glob1 = 0;
 		}
 		if (line[0] == '\n')
 		{
 			check = -1;
 			var_glob1 = 0;
+			frees(&lines);
 		}
 		if (!var_glob1)
 		{
@@ -157,7 +119,6 @@ void loop_shell(t_path *path)
 			}
 			if (!check)
 			{
-				ft_putstr_fd(line, 1);
 				cmd = add_list_cmd(cmd);
 				cmd->line = ft_strdup(path->cmds);
 				parse_list_command(cmd, cmd->line);
@@ -172,10 +133,6 @@ void loop_shell(t_path *path)
 			bash_promp();
 			var_glob = 11;
 		}
-		if (line)
-		{
-			free(line);
-			line = NULL;
-		}
+		frees(&line);
 	}
 }

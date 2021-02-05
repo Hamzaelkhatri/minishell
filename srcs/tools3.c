@@ -25,6 +25,15 @@ char	*ft_str_in_str(const char *s1, const char *s2)
 	return (NULL);
 }
 
+void frees(char **str)
+{
+	if(*str)
+	{
+		free(*str);
+		*str = NULL;
+	}
+}
+
 int		count_line(char **env)
 {
 	int i;
