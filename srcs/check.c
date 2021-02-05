@@ -67,31 +67,31 @@ static int	ft_check_line_ex(char *line, int *i)
 {
 	if(line[*i] == '\\')
 	{
-		if(count_antislach(line, *i) == 0 && line[*i + 1] == '\0')
-			ft_putstr_fd("syntax error\n", 2);
+		// if(count_antislach(line, *i) == 0 && line[*i + 1] == '\0')
+		// 	ft_putstr_fd("syntax error\n", 2);
 		return(0);
 	}
 
 	if ((line[*i] == '|' && *i == 0) || (line[*i] == '|' &&\
 		check_operation(&line[*i]) == 0))
 		{
-		ft_putstr_fd("syntax error\n", 2);
+		// ft_putstr_fd("syntax error\n", 2);
 		return(0);
 		}
 	else if ((line[*i] == ';' && *i == 0) || (line[*i] == ';'\
 		&& check_operation(&line[*i]) == 0))
 		{
-		ft_putstr_fd("syntax error\n", 2);
+		// ft_putstr_fd("syntax error\n", 2);
 		return(0);
 		}
 	else if (line[*i] == '<' && check_operation(&line[*i]) == 0)
 	{
-		ft_putstr_fd("syntax error\n", 2);
+		// ft_putstr_fd("syntax error\n", 2);
 		return(0);
 	}
 	else if (line[*i] == '>' && check_operation(&line[*i]) == 0)
 	{
-		ft_putstr_fd("syntax error\n", 2);
+		// ft_putstr_fd("syntax error\n", 2);
 		return(0);
 	}
 	else if (line[*i] == '>' && line[*i + 1] == '>')

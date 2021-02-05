@@ -7,7 +7,6 @@ static int words(char *str, char c)
 	int j;
 	char quote;
 	static int index;
-	puts("samir");
 	i = 0;
 	j = 0;
 	// printf("index{%d}\n",++index);

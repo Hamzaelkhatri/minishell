@@ -26,8 +26,6 @@ static int words(char *str)
 
 	i = 0;
 	j = 0;
-	puts("samir");
-	exit(1);
 	while (str[i])
 	{
 		while (((str[i] == ' ' || str[i] == '\t') && count_antislach(str, i - 1)) && str[i])

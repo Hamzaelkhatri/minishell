@@ -115,7 +115,6 @@ void loop_shell(t_path *path)
 			{
 				path->cmds = ft_strtrim(path->cmds, "\n");
 				check = ft_check_line(path->cmds);
-				ft_putnbr_fd(check,2);
 			}
 			if (!check)
 			{
@@ -125,7 +124,7 @@ void loop_shell(t_path *path)
 				ft_strdel(&path->cmds);
 				sort(cmd);
 				variables(cmd, path);
-				print(cmd);
+				// print(cmd);
 				check_scommand(cmd);
 				commande_effect(cmd, path);
 				free_lcommand(&cmd);
