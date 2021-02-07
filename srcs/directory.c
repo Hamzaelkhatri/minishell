@@ -17,14 +17,15 @@ int check_link(char *cmd)
 int bash_err(char *cmd)
 {
     ft_putstr_fd("\e[1;31mbash: ", 2);
-    ft_putstr_fd("no such file or directory: ", 2);
-    ft_putendl_fd(cmd, 2);
+    ft_putstr_fd(cmd, 2);
+    ft_putendl_fd(": command not found", 2);
     return (127);
 }
 
 char *get_directory(t_path *path, char *cmd)
 {
     char *tmp;
+    char *tmps;
     char *link;
     char **paths;
     int i;
@@ -37,29 +38,43 @@ char *get_directory(t_path *path, char *cmd)
         while (paths[i])
         {
             link = ft_strjoin(paths[i], "/");
-            link = ft_strjoin(link, (cmd));
+            tmps = link;
+            link = ft_strjoin(link, cmd);
+            free(tmps);
+            tmps = link;
             if (!(path->dollar = check_paths(link)))
+            {
+                // frees(&tmps);
+                free_tab(&paths);
                 return (link);
-            if (link)
-                free(link);
+            }
+            frees(&link);
             i++;
         }
+        free_tab(&paths);
         path->dollar = bash_err(cmd);
     }
     else if (check_link((cmd)))
     {
         if (!(path->dollar = check_paths((cmd))))
+        {
+            frees(&tmp);
             return ((cmd));
+        }
         path->dollar = bash_err(cmd);
     }
     else
     {
+        tmps = link;
         link = ft_strjoin(getcwd(NULL, 100), "/");
+        frees(&tmps);
         link = ft_strjoin(link, (cmd));
-        if (!(path->dollar = !check_paths(link)))
+        if (!(path->dollar = check_paths(link)))
             return (link);
         else
             path->dollar = bash_err(cmd);
+        frees(&link);
     }
+
     return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/05 12:33:43 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/06 08:49:26 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ char 			*ft_ignoring(char *line);
 void			back_slash(t_list_cmd *l_cmd);
 void			variables(t_list_cmd *l_cmd, t_path *path);
 int				count_antislach(char *line,int i);
-char *get_var_env1(t_path *path, char *var);
+char			*get_var_env1(t_path *path, char *var);
 char			**ft_space_split(char const *s);
 int				is_correct(char c);
 void			*leak(char **spl, int j);
@@ -183,7 +183,7 @@ void			free_lcommand(t_list_cmd **l_command);
 void			ft_exit(t_list_cmd *l_cmd, int error);
 void			init_simple_cmd(t_simple_command **parent, int i);
 void			init_lcommand(t_list_cmd **parent);
-void			loop_shell(t_path *path);
+void			loop_shell(t_path *path,t_list_cmd *cmd);
 void			init(t_path *path, t_key *key, t_cmd *cmd);
 void			show_env(char **path);
 char			*search_env(char **env, char *str);

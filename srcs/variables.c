@@ -1,7 +1,6 @@
 
 #include "minishell.h"
 
-
 char *ft_extraire_variable(char *line, int i, int *index)
 {
 	int result;
@@ -77,7 +76,6 @@ char *ft_concatenation(char *line, int *i, int index, char *ptr)
 	str_beg = NULL;
 	str_end = NULL;
 	str1 = (ptr != NULL) ? ft_strdup(ptr) : ft_strdup("");
-	// printf("str1 ==> %s\n",line[0]);
 	len = ft_strlen(str1);
 	if (*i != 0)
 	{
@@ -88,7 +86,7 @@ char *ft_concatenation(char *line, int *i, int index, char *ptr)
 	{
 		str_end = ft_strdup(&line[*i + index + 1]);
 		str1 = ft_strjoin_free(str1, (str_end));
-		tmp = str_end;
+		// tmp = str_end;
 		free(str_end);
 		str_end = NULL;
 	}
@@ -97,58 +95,59 @@ char *ft_concatenation(char *line, int *i, int index, char *ptr)
 	return (str1);
 }
 
+// char *affectation_$(char **line,int *i, int *index, t_path *path)
 char *dollars(char *line, t_path *path)
 {
 	int i;
 	int index;
-	char wich;
 	char *ptr;
 	char *str;
 	int save = 0;
-	char *tmp;
-	char *test;
+	char *samir;
 
 	i = 0;
 	index = 0;
-	while (line[i])
+	samir = ft_strdup(line);
+	while (samir[i])
 	{
-		if (line[i] == 34 && count_antislach(line, i - 1))
+		if (samir[i] == 34 && count_antislach(samir, i - 1))
 			save = (save == 0) ? 1 : 0;
-		if (line[i] == 39 && count_antislach(line, i - 1) && save == 0)
+		if (samir[i] == 39 && count_antislach(samir, i - 1) && save == 0)
 		{
 			i++;
-			while (line[i] != 39 && line[i])
+			while (samir[i] != 39 && samir[i])
 				i++;
 		}
-		else if (line[i] == '$' && count_antislach(line, i - 1))
+		else if (samir[i] == '$' && count_antislach(samir, i - 1))
 		{
 
-			if ((str = ft_variables(line, i, &index)))
+			if ((str = ft_variables(samir, i, &index)))
 			{
 				if (str[0] == '$' && str[1] == '?' && str[2] == '\0')
 				{
-					test = ft_itoa(path->dollar);
-					line = ft_concatenation(line, &i, index, test);
+					ptr = ft_itoa(path->dollar);
+					samir = ft_concatenation(samir, &i, index, ptr);
 				}
 				else
 				{
 					ptr = (get_var_env1(path, str)) ? ft_strdup(get_var_env1(path, str)) : NULL;
 					if (ptr != NULL)
-						line = ft_concatenation(line, &i, index, ptr);
+					{
+						samir = ft_concatenation(samir, &i, index, ptr);
+						free(ptr);
+					}
 					else
-						line = ft_concatenation(line, &i, index, NULL);
+						samir = ft_concatenation(samir, &i, index, NULL);
 				}
 			}
-			else
-				printf("NULL\n");
 		}
-		if (line[i])
+		if (samir[i])
 			i++;
 	}
-	// free(tmp);
+	// free(line);
 	// printf("line { ===> %s}\n",line);
 
-	return ((line));
+	return ((samir));
 }
 
 void variables_extended(t_list_cmd *l_cmd, t_simple_command *tmp_s, t_path *path)
@@ -163,19 +162,29 @@ void variables_extended(t_list_cmd *l_cmd, t_simple_command *tmp_s, t_path *path
 			if (l_cmd->command->s_left->l_element->indice == 1)
 			{
 				tmp = ft_strdup(l_cmd->command->s_left->l_element->cmd);
-				l_cmd->command->s_left->l_element->cmd = dollars(tmp, path);
+				tmp = dollars(tmp, path);
+				free(l_cmd->command->s_left->l_element->cmd);
+				l_cmd->command->s_left->l_element->cmd = NULL;
+				l_cmd->command->s_left->l_element->cmd = ft_ignoring(tmp);
 				free(tmp);
-				l_cmd->command->s_left->l_element->cmd = ft_ignoring(l_cmd->command->s_left->l_element->cmd);
 			}
 			else if (l_cmd->command->s_left->l_element->indice == 2)
 			{
-				l_cmd->command->s_left->l_element->argument = dollars(l_cmd->command->s_left->l_element->argument, path);
-				l_cmd->command->s_left->l_element->argument = ft_ignoring(l_cmd->command->s_left->l_element->argument);
+				tmp = ft_strdup(l_cmd->command->s_left->l_element->argument);
+				tmp = dollars(tmp, path);
+				free(l_cmd->command->s_left->l_element->argument);
+				l_cmd->command->s_left->l_element->argument = NULL;
+				l_cmd->command->s_left->l_element->argument = ft_ignoring(tmp);
+				free(tmp);
 			}
 			else if (l_cmd->command->s_left->l_element->indice == 3)
 			{
-				l_cmd->command->s_left->l_element->redirection.file = dollars(l_cmd->command->s_left->l_element->redirection.file, path);
-				l_cmd->command->s_left->l_element->redirection.file = ft_ignoring(l_cmd->command->s_left->l_element->redirection.file);
+				tmp = ft_strdup(l_cmd->command->s_left->l_element->redirection.file);
+				tmp = dollars(tmp, path);
+				// 	free(l_cmd->command->s_left->l_element->redirection.file);
+				// l_cmd->command->s_left->l_element->redirection.file = NULL;
+				l_cmd->command->s_left->l_element->redirection.file = ft_ignoring(tmp);
+				free(tmp);
 			}
 			l_cmd->command->s_left = l_cmd->command->s_left->right;
 		}
@@ -202,5 +211,4 @@ void variables(t_list_cmd *l_cmd, t_path *path)
 		l_cmd = l_cmd->next;
 	}
 	l_cmd = tmp_l_command;
-	// printf("{%s}\n",l_cmd->command->s_left->l_element->cmd);
 }

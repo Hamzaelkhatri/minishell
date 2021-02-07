@@ -1,23 +1,28 @@
-
 #include "minishell.h"
-
 
 void double_quotes(char *line, char **str, int *i, int *index)
 {
 	(*str)[*index] = line[++(*i)];
-			while ((((line[*i] == 34 && count_antislach(line, *i - 1) == 0)) || line[*i] != 34) && line[*i])
-			{
-				if(line[*i] == '\\' && line[*i + 1] == '\\')
-				{
-					(*str)[++(*index)] = line[++(*i)];
-					(*i)++;
-				}
-				else if ((line[*i] == '\\' && line[*i + 1] == 34))
-					(*str)[*index] = line[++(*i)];
-				else
-					(*str)[++(*index)] = line[++(*i)];
-			}
+	while ((((line[*i] == 34 && count_antislach(line, *i - 1) == 0)) || line[*i] != 34) && line[*i])
+	{
+		if (line[*i] == '\\' && line[*i + 1] == '\\')
+		{
+			(*str)[++(*index)] = line[++(*i)];
+			(*i)++;
+		}
+		else if ((line[*i] == '\\' && line[*i + 1] == 34))
 			(*str)[*index] = line[++(*i)];
+		else
+			(*str)[++(*index)] = line[++(*i)];
+	}
+	(*str)[*index] = line[++(*i)];
+}
+void simple_quotes(char *line, char **str, int *i, int *index)
+{
+	(*str)[*index] = line[++(*i)];
+	while (line[*i] != 39)
+		(*str)[++(*index)] = line[++(*i)];
+	(*str)[*index] = line[++(*i)];
 }
 char *ft_ignoring(char *line)
 {
@@ -34,45 +39,15 @@ char *ft_ignoring(char *line)
 	while (line[i])
 	{
 		if (line[i] == 34 && count_antislach(line, i - 1))
-		{
-			str[index] = line[++i];
-			while ((((line[i] == 34 && count_antislach(line, i - 1) == 0)) || line[i] != 34) && line[i])
-			{
-				if(line[i] == '\\' && line[i + 1] == '\\')
-				{
-					str[++index] = line[++i];
-					i++;
-				}
-				else if ((line[i] == '\\' && line[i + 1] == 34))
-					str[index] = line[++i];
-				else
-					str[++(index)] = line[++i];
-			}
-			str[index] = line[++i];
-			// printf("str ==> {%s}\n",str);
-			// double_quotes(line, &str, &i, &index);	
-		}
-		else if(line[i] == 39 && count_antislach(line, i - 1))
-		{
-			// printf("2\n");
-			str[index] = line[++i];
-			while(line[i] != 39)
-				str[++index] = line[++i];
-			str[index] = line[++i];
-		}
+			double_quotes(line, &str, &i, &index);
+		else if (line[i] == 39 && count_antislach(line, i - 1))
+			simple_quotes(line, &str, &i, &index);
 		else if (line[i] == '\\')
-		{
-			// printf("2\n");
 			str[index] = line[++i];
-		}
 		else
-		str[index++] = line[i++];
-		if(!line[i])
-		str[index] = '\0'; 
-		// str[++index] = line[++i];
+			str[index++] = line[i++];
+		if (!line[i])
+			str[index] = '\0';
 	}
-	// free(line);
-	// line = NULL;
 	return (str);
 }
-// "$PWD""$PW"D

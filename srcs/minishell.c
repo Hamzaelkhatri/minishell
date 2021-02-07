@@ -6,10 +6,13 @@ int main(int argc, char **argv, char **env)
     t_list_cmd *l_command;
     t_path path;
     t_key key;
-    t_cmd cmd;
+    t_cmd cmds;
+    t_list_cmd *cmd;
+    cmd = NULL;
     l_command = NULL;
-    init(&path, &key, &cmd);
+    init(&path, &key, &cmds);
     path.env->fullenv = env;
-    loop_shell(&path);
+    // get_directory(&path, "ls");
+    loop_shell(&path,cmd);
     return (0);
 }

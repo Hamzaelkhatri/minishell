@@ -2,7 +2,7 @@
 
 int cmdcheck(char *str)
 {
-    char *cmd[9];
+    char *cmd[10];
     int i;
     // puts(str);
     i = 0;
@@ -13,7 +13,8 @@ int cmdcheck(char *str)
     cmd[4] = "unset";
     cmd[5] = "pwd";
     cmd[6] = "cd";
-    cmd[7] = NULL;
+    cmd[7] = "echo -n";
+    cmd[8] = NULL;
 
     while (cmd[i])
     {
