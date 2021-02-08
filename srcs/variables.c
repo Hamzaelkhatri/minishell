@@ -54,7 +54,9 @@ char *ft_strdup_beg(const char *s1, int j)
 	char *ptr;
 
 	i = 0;
-	if (!(ptr = malloc(sizeof(char) * (j))))
+	if(s1 == NULL)
+		return(NULL);
+	if (!(ptr = malloc(sizeof(char) * (j) + 1)))
 		return (NULL);
 	while (i < j)
 	{
@@ -72,23 +74,29 @@ char *ft_concatenation(char *line, int *i, int index, char *ptr)
 	char *str_end;
 	int len;
 	char *tmp;
+	char *tmp1;
 
 	str_beg = NULL;
 	str_end = NULL;
 	str1 = (ptr != NULL) ? ft_strdup(ptr) : ft_strdup("");
+	tmp  = str1;
 	len = ft_strlen(str1);
-	if (*i != 0)
+	if (*i > 0)
 	{
-		str_beg = ft_strdup_beg((line), *i);
-		str1 = ft_strjoin_free(str_beg, str1);
+		str_beg = ft_strdup_beg(line, *i);
+		tmp1 = str_beg;
+		str1 = ft_strjoin(str_beg, str1);
+		frees(&tmp1);
+		frees(&tmp);
+		tmp = str1;
 	}
 	if (line[*i + 1 + index])
 	{
 		str_end = ft_strdup(&line[*i + index + 1]);
-		str1 = ft_strjoin_free(str1, (str_end));
-		// tmp = str_end;
-		free(str_end);
-		str_end = NULL;
+		tmp1 = str_end;
+		str1 = ft_strjoin(str1, (str_end));
+		frees(&tmp1);
+		frees(&tmp);
 	}
 	*i = len + *i - 1;
 	// free(tmp);
@@ -104,6 +112,7 @@ char *dollars(char *line, t_path *path)
 	char *str;
 	int save = 0;
 	char *samir;
+	char *ptr_s;
 
 	i = 0;
 	index = 0;
@@ -126,20 +135,27 @@ char *dollars(char *line, t_path *path)
 				if (str[0] == '$' && str[1] == '?' && str[2] == '\0')
 				{
 					ptr = ft_itoa(path->dollar);
+					ptr_s = samir;
 					samir = ft_concatenation(samir, &i, index, ptr);
+					frees(&ptr_s);
+					frees(&ptr);
 				}
 				else
 				{
 					ptr = (get_var_env1(path, str)) ? ft_strdup(get_var_env1(path, str)) : NULL;
 					if (ptr != NULL)
 					{
+						ptr_s = samir;
 						samir = ft_concatenation(samir, &i, index, ptr);
-						free(ptr);
+						frees(&ptr_s);
+						frees(&ptr);
 					}
 					else
 						samir = ft_concatenation(samir, &i, index, NULL);
 				}
 			}
+			if(str)
+				free(str);
 		}
 		if (samir[i])
 			i++;
@@ -153,7 +169,7 @@ char *dollars(char *line, t_path *path)
 void variables_extended(t_list_cmd *l_cmd, t_simple_command *tmp_s, t_path *path)
 {
 	char *tmp;
-
+	char *str;
 	while (l_cmd->command != NULL)
 	{
 		tmp_s = l_cmd->command->s_left;
@@ -162,7 +178,9 @@ void variables_extended(t_list_cmd *l_cmd, t_simple_command *tmp_s, t_path *path
 			if (l_cmd->command->s_left->l_element->indice == 1)
 			{
 				tmp = ft_strdup(l_cmd->command->s_left->l_element->cmd);
+				str = tmp;
 				tmp = dollars(tmp, path);
+				frees(&str);
 				free(l_cmd->command->s_left->l_element->cmd);
 				l_cmd->command->s_left->l_element->cmd = NULL;
 				l_cmd->command->s_left->l_element->cmd = ft_ignoring(tmp);
@@ -171,7 +189,9 @@ void variables_extended(t_list_cmd *l_cmd, t_simple_command *tmp_s, t_path *path
 			else if (l_cmd->command->s_left->l_element->indice == 2)
 			{
 				tmp = ft_strdup(l_cmd->command->s_left->l_element->argument);
+				str = tmp;
 				tmp = dollars(tmp, path);
+				free(str);
 				free(l_cmd->command->s_left->l_element->argument);
 				l_cmd->command->s_left->l_element->argument = NULL;
 				l_cmd->command->s_left->l_element->argument = ft_ignoring(tmp);
@@ -180,11 +200,13 @@ void variables_extended(t_list_cmd *l_cmd, t_simple_command *tmp_s, t_path *path
 			else if (l_cmd->command->s_left->l_element->indice == 3)
 			{
 				tmp = ft_strdup(l_cmd->command->s_left->l_element->redirection.file);
+				str = tmp;
 				tmp = dollars(tmp, path);
-				// 	free(l_cmd->command->s_left->l_element->redirection.file);
-				// l_cmd->command->s_left->l_element->redirection.file = NULL;
+				frees(&str);
+				free(l_cmd->command->s_left->l_element->redirection.file);
+				l_cmd->command->s_left->l_element->redirection.file = NULL;
 				l_cmd->command->s_left->l_element->redirection.file = ft_ignoring(tmp);
-				free(tmp);
+				frees(&tmp);
 			}
 			l_cmd->command->s_left = l_cmd->command->s_left->right;
 		}
@@ -206,9 +228,11 @@ void variables(t_list_cmd *l_cmd, t_path *path)
 	{
 		tmp_command = l_cmd->command;
 		tmp_s = l_cmd->command->s_left;
-		variables_extended(l_cmd, tmp_s, path);
+		// variables_extended(l_cmd, tmp_s, path);
 		l_cmd->command = tmp_command;
 		l_cmd = l_cmd->next;
 	}
 	l_cmd = tmp_l_command;
 }
+
+// "$PWD"$TERM

@@ -7,6 +7,8 @@ int count_antislach(char *line,int i)
 	int result;
 
 	j = 0;
+	if(i < 0)
+		return(1);
 	while(line[i]== '\\' && i >= 0)
 	{
 		i--;

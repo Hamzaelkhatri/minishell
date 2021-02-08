@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/06 08:49:26 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/08 12:38:02 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ void			free_scommand(t_simple_command **scommand);
 void			free_command(t_command **command);
 void			free_lcommand(t_list_cmd **l_command);
 void			ft_exit(t_list_cmd *l_cmd, int error);
+void			free_redirection(t_save **save);
 void			init_simple_cmd(t_simple_command **parent, int i);
 void			init_lcommand(t_list_cmd **parent);
 void			loop_shell(t_path *path,t_list_cmd *cmd);

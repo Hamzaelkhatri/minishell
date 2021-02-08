@@ -119,19 +119,15 @@ void store(t_list_cmd *l_cmd, t_save **save, char **tab_split)
 			(*save)->file = ft_strdup(l_cmd->command->tool.tab[l_cmd->command->tool.i + 1]);
 		else if (result == 3)
 			(*save)->file = ft_strdup(tab_split[i++]);
-			// i++;
 		else if (result == 4)
 		{
 			(*save)->cmd_arg = ft_strdup(tab_split[i++]);
 			(*save)->file = ft_strdup(l_cmd->command->tool.tab[l_cmd->command->tool.i + 1]);
-			// i++;
 		}
 		else if (result == 5)
 		{
 			(*save)->cmd_arg = ft_strdup(tab_split[i++]);
-			// i++;
 			(*save)->file = ft_strdup(tab_split[i++]);
-			// i++;
 		}
 		*save = (*save)->next;
 	}
@@ -193,16 +189,24 @@ void affect_redirection(t_list_cmd *l_cmd, char *line)
 	t_save *save = NULL;
 	int index = 0;
 	int end;
+	char *tmp_f;
 
 	i = 0;
 	quotes = 0;
 	tab_split = NULL;
-	
+	// line = ft_strdup(line);
 	if(check_end(line))
 	{
+		// tmp_f = line;
 		line = ft_strjoin_free(line, l_cmd->command->tool.tab[++l_cmd->command->tool.i]);
+		// frees(&tmp_f);
+			// printf("samir\n");
 		while(l_cmd->command->tool.tab[l_cmd->command->tool.i + 1] && check_end(l_cmd->command->tool.tab[l_cmd->command->tool.i + 1]))
+		{
+			tmp_f = line;
 			line = ft_strjoin_free(line, l_cmd->command->tool.tab[++l_cmd->command->tool.i]);
+			frees(&tmp_f);
+		}
 	}
 	while (line[i])
 	{
@@ -250,24 +254,12 @@ void affect_redirection(t_list_cmd *l_cmd, char *line)
 		i++;
 	}
 	tab_split = ft_space_split_quote(line);
-	i = 0;
-	// while(tab_split[i])
-	// 	printf("{%s}\n",tab_split[i++]);
-
 	store(l_cmd, &save, tab_split);
 	save_redirection(l_cmd, save);
-// while (save)
-// {
-// 	if (save->result == 2)
-// 		printf("result 2 |%s|\t|%s|\n", save->red, save->file);
-// 	else if (save->result == 3)
-// 		printf("result 3 |%s|\t|%s|\n", save->red, save->file);
-// 	else if (save->result == 4)
-// 		printf("result 4 |argument ==> %s||%s|\t|%s|\n", save->cmd_arg, save->red, save->file);
-// 	else if (save->result == 5)
-// 		printf("result 5 |argument ==> %s||%s|\t|%s|\n", save->cmd_arg, save->red, save->file);
-// 	save = save->next;
-// }
+	// for free
+	// frees(&line);
+	free_redirection(&save);
+	// free_tab(&tab_split);
 }
 
 // 3/4

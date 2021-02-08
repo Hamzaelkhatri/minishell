@@ -53,9 +53,27 @@ void	free_element(t_elements **element)
 	}
 }
 
+
 void	free_s_command(t_simple_command **s_command)
 {
 	free_element(&(*s_command)->l_element);
 	free(*s_command);
 	*s_command = NULL;
+}
+
+void	free_redirection(t_save **save)
+{
+	if(*save != NULL)
+		free_redirection(&(*save)->next);
+	if(*save != NULL)
+	{
+		if((*save)->cmd_arg != NULL)
+			frees(&(*save)->cmd_arg);
+		if((*save)->file != NULL)
+			frees(&(*save)->file);
+		if((*save)->red != NULL)
+			frees(&(*save)->red);
+		free(*save);
+		*save = NULL;
+	}
 }
