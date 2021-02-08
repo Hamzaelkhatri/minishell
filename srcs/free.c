@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_strdel(char **as)
+void ft_strdel(char **as)
 {
 	if (as != NULL)
 	{
@@ -9,7 +9,7 @@ void	ft_strdel(char **as)
 	}
 }
 
-void	free_tab(char ***tab)
+void free_tab(char ***tab)
 {
 	int index;
 
@@ -27,7 +27,7 @@ void	free_tab(char ***tab)
 	}
 }
 
-void	free_element(t_elements **element)
+void free_element(t_elements **element)
 {
 	if ((*element)->cmd != NULL)
 	{
@@ -53,26 +53,24 @@ void	free_element(t_elements **element)
 	}
 }
 
-
-void	free_s_command(t_simple_command **s_command)
+void free_s_command(t_simple_command **s_command)
 {
 	free_element(&(*s_command)->l_element);
 	free(*s_command);
 	*s_command = NULL;
 }
 
-void	free_redirection(t_save **save)
+void free_redirection(t_save **save)
 {
-	if(*save != NULL)
+	if ((*save)->next != NULL)
 		free_redirection(&(*save)->next);
-	if(*save != NULL)
+	if (*save != NULL)
 	{
+		// printf("zainab\n");
 		if((*save)->cmd_arg != NULL)
 			frees(&(*save)->cmd_arg);
 		if((*save)->file != NULL)
 			frees(&(*save)->file);
-		if((*save)->red != NULL)
-			frees(&(*save)->red);
 		free(*save);
 		*save = NULL;
 	}
