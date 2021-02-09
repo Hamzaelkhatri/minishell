@@ -91,6 +91,7 @@ void manage_line(t_path *path, int *check, t_list_cmd *cmd, char *line)
 		sort(cmd);
 		variables(cmd, path);
 		check_scommand(cmd);
+		// print(cmd);
 		commande_effect(cmd, path);
 		free_lcommand(&cmd);
 	}
