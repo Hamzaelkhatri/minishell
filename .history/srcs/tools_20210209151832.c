@@ -90,12 +90,9 @@ char	*ft_strjoin_command(t_simple_command *cmd)
 			tmp = line;
 			if (cmd->right != NULL)
 			{
-				
+				frees(line);
 				line = ft_strjoin_free(line, " ");
-				frees(&tmp);
-				tmp = line;
 			}
-			// frees(&tmp);
 		}
 		else
 			ft_strjoin_cmd_ext(cmd, &line);

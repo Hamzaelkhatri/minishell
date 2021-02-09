@@ -92,7 +92,7 @@ char	*ft_strjoin_free(char *s1, char const *s2)
 	j = 0;
 	k = 0;
 	if (!s1)
-		return (ft_strdup(s2));
+		return ((s2));
 	if (s1 && s2)
 	{
 		if (!(p = (char *)malloc(sizeof(char) * (ft_strlen(s1)

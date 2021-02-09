@@ -68,9 +68,9 @@ void	ft_strjoin_cmd_ext(t_simple_command *cmd, char **line)
 {
 	if (cmd->l_element->indice == 2)
 	{
-		*line = ft_strjoin_free(*line, cmd->l_element->argument);
+		*line = ft_strjoin(*line, cmd->l_element->argument);
 		if (cmd->right != NULL)
-			*line = ft_strjoin_free(*line, " ");
+			*line = ft_strjoin(*line, " ");
 	}
 }
 
@@ -86,16 +86,10 @@ char	*ft_strjoin_command(t_simple_command *cmd)
 	{
 		if (cmd->l_element->indice == 1)
 		{
-			line = ft_strjoin_free(line, cmd->l_element->cmd);
+			line = ft_strjoin(line, cmd->l_element->cmd);
 			tmp = line;
 			if (cmd->right != NULL)
-			{
-				
-				line = ft_strjoin_free(line, " ");
-				frees(&tmp);
-				tmp = line;
-			}
-			// frees(&tmp);
+				line = ft_strjoin(line, " ");
 		}
 		else
 			ft_strjoin_cmd_ext(cmd, &line);

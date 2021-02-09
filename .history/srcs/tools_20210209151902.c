@@ -95,7 +95,7 @@ char	*ft_strjoin_command(t_simple_command *cmd)
 				frees(&tmp);
 				tmp = line;
 			}
-			// frees(&tmp);
+			frees(&tmp);
 		}
 		else
 			ft_strjoin_cmd_ext(cmd, &line);

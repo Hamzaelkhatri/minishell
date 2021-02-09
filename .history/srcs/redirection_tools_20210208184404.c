@@ -136,7 +136,6 @@ void store(t_list_cmd *l_cmd, t_save **save, char **tab_split)
 		*save = (*save)->next;
 	}
 	*save = tmp;
-	// free_tab(&tab_split);
 	// printf("|cmd-arg ==> %s|\t", (*save)->cmd_arg);
 	// printf("|file ==> %s|\t", (*save)->file);
 	// printf("|RED ==> %s|\n", (*save)->red);
@@ -186,24 +185,6 @@ static int check_if_redirection(char *line)
 	}
 	return (0);
 }
-void free_tab1(char ***tab)
-{
-	int index;
-
-	index = 0;
-	if (*tab != NULL && *tab[index] != NULL)
-	{
-		while ((*tab)[index])
-		{
-			printf("tab ==> %s\n",(*tab)[index]);
-			free((*tab)[index]);
-			(*tab)[index] = NULL;
-			index++;
-		}
-		free(*tab);
-		*tab = NULL;
-	}
-}
 
 void affect_redirection(t_list_cmd *l_cmd, char *line)
 {
@@ -224,13 +205,13 @@ void affect_redirection(t_list_cmd *l_cmd, char *line)
 	if (check_end(line))
 	{
 		// tmp_f = line;
-		line = ft_strjoin(line, l_cmd->command->tool.tab[++l_cmd->command->tool.i]);
+		line = ft_strjoin_free(line, l_cmd->command->tool.tab[++l_cmd->command->tool.i]);
 		// frees(&tmp_f);
 		// printf("samir\n");
 		while (l_cmd->command->tool.tab[l_cmd->command->tool.i + 1] && check_end(l_cmd->command->tool.tab[l_cmd->command->tool.i + 1]))
 		{
 			// tmp_f = line;
-			line = ft_strjoin(line, l_cmd->command->tool.tab[++l_cmd->command->tool.i]);
+			line = ft_strjoin_free(line, l_cmd->command->tool.tab[++l_cmd->command->tool.i]);
 			// frees(&tmp_f);
 		}
 	}
@@ -280,11 +261,7 @@ void affect_redirection(t_list_cmd *l_cmd, char *line)
 		}
 		i++;
 	}
-	printf("line ==> %s\n",line);
 	tab_split = ft_space_split_quote(line);
-	int k = 0;
-	while(tab_split[k])
-		printf("salam %s\n",tab_split[k++]);
 	store(l_cmd, &save, tab_split);
 	save_redirection(l_cmd, save);
 	// while (save)
@@ -315,8 +292,7 @@ void affect_redirection(t_list_cmd *l_cmd, char *line)
 	// save = NULL;
 	frees(&line);
 	free_redirection(&save);
-	free_tab1(&tab_split);
-	// printf("3raft shnu ta sir t9awad\n");
+	free_tab(&tab_split);
 }
 
 // 3/4

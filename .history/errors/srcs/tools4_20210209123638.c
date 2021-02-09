@@ -103,6 +103,7 @@ char	*ft_strjoin_free(char *s1, char const *s2)
 		while (s2[k])
 			p[i++] = s2[k++];
 		p[i] = '\0';
+		free(s1);
 		return (p);
 	}
 	return (NULL);
