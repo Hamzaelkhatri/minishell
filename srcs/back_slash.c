@@ -43,9 +43,15 @@ char *ft_ignoring(char *line)
 		else if (line[i] == 39 && count_antislach(line, i - 1))
 			simple_quotes(line, &str, &i, &index);
 		else if (line[i] == '\\')
-			str[index] = line[++i];
+		{
+			str[index++] = line[++i];
+			i++;
+		}
+
 		else
+		{
 			str[index++] = line[i++];
+		}
 		if (!line[i])
 			str[index] = '\0';
 	}

@@ -58,7 +58,7 @@ char *get_directory(t_path *path, char *cmd)
     else if (check_link((cmd)))
     {
         if (!(path->dollar = check_paths((cmd))))
-            return ((cmd));
+            return (ft_strdup(cmd));
         path->dollar = bash_err(cmd);
     }
     else

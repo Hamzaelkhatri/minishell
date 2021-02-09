@@ -174,6 +174,8 @@ char *get_shift(t_command *lcmd)
 int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
 {
     char *cmds;
+    char *tmp1;
+    char *tmp2;
     t_command *tmp;
     char *tcmp;
 
@@ -181,7 +183,11 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
     if (get_shift(l_cmd))
     {
         tmp = l_cmd;
-        shift_extra(get_file(tmp), get_shift(tmp), path, tmp);
+        tmp1=get_file(tmp);
+        tmp2=get_shift(tmp);
+        shift_extra(tmp1,tmp2, path, tmp);
+        // frees(&tmp1);
+        // frees(&tmp2);
     }
     else if (l_cmd->s_left->l_element->redirection.i_o)
         while (l_cmd->s_left)
