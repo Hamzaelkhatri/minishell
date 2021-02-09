@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 10:32:55 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/02/04 15:47:03 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/09 18:06:57 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void pipes_cmd(t_path *path, t_list_cmd *lst)
 
 	i = 0;
 	int s = lstsize(lst);
-	while (lst->command != NULL)
+	t_command *tmp = lst->command;
+	while (tmp != NULL)
 	{
-		// if(f != 1)
 		pipe(fd);
 		if ((pid[i] = fork()) == -1)
 		{
@@ -63,9 +63,8 @@ void pipes_cmd(t_path *path, t_list_cmd *lst)
 				close(_fd[1]);
 				dup2(_fd[0], 0);
 			}
-			lst->command->s_left->l_element->cmd = ft_strtrim(lst->command->s_left->l_element->cmd, "\n");
-			get_cmd_(lst->command->s_left->l_element->cmd, path, lst->command);
-			exit(path->dollar);//
+			get_cmd_(tmp->s_left->l_element->cmd, path, tmp);
+			exit(pid[i]);
 		}
 		else
 		{
@@ -75,10 +74,11 @@ void pipes_cmd(t_path *path, t_list_cmd *lst)
 			close(fd[1]);
 			_fd[0] = fd[0];
 			_fd[1] = fd[1];
-			lst->command = lst->command->right;
+			tmp = tmp->right;
 			i++;
 		}
 	}
+	
 	while (0 < i)
 	{
 		wait(&status);

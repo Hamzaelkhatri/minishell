@@ -47,7 +47,6 @@ char *ft_ignoring(char *line)
 			str[index++] = line[++i];
 			i++;
 		}
-
 		else
 		{
 			str[index++] = line[i++];
