@@ -29,6 +29,19 @@ int _status_cmd(int status, t_path *path)
     return (path->dollar);
 }
 
+void errrno_handler(t_path *path, char *cmd)
+{
+    int a = fork();
+    if (!a)
+    {
+        char *const args[] = {"/bin/bash", "-c", cmd, NULL};
+        if (execve("/bin/bash", args, path->env->fullenv) == -1)
+            perror("bash$ ");
+        exit(0);
+    }
+    wait(0);
+}
+
 int exeute(t_path *path, t_command *cmd)
 {
     char *binaryPath;
@@ -48,7 +61,9 @@ int exeute(t_path *path, t_command *cmd)
         if (!a)
         {
             if (execve(binaryPath, tmp, path->env->fullenv) != 0)
-                ft_putendl_fd(strerror(errno), 1);
+            {
+                errrno_handler(path, cmds);
+            }
             exit(EXIT_SUCCESS);
         }
         wait(&status);
