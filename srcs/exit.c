@@ -14,7 +14,6 @@ int check_int(char *str)
 
 	i = 0;
 	str = ft_strtrim(str, "\n");
-	str = ignoring_quote(str);
 	while (str[i] && (str[i] < 33 || str[i] == '-' || str[i] == '+'))
 		i++;
 	if (ft_atoi_long(str) <= LLONG_MIN && str[i - 1] != '-')

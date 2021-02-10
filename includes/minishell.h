@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/08 17:06:17 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/10 19:02:48 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 # include "get_next_line.h"
 # define DEBUG_BOOL 0
 # define FLAG S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR
+
+int				g_var;
+int				g_var1;
 
 typedef struct	s_key
 {
@@ -189,7 +192,6 @@ void			init(t_path *path, t_key *key, t_cmd *cmd);
 void			show_env(char **path);
 char			*search_env(char **env, char *str);
 void			print_working_directory(t_path *path);
-int				exeute(t_path *path, t_command *cmd);
 char			**ft_split_quotes(char const *s, char c);
 char			**ft_space_split(char const *s);
 char			*ft_str_in_str(const char *s1, const char *s2);
@@ -239,6 +241,18 @@ int				is_int(char *str);
 int				count_digit(char *str);
 int				size_args(t_command *l_cmd);
 char			*get_shift(t_command *lcmd);
-int				_status_cmd(int status,t_path *path);
+int				status_cmd_(int status,t_path *path);
 void			frees(char **str);
+void			bash_promp(void);
+void			sort_execute(t_list_cmd *cmd, t_path *path);
+int				manage_spaces(char *line);
+int				set_new_cmd(char **lines, char *line, t_list_cmd *cmd, t_path *path);
+void			signals(void);
+void			manage_cntrc(char *line);
+int				read_line(char **line);
+void			exit_(char **line);
+void			looping_exec(t_path *path, t_list_cmd *cmd, int *check);
+void			init_(char **lines, int *check);
+void			sigint_handler(int sig);
+int				execute(t_path *path, t_command *cmd);
 #endif

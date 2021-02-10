@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 10:32:55 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/02/09 18:06:57 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/10 18:59:12 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void pipes_cmd(t_path *path, t_list_cmd *lst)
 		}
 		else
 		{
-			_status_cmd(pid[i], path);
+			status_cmd_(pid[i], path);
 			if (i > 0)
 				close(_fd[0]);
 			close(fd[1]);
@@ -84,6 +84,6 @@ void pipes_cmd(t_path *path, t_list_cmd *lst)
 		wait(&status);
 		i--;
 		if (status && !path->dollar)
-			path->dollar= _status_cmd(status,path);
+			path->dollar= status_cmd_(status,path);
 	}
 }

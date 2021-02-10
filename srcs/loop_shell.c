@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 18:16:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/09 19:25:46 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/10 18:52:30 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	loop_shell(t_path *path, t_list_cmd *cmd)
 {
 	char	*line;
-	int		ret;
-	char	*lines;
 	int		check;
 
 	init_(&line, &check);
@@ -42,8 +40,6 @@ void	signals(void)
 
 void	sigint_handler(int sig)
 {
-	int a;
-
 	if (sig == SIGINT)
 	{
 		if (g_var)

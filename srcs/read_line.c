@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 18:16:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/09 19:28:17 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/10 18:53:27 by ahaddad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	looping_exec(t_path *path, t_list_cmd *cmd, int *check)
 	if (*check > 0)
 		path->dollar = *check;
 	*check = 0;
-	ret = read_line(path, &line);
+	ret = read_line(&line);
 	if (line[0] == '\0' && !g_var1)
 		exit_(&line);
 	if (line[ret - 1] != '\n')

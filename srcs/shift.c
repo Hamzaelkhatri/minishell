@@ -80,10 +80,10 @@ void shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
         if (cmdcheck(cmd->s_left->l_element->cmd))
             commandes(cmd->s_left->l_element->cmd, path, cmd);
         else if (cmd->s_left->l_element->cmd)
-            getprogramme(path, cmd);
+            execute(path, cmd);
         exit(EXIT_SUCCESS);
     }
     waitpid(0,&status,0);
     if (status && !path->dollar)
-        _status_cmd(status, path);
+        status_cmd_(status, path);
 }

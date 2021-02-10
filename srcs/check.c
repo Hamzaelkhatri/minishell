@@ -149,7 +149,6 @@ int			check_type_element(char *line, int *check_i_o, int count)
 			quotes = (quotes == 0) ? 1 : 0;
 		if ((line[i] == '>' || line[i] == '<') && quotes == 0 &&  line[i - 1] != '\\')
 		{
-			// ft_putendl_fd("sahbi amine",1);
 			return(2);
 		}
 		i++;

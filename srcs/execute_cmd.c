@@ -199,7 +199,7 @@ int get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
     else if (cmdcheck(tcmp))
         commandes(tcmp, path, l_cmd);
     else
-        getprogramme(path, l_cmd);
+        execute(path, l_cmd);
     frees(&tcmp);
     return (path->dollar);
 }
