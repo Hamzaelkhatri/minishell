@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 11:34:06 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/11 11:35:05 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/11 18:00:32 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,10 @@ void	show_env(char **env)
 			ft_putendl_fd(env[i], 1);
 		i++;
 	}
+}
+
+void	execute_env(t_path *path)
+{
+	show_env(path->env->fullenv);
+	path->dollar = 0;
 }

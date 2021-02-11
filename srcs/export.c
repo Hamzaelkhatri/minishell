@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/11 18:21:39 by helkhatr          #+#    #+#             */
+/*   Updated: 2021/02/11 18:39:38 by helkhatr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char *get_befor_equal(char *str)
+char	*get_befor_equal(char *str)
 {
-	char *ptr;
-	int i;
+	char	*ptr;
+	int		i;
 
 	i = 0;
 	if (!(ptr = malloc(sizeof(char) * (cout_to_char(str, '=') + 1))))
@@ -17,10 +29,10 @@ char *get_befor_equal(char *str)
 	return (ptr);
 }
 
-char *get_after_equal(char *str)
+char	*get_after_equal(char *str)
 {
-	int i;
-	char *tmp;
+	int		i;
+	char	*tmp;
 
 	tmp = get_befor_equal(str);
 	if (!check_equal(str))
@@ -33,13 +45,13 @@ char *get_after_equal(char *str)
 	return (&str[i + 1]);
 }
 
-void show_export(char **env)
+void	show_export(char **env)
 {
-	int i;
-	char *tmp;
+	int		i;
+	char	*tmp;
 
 	if (!env)
-		return;
+		return ;
 	i = 0;
 	while (env[i])
 	{
@@ -61,10 +73,11 @@ void show_export(char **env)
 	}
 }
 
-int check_space(char *str)
+int		check_space(char *str)
 {
-	int i = 0;
+	int i;
 
+	i = 0;
 	while (str[i] != '=' && str[i])
 	{
 		if (str[i] == ' ')
@@ -78,10 +91,10 @@ int check_space(char *str)
 	return (0);
 }
 
-static char *get_to_space(char *str)
+char	*get_to_space(char *str)
 {
-	char *ptr;
-	int i;
+	char	*ptr;
+	int		i;
 
 	i = 0;
 	if (!(ptr = malloc(sizeof(char) * ft_strlen(str))))
@@ -91,75 +104,8 @@ static char *get_to_space(char *str)
 	{
 		ptr[i] = str[i];
 		if (str[i] == ' ')
-			break;
+			break ;
 		i++;
 	}
 	return (ptr);
-}
-
-int check_equal(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int get_extern_value(char *str)
-{
-	int i;
-
-	i = 0;
-	if (str[0] == '=' || !str[0] || ft_isdigit(str[0]))
-		return (0);
-	while (str[i])
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int export_cmd(char *name, t_path *path)
-{
-	int line = 0;
-	char *tmp;
-	char *tmp1;
-
-	name = ft_strtrim(name, "\n");
-	tmp = get_befor_equal(name);
-	if (!get_extern_value(tmp))
-	{
-		ft_putstr_fd("\e[1;31mexport :\e[1;31m", 2);
-		ft_putstr_fd(tmp, 2);
-		ft_putstr_fd(" bad assignment\n", 2);
-		path->dollar = 127;
-	}
-	else
-	{
-		if (!check_equal(name))
-		{
-			tmp1 = name;
-			name = ft_strjoin(name, "");
-			frees(&tmp1);
-		}
-		if (!search_env(path->env->fullenv, tmp))
-		{
-			line = count_line(path->env->fullenv);
-			path->env->fullenv[line] = name;
-			path->env->fullenv[line + 1] = NULL;
-		}
-		else if (check_equal(name))
-			edit_env(path->env->fullenv, tmp, get_after_equal(name));
-		path->dollar = 0;
-	}
-	frees(&tmp);
-	return (1);
 }

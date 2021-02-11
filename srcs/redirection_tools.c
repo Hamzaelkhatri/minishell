@@ -280,11 +280,11 @@ void affect_redirection(t_list_cmd *l_cmd, char *line)
 		}
 		i++;
 	}
-	printf("line ==> %s\n",line);
+	// printf("line ==> %s\n",line);
 	tab_split = ft_space_split_quote(line);
 	int k = 0;
-	while(tab_split[k])
-		printf("salam %s\n",tab_split[k++]);
+	// while(tab_split[k])
+		// printf("salam %s\n",tab_split[k++]);
 	store(l_cmd, &save, tab_split);
 	save_redirection(l_cmd, save);
 	// while (save)

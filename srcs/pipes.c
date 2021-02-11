@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/17 10:32:55 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/02/10 18:59:12 by ahaddad          ###   ########.fr       */
+/*   Created: 2021/02/11 19:10:18 by helkhatr          #+#    #+#             */
+/*   Updated: 2021/02/11 19:30:13 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int lstsize(t_list_cmd *lst)
+int		lstsize(t_list_cmd *lst)
 {
-	t_command *tmp;
+	t_command	*tmp;
+	int			i;
+
 	tmp = lst->command;
-	int i = 0;
+	i = 0;
 	while (tmp)
 	{
 		tmp = tmp->right;
@@ -25,65 +27,85 @@ int lstsize(t_list_cmd *lst)
 	return (i);
 }
 
-void pipes_cmd(t_path *path, t_list_cmd *lst)
+void	pipe_cmd_(int i, int fd[2], int fd_[2], t_list_cmd *lst)
 {
-	int fd[2];
-	int _fd[2];
-	int i;
-	pid_t pid[4000];
-	int status;
+	int	s;
 
-	i = 0;
-	int s = lstsize(lst);
-	t_command *tmp = lst->command;
-	while (tmp != NULL)
+	s = lstsize(lst);
+	if (i == 0)
 	{
-		pipe(fd);
-		if ((pid[i] = fork()) == -1)
-		{
-			ft_putendl_fd(strerror(errno), 1);
-			exit(0);
-		}
-		else if (pid[i] == 0)
-		{
-			if (i == 0)
-			{
-				close(fd[0]);
-				dup2(fd[1], 1);
-			}
-			else if (i == s - 1)
-			{
-				close(_fd[1]);
-				dup2(_fd[0], 0);
-			}
-			else
-			{
-				close(fd[0]);
-				dup2(fd[1], 1);
-				close(_fd[1]);
-				dup2(_fd[0], 0);
-			}
-			get_cmd_(tmp->s_left->l_element->cmd, path, tmp);
-			exit(pid[i]);
-		}
-		else
-		{
-			status_cmd_(pid[i], path);
-			if (i > 0)
-				close(_fd[0]);
-			close(fd[1]);
-			_fd[0] = fd[0];
-			_fd[1] = fd[1];
-			tmp = tmp->right;
-			i++;
-		}
+		close(fd[0]);
+		dup2(fd[1], 1);
 	}
-	
+	else if (i == s - 1)
+	{
+		close(fd_[1]);
+		dup2(fd_[0], 0);
+	}
+	else
+	{
+		close(fd[0]);
+		dup2(fd[1], 1);
+		close(fd_[1]);
+		dup2(fd_[0], 0);
+	}
+}
+
+void	pipe_extra(int pid, t_path *path, int fd_[2], int fd[2])
+{
+	status_cmd_(pid, path);
+	close(fd_[0]);
+	close(fd[1]);
+	fd_[0] = fd[0];
+	fd_[1] = fd[1];
+}
+
+void	waiting_childs(t_path *path, int i)
+{
+	int		status;
+
 	while (0 < i)
 	{
 		wait(&status);
 		i--;
 		if (status && !path->dollar)
-			path->dollar= status_cmd_(status,path);
+			path->dollar = status_cmd_(status, path);
 	}
+}
+
+void	err_affec()
+{
+	ft_putendl_fd(strerror(errno), 1);
+	exit(0);
+}
+
+void	pipes_cmd(t_path *path, t_list_cmd *lst)
+{
+	int			fd[2];
+	int			fd_[2];
+	int			i;
+	pid_t		pid;
+	t_command	*tmp;
+
+	i = 0;
+	tmp = lst->command;
+	while (tmp != NULL)
+	{
+		pipe(fd);
+		if ((pid = fork()) == -1)
+			err_affec();
+		else if (pid == 0)
+		{
+			pipe_cmd_(i, fd, fd_, lst);
+			get_cmd_(tmp->s_left->l_element->cmd, path, tmp);
+			exit(0);
+		}
+		else
+		{
+			pipe_extra(pid, path, fd_, fd);
+			tmp = tmp->right;
+			i++;
+		}
+	}
+	waiting_childs(path, i);
 }

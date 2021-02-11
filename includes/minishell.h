@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/11 11:18:12 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/11 18:57:52 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 
 int		g_var;
 int		g_var1;
+int		g_var2;
 typedef struct	s_key
 {
 	int cntrd;
@@ -247,11 +248,24 @@ int				read_line(char **line);
 void			bash_promp(void);
 void			sort_execute(t_list_cmd *cmd, t_path *path);
 int				manage_spaces(char *line);
-void			looping_exec(t_path *path, t_list_cmd *cmd);
 void			exit_(char **line);
 void			signals(void);
 void			sigint_handler(int sig);
 void			init_(char **lines);
-void			manage_cntrc(char *line);
+void			manage_cntrc(char *line,t_path *path);
 int				execute(t_path *path, t_command *cmd);
+void			manage_d(char **lines, char *line);
+int				set_new_cmd(char **lines, char *line, t_list_cmd *cmd, t_path *path);
+void			execute_cd(t_command *l_cmd, t_path *path);
+void			execute_env(t_path *path);
+void			execute_echo(char *cmd, t_path *path, t_command *l_cmd);
+void			execute_unset(t_path *path, t_command *l_cmd);
+void			execute_pwd(char *cmd, t_path *path);
+void			execute_export(t_path *path);
+void			execute_export_(t_path *path, t_command *l_cmd);
+char			*word_tolower(char *str);
+int				ft_check_str(char *cmd, char *des);
+void			export_extra(t_path *path, char *name, char *tmp);
+char			*get_after_equal(char *str);
+void			init_2(char **lines);
 #endif

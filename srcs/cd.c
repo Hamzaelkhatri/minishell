@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 10:29:26 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/11 10:47:36 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/11 18:00:44 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,12 @@ void	cd_cmd(char *next_path, t_path *path)
 	tmp = getcwd(NULL, 100);
 	edit_env(path->env->fullenv, "PWD", tmp);
 	frees(&tmp);
+}
+
+void	execute_cd(t_command *l_cmd, t_path *path)
+{
+	if (l_cmd->s_left->right != NULL)
+		cd_cmd(l_cmd->s_left->right->l_element->argument, path);
+	else
+		cd_cmd(NULL, path);
 }

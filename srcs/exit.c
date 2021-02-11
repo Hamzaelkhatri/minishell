@@ -1,21 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/11 18:17:03 by helkhatr          #+#    #+#             */
+/*   Updated: 2021/02/11 18:21:16 by helkhatr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_exit(t_list_cmd *l_cmd, int error)
+void	ft_exit(t_list_cmd *l_cmd, int error)
 {
 	ft_putendl_fd(strerror(error), 2);
 	free_lcommand(&l_cmd);
 	exit(1);
 }
 
-int check_int(char *str)
+int		check_int_(char *str, int i)
 {
-	int i;
-
-	i = 0;
-	str = ft_strtrim(str, "\n");
-	while (str[i] && (str[i] < 33 || str[i] == '-' || str[i] == '+'))
-		i++;
 	if (ft_atoi_long(str) <= LLONG_MIN && str[i - 1] != '-')
 	{
 		print_err_exite(str);
@@ -38,9 +43,23 @@ int check_int(char *str)
 		print_err_exite(str);
 		return (255);
 	}
+	return (-1);
+}
+
+int		check_int(char *str)
+{
+	int i;
+
+	i = 0;
+	str = ft_strtrim(str, "\n");
+	while (str[i] && (str[i] < 33 || str[i] == '-' || str[i] == '+'))
+		i++;
+	if (check_int_(str, i) >= 0)
+		return (check_int_(str, i));
 	while (str[i])
 	{
-		if ((!ft_isdigit(str[i]) && str[i] != 32 && str[i] != '\t') || count_digit(&str[i]) > 19)
+		if ((!ft_isdigit(str[i]) && str[i] != 32 && str[i] != '\t') ||
+				count_digit(&str[i]) > 19)
 		{
 			print_err_exite(str);
 			return (255);
@@ -50,12 +69,12 @@ int check_int(char *str)
 	return (ft_atoi(str));
 }
 
-void exit_exec(t_command *l_cmd)
+void	exit_exec(t_command *l_cmd)
 {
-	if (size_args(l_cmd) > 1 && is_int(l_cmd->s_left->right->l_element->argument))
+	if (size_args(l_cmd) > 1 &&
+			is_int(l_cmd->s_left->right->l_element->argument))
 	{
 		ft_putendl_fd("\e[1;31mminishell: exit: too many arguments", 2);
-		// exit(EXIT_FAILURE);
 	}
 	if (l_cmd->s_left->right && l_cmd->s_left->right->l_element->argument)
 	{

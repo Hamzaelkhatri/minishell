@@ -26,3 +26,9 @@ void    unset_cmd(char *name, t_path *path)
     if (j)
         path->env->fullenv[j] = NULL;
 }
+
+void	execute_unset(t_path *path, t_command *l_cmd)
+{
+	unset_cmd(l_cmd->s_left->right->l_element->argument, path);
+	path->dollar = 0;
+}

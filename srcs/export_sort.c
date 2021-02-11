@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_sort.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/11 18:43:16 by helkhatr          #+#    #+#             */
+/*   Updated: 2021/02/11 18:51:04 by helkhatr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char **ft_strdup_extra(char **str)
+char	**ft_strdup_extra(char **str)
 {
-	char **ptr;
-	int i;
+	char	**ptr;
+	int		i;
 
 	if (!(ptr = malloc(sizeof(char *) * count_line(str))))
-		return NULL;
+		return (NULL);
 	i = 0;
 	while (str[i + 1])
 	{
@@ -17,14 +29,13 @@ char **ft_strdup_extra(char **str)
 	return (ptr);
 }
 
-void ft_sortstr(char **str)
+void	ft_sortstr(char **str)
 {
-	int i;
-	int j;
-	int count;
-	char **ret;
-	char *tmp;
-	char *temp;
+	int		i;
+	int		j;
+	int		count;
+	char	*tmp;
+	char	*temp;
 
 	i = 0;
 	count = count_line(str);
@@ -43,5 +54,25 @@ void ft_sortstr(char **str)
 			}
 		}
 		i++;
+	}
+}
+
+void	execute_export(t_path *path)
+{
+	char	**tmp;
+
+	tmp = path->env->fullenv;
+	ft_sortstr(tmp);
+	show_export(tmp);
+	path->dollar = 0;
+}
+
+void	execute_export_(t_path *path, t_command *l_cmd)
+{
+	while (l_cmd->s_left->right)
+	{
+		if (!export_cmd(l_cmd->s_left->right->l_element->argument, path))
+			break ;
+		l_cmd->s_left->right = l_cmd->s_left->right->right;
 	}
 }
