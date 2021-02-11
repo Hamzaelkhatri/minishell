@@ -62,3 +62,11 @@ int ft_strcmp(const char *s1, const char *s2)
   return (0);
 }
 
+int		check_paths(char *path)
+{
+	struct stat sb;
+
+	if (stat(path, &sb) == -1)
+		return (127);
+	return (0);
+}

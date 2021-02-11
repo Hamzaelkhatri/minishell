@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 18:16:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/10 18:52:30 by ahaddad          ###   ########.fr       */
+/*   Updated: 2021/02/11 11:19:02 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 void	loop_shell(t_path *path, t_list_cmd *cmd)
 {
 	char	*line;
-	int		check;
 
-	init_(&line, &check);
+	init_(&line);
 	while (1)
-		looping_exec(path, cmd, &check);
+		looping_exec(path, cmd);
 }
 
 void	exit_(char **line)

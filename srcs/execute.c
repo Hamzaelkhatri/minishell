@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaddad <ahaddad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 18:56:51 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/02/10 19:28:51 by ahaddad          ###   ########.fr       */
+/*   Updated: 2021/02/11 12:22:10 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		check_paths(char *path)
-{
-	struct stat sb;
-
-	if (stat(path, &sb) == -1)
-		return (127);
-	return (0);
-}
 
 char	**args(char *cmd, t_path *path)
 {
@@ -40,15 +31,18 @@ void	errrno_handler(t_path *path, char *cmd)
 	int		a;
 	char	**args;
 
-	args[0] = ft_strdup("/bin/bash");
-	args[1] = ft_strdup("-c");
-	args[2] = ft_strdup(cmd);
-	args[3] = ft_strdup(NULL);
 	a = fork();
 	if (!a)
 	{
-		if (execve("/bin/bash", args, path->env->fullenv) == -1)
-			perror("bash$ ");
+		args[0] = ft_strdup("/bin/bash");
+		args[1] = ft_strdup("-c");
+		args[2] = ft_strdup(cmd);
+		if (execve("/bin/bash", args, NULL) == -1)
+		{
+			ft_putstr_fd("bash$ :", 2);
+			ft_putstr_fd(cmd, 2);
+			ft_putendl_fd(": is a directory", 2);
+		}
 		exit(0);
 	}
 	wait(0);
@@ -86,8 +80,7 @@ int		execute(t_path *path, t_command *cmd)
 		}
 		wait(&status);
 	}
-	if (status && !path->dollar)
-		status_cmd_(status, path);
+	(status && !path->dollar) ? status_cmd_(status, path) : 0;
 	frees_(&binarypath, &tmp, &cmds);
 	return (path->dollar);
 }
