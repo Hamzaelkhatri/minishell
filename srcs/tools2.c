@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:51:16 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/11 18:51:17 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/12 17:37:09 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ char	*ft_concatenation(char *line, int *i, int index, char *ptr)
 	str1 = (ptr != NULL) ? ft_strdup(ptr) : ft_strdup("");
 	tmp = str1;
 	len = ft_strlen(str1);
+	if(index == -1)
+		index = 0;
 	if (*i > 0)
 	{
 		str_beg = ft_strdup_beg(line, *i);
@@ -95,6 +97,10 @@ char	*ft_concatenation(char *line, int *i, int index, char *ptr)
 	if (line[*i + 1 + index])
 	{
 		str_end = ft_strdup(&line[*i + index + 1]);
+		// printf("|index ==> %d|\t|%s|\n",*i + 1 + index,&line[*i + 1 + index]);
+		// getchar();
+		// printf("|index ==> %d|\t|%s|\n",*i + 1 + index,str_end);
+		// getchar();
 		concat_ext(&str1, &str_end, &tmp, 2);
 	}
 	*i = len + *i - 1;
