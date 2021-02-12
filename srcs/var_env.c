@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   var_env.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: helkhatr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/12 10:41:45 by helkhatr          #+#    #+#             */
+/*   Updated: 2021/02/12 10:42:57 by helkhatr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char	*get_var_env(t_path *path,char *var)
+char	*get_var_env(t_path *path, char *var)
 {
-    return (search_env(path->env->fullenv,&var[1]));
+	return (search_env(path->env->fullenv, &var[1]));
 }
 
 char	*search_env1(char **env, char *str)
 {
-	int i;
-	int j;
-	char *tmp;
-	char *eq;
+	int		i;
+	int		j;
+	char	*tmp;
+	char	*eq;
 
 	j = ft_strlen(str) + 1;
 	i = 0;
@@ -21,7 +33,7 @@ char	*search_env1(char **env, char *str)
 		{
 			tmp = ft_str_to_equal(env[i], str, ft_strlen(str));
 			free(eq);
-			return &tmp[j];
+			return (&tmp[j]);
 		}
 		free(eq);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/11 18:57:52 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/12 11:24:19 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <limits.h>
-# include "get_next_line.h"
-# define DEBUG_BOOL 0
-# define FLAG S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR
+# define BUFFER_SIZE 2000
 
 int		g_var;
 int		g_var1;
 int		g_var2;
+
 typedef struct	s_key
 {
 	int cntrd;
@@ -71,15 +70,15 @@ typedef struct	s_cmd
 	int	cd;
 }				t_cmd;
 
-typedef struct s_save
+typedef struct	s_save
 {
-	int check;
-	char *cmd_arg;
-	char *file;
-	int check_io;
-	int result;
-	char *red;
-	struct s_save *next;
+	int				check;
+	char			*cmd_arg;
+	char			*file;
+	int				check_io;
+	int				result;
+	char			*red;
+	struct s_save	*next;
 }				t_save;
 
 typedef struct	s_redirection
@@ -145,23 +144,26 @@ typedef struct	s_tmp
 	t_simple_command	*cmd;
 }				t_tmp;
 
-void			print(t_list_cmd *l_command);
-char 			*ft_ignoring(char *line);
+char			*ft_ignoring(char *line);
 void			back_slash(t_list_cmd *l_cmd);
 void			variables(t_list_cmd *l_cmd, t_path *path);
-int				count_antislach(char *line,int i);
+int				count_antislach(char *line, int i);
 char			*get_var_env1(t_path *path, char *var);
 char			**ft_space_split(char const *s);
 int				is_correct(char c);
+void			check_variable(char **str, int *i, int index, t_path *path);
+int				ft_check_variable(char *line, int i);
+char			*ft_concatenation(char *line, int *i, int index, char *ptr);
 void			*leak(char **spl, int j);
 char			**ft_space_split(char const *s);
 char			**ft_space_split_quote(char const *s);
 t_list_cmd		*add_list_cmd(t_list_cmd *parent);
 t_command		*add_command(t_command *parent, t_list_cmd *l_cmd);
 t_command		*add_simple_cmd(t_command *parent, int i, t_list_cmd *l_cmd);
-void			alloc_affect(t_list_cmd *l_cmd, char *command, int indice, t_save *save);
+void			alloc_affect(t_list_cmd *l_cmd, char *command, int indice,
+				t_save *save);
 int				ft_check_line(char *line);
-int				check_type_element(char *line, int *check_i_o, int count);
+int				check_type_element(char *line, int count);
 int				check_io_redirection(char *line, int *p);
 void			check_element(t_list_cmd *l_cmd);
 int				check_what_after(char c);
@@ -187,7 +189,7 @@ void			ft_exit(t_list_cmd *l_cmd, int error);
 void			free_redirection(t_save **save);
 void			init_simple_cmd(t_simple_command **parent, int i);
 void			init_lcommand(t_list_cmd **parent);
-void			loop_shell(t_path *path,t_list_cmd *cmd);
+void			loop_shell(t_path *path, t_list_cmd *cmd);
 void			init(t_path *path, t_key *key, t_cmd *cmd);
 void			show_env(char **path);
 char			*search_env(char **env, char *str);
@@ -197,11 +199,12 @@ char			**ft_split_quotes(char const *s, char c);
 char			**ft_space_split(char const *s);
 char			*ft_str_in_str(const char *s1, const char *s2);
 int				ft_2strlen(char **str);
-char			*get_directory(t_path *path,char *cmd);
+char			*get_directory(t_path *path, char *cmd);
 int				check_path(char *path, char *cmd);
 void			getprogramme(t_path *path, t_command *cmd);
 void			shift(int fd);
-void			shift_extra(char *file, char *shifts, t_path *path,t_command *cmd);
+void			shift_extra(char *file, char *shifts, t_path *path,
+				t_command *cmd);
 char			*get_var_env(t_path *path, char *var);
 void			cd_cmd(char *nextpath, t_path *path);
 int				count_line(char **env);
@@ -230,10 +233,10 @@ int				check_equal(char *str);
 int				ft_strcmp(const char *s1, const char *s2);
 char			*get_befor_equal(char *str);
 int				check_paths(char *path);
-char			**args(char *cmd,t_path *path);
+char			**args(char *cmd, t_path *path);
 char			*get_file(t_command *lcmd);
-char			*get_file_shift(t_command *lcmd,char *shift);
-int				double_red(char *file1, char *file2,char *shift);
+char			*get_file_shift(t_command *lcmd, char *shift);
+int				double_red(char *file1, char *file2, char *shift);
 int				create_file(char *file);
 void			exit_exec(t_command *l_cmd);
 long long		ft_atoi_long(char *str);
@@ -252,10 +255,11 @@ void			exit_(char **line);
 void			signals(void);
 void			sigint_handler(int sig);
 void			init_(char **lines);
-void			manage_cntrc(char *line,t_path *path);
+void			manage_cntrc(char *line, t_path *path);
 int				execute(t_path *path, t_command *cmd);
 void			manage_d(char **lines, char *line);
-int				set_new_cmd(char **lines, char *line, t_list_cmd *cmd, t_path *path);
+int				set_new_cmd(char **lines, char *line, t_list_cmd *cmd,
+				t_path *path);
 void			execute_cd(t_command *l_cmd, t_path *path);
 void			execute_env(t_path *path);
 void			execute_echo(char *cmd, t_path *path, t_command *l_cmd);
@@ -268,4 +272,23 @@ int				ft_check_str(char *cmd, char *des);
 void			export_extra(t_path *path, char *name, char *tmp);
 char			*get_after_equal(char *str);
 void			init_2(char **lines);
+int				lstsize(t_list_cmd *lst);
+void			close_dup(int fd1, int fd2, int fd3);
+void			close_fd(int i, int fd1, int fd2);
+void			backup_fd(int fd1[2], int fd2[2]);
+void			exec_fd(int i, t_list_cmd *lst, int fd[2], int fd_[2]);
+int				check_operation_r(char *line);
+int				check_operation(char *line);
+t_save			*alloc_store(t_save *save, char *red, int which, int check_io);
+void			store_ext(t_list_cmd *l_cmd, t_save **save, char **tab_split,
+				int *i);
+void			store(t_list_cmd *l_cmd, t_save **save, char **tab_split);
+void			save_redirection(t_list_cmd *l_cmd, t_save *save);
+void			check_join_r(t_list_cmd *l_cmd, char **str, char *line);
+void			affect_redirection_ex(t_list_cmd *l_cmd, int result,
+				t_save *save);
+int				split_tool(char *str, int i, char quote, int index);
+void			concat_ext(char **str1, char **dupstr, char **tmp, int index);
+char			*ft_strjoin_free(char *s1, char const *s2);
+
 #endif

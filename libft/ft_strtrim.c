@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 22:57:15 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/07 17:05:28 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/12 10:17:12 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ static int	endofchar(const char *s, const char *set)
 
 	i = 0;
 	j = ft_strlen(s);
-
-	if(!s || !set)
+	if (!s || !set)
 		return (0);
 	j--;
 	while (j > 0 && set[i])

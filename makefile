@@ -7,7 +7,10 @@ LIB_PATH= libft
 
 SRC_NAME=allocation.c\
 		check.c\
+		check2.c\
+		check3.c\
 		redirection_tools.c\
+		redirection_tools2.c\
 		sort.c\
 		init.c\
 		search_env.c\
@@ -18,7 +21,6 @@ SRC_NAME=allocation.c\
 		execute.c\
 		tools.c\
     	directory.c\
-		ft_split.c\
 		cd.c\
 		shift.c\
 		var_env.c\
@@ -36,7 +38,6 @@ SRC_NAME=allocation.c\
 		ft_split_quotes.c\
 		ft_space_split_quote.c\
 		free_extended.c\
-		print.c\
 		echo.c\
 		tools2.c\
 		tools3.c\
@@ -47,6 +48,8 @@ SRC_NAME=allocation.c\
 		loop_shell.c\
 		execute_cmd_two.c\
 		export_extra.c\
+		duping.c\
+		variables2.c\
 
 HDR_NAME=minishell.h 
 

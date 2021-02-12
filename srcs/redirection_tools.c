@@ -1,51 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection_tools.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/11 18:49:50 by sqatim            #+#    #+#             */
+/*   Updated: 2021/02/11 18:49:58 by sqatim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int wich_redirection(int check)
-{
-	if (check == 5 || check == 6 || check == 7 || check == 8)
-		return (2);
-	else if (check == 1 || check == 2 || check == 3 || check == 4)
-		return (1);
-	else if (check == 9 || check == 10 || check == 11 || check == 12)
-		return (3);
-	return (0);
-}
-
-int check_io_redirection(char *line, int *p)
-{
-	int redirection;
-
-	redirection = check_redirection(line, p);
-	return (redirection);
-}
-
-int check_redirection(char *line, int *i)
-{
-	if (line[*i] == '>' && line[*i + 1] == '>')
-	{
-		if (line[*i + 2] == '\0')
-			return (*i == 0) ? (5) : (6);
-		else if (check_what_after(line[*i + 2]) == 1)
-			return (*i == 0) ? (7) : (8);
-	}
-	else if (line[*i] == '>')
-	{
-		if (line[*i + 1] == '\0')
-			return (*i == 0) ? (1) : (2);
-		else if (check_what_after(line[*i + 1]) == 1)
-			return (*i == 0) ? (3) : (4);
-	}
-	else if (line[*i] == '<' && line[*i + 1] != '<')
-	{
-		if (line[*i + 1] == '\0')
-			return (*i == 0) ? (9) : (10);
-		else if (check_what_after(line[*i + 1]) == 1)
-			return (*i == 0) ? (11) : (12);
-	}
-	return (0);
-}
-
-static void affect_redirection_ex(t_list_cmd *l_cmd, int result, t_save *save)
+void		affect_redirection_ex(t_list_cmd *l_cmd, int result, t_save *save)
 {
 	if (result == 3)
 		alloc_affect(l_cmd, save->file, 3, save);
@@ -65,266 +32,89 @@ static void affect_redirection_ex(t_list_cmd *l_cmd, int result, t_save *save)
 	}
 }
 
-int redirection(int check_i_o)
+void		in_boucle_r_ext(t_save **save, int check_i_o, int wich, int *index)
 {
-	if (check_i_o == 1 || check_i_o == 5 || check_i_o == 9)
-		return (2);
-	else if (check_i_o == 3 || check_i_o == 7 || check_i_o == 11)
-		return (3);
-	else if (check_i_o == 2 || check_i_o == 6 || check_i_o == 10)
-		return (4);
-	else if (check_i_o == 4 || check_i_o == 8 || check_i_o == 12)
-		return (5);
-	return (0);
-}
-
-t_save *alloc_store(t_save *save, char *red, int which, int check_io)
-{
-	t_save *tmp;
-	t_save *new;
-
-	if (!(new = (t_save *)malloc(sizeof(t_save))))
-		return (NULL);
-	new->check = which;
-	new->cmd_arg = NULL;
-	new->file = NULL;
-	new->check_io = check_io;
-	new->result = 0;
-	new->red = red;
-	new->next = NULL;
-	if (save == NULL)
-		return (new);
-	tmp = save;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
-	return (save);
-}
-
-void store(t_list_cmd *l_cmd, t_save **save, char **tab_split)
-{
-	int i = 0;
-	int result;
-	t_save *tmp;
-
-	tmp = *save;
-	// if (save->cmd_arg != NULL)
-	// if (save->file != NULL)
-	// if (save->red != NULL)
-	while (*save)
+	if (wich == 1)
 	{
-		result = redirection((*save)->check_io);
-		(*save)->result = result;
-		if (result == 2)
-			(*save)->file = ft_strdup(l_cmd->command->tool.tab[l_cmd->command->tool.i + 1]);
-		else if (result == 3)
-		{
-			(*save)->file = ft_strdup(tab_split[i++]);
-			// printf("fiiiiile ==> %s\n",(*save)->file);
-		}
-		else if (result == 4)
-		{
-			(*save)->cmd_arg = ft_strdup(tab_split[i++]);
-			(*save)->file = ft_strdup(l_cmd->command->tool.tab[l_cmd->command->tool.i + 1]);
-		}
-		else if (result == 5)
-		{
-			(*save)->cmd_arg = ft_strdup(tab_split[i++]);
-			(*save)->file = ft_strdup(tab_split[i++]);
-		}
-		// printf("samir\n");
-		*save = (*save)->next;
+		if ((check_i_o == 2 || check_i_o == 4) && *index == 1)
+			check_i_o = (check_i_o == 2) ? 1 : 3;
+		if ((check_i_o == 2 || check_i_o == 4) && *index == 0)
+			*save = alloc_store(*save, ">", 1, check_i_o);
+		else
+			*save = alloc_store(*save, ">", 2, check_i_o);
+		*index = 1;
 	}
-	*save = tmp;
-	// free_tab(&tab_split);
-	// printf("|cmd-arg ==> %s|\t", (*save)->cmd_arg);
-	// printf("|file ==> %s|\t", (*save)->file);
-	// printf("|RED ==> %s|\n", (*save)->red);
-}
-
-void save_redirection(t_list_cmd *l_cmd, t_save *save)
-{
-	t_save *tmp;
-
-	tmp = save;
-	while (save)
+	else if (wich == 2)
 	{
-		if (save->result == 3 || save->result == 4 || save->result == 5)
-			affect_redirection_ex(l_cmd, save->result, save);
-		else if (save->result == 2)
-		{
-			alloc_affect(l_cmd, save->file, 3, save);
-			l_cmd->command->tool.i++;
-		}
-		save = save->next;
+		if ((check_i_o == 10 || check_i_o == 12) && *index == 1)
+			check_i_o = (check_i_o == 10) ? 9 : 11;
+		if ((check_i_o == 10 || check_i_o == 12) && *index == 0)
+			*save = alloc_store(*save, "<", 1, check_i_o);
+		else
+			*save = alloc_store(*save, "<", 2, check_i_o);
+		*index = 1;
 	}
-	save = tmp;
 }
 
-static int check_end(char *line)
+void		in_boucle_r(char *str, int *i, t_save **save, int *index)
 {
-	int i;
+	int	check_i_o;
 
-	i = 0;
-	while (line[i])
-		i++;
-	if (line[i - 1] == '>' || line[i - 1] == '<')
-		return (1);
+	check_i_o = check_redirection(str, i);
+	if (check_i_o == 1 || check_i_o == 2 || check_i_o == 3 || check_i_o == 4)
+		in_boucle_r_ext(&(*save), check_i_o, 1, index);
+	else if (check_i_o == 5 || check_i_o == 6 || check_i_o == 7\
+		|| check_i_o == 8)
+	{
+		str[(*i)++] = ' ';
+		if ((check_i_o == 6 || check_i_o == 8) && *index == 1)
+			check_i_o = (check_i_o == 6) ? 5 : 7;
+		if ((check_i_o == 6 || check_i_o == 8) && *index == 0)
+			*save = alloc_store(*save, ">>", 1, check_i_o);
+		else
+			*save = alloc_store(*save, ">>", 2, check_i_o);
+		*index = 1;
+	}
 	else
-		return (0);
-}
-static int check_if_redirection(char *line)
-{
-	int i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '>' || line[i] == '<')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-void free_tab1(char ***tab)
-{
-	int index;
-
-	index = 0;
-	if (*tab != NULL && *tab[index] != NULL)
-	{
-		while ((*tab)[index])
-		{
-			printf("tab ==> %s\n",(*tab)[index]);
-			free((*tab)[index]);
-			(*tab)[index] = NULL;
-			index++;
-		}
-		free(*tab);
-		*tab = NULL;
-	}
+		in_boucle_r_ext(&(*save), check_i_o, 2, index);
 }
 
-void affect_redirection(t_list_cmd *l_cmd, char *line)
+void		affect_redirection_ext(t_list_cmd *l_cmd, t_save **save, char **str)
 {
 	char **tab_split;
-	t_save *tmp;
-	int i;
-	char quotes;
-	int check_i_o;
-	t_save *save = NULL;
-	int index = 0;
-	int end;
-	char *tmp_f;
+
+	tab_split = ft_space_split_quote(*str);
+	store(l_cmd, &(*save), tab_split);
+	free_tab(&tab_split);
+	frees(&(*str));
+	save_redirection(l_cmd, *save);
+	free_redirection(&(*save));
+}
+
+void		affect_redirection(t_list_cmd *l_cmd, char *line)
+{
+	int		i;
+	int		index;
+	char	quotes;
+	char	*str;
+	t_save	*save;
 
 	i = 0;
 	quotes = 0;
-	tab_split = NULL;
-	// line = ft_strdup(line);
-	if (check_end(line))
+	save = NULL;
+	index = 0;
+	check_join_r(l_cmd, &str, line);
+	while (str[i])
 	{
-		// tmp_f = line;
-		line = ft_strjoin(line, l_cmd->command->tool.tab[++l_cmd->command->tool.i]);
-		// frees(&tmp_f);
-		// printf("samir\n");
-		while (l_cmd->command->tool.tab[l_cmd->command->tool.i + 1] && check_end(l_cmd->command->tool.tab[l_cmd->command->tool.i + 1]))
-		{
-			// tmp_f = line;
-			line = ft_strjoin(line, l_cmd->command->tool.tab[++l_cmd->command->tool.i]);
-			// frees(&tmp_f);
-		}
-	}
-	while (line[i])
-	{
-		if (line[i] == 34 || line[i] == 39)
+		if (str[i] == 34 || str[i] == 39)
 			quotes = (quotes == 0) ? 1 : 0;
-		if ((line[i] == '>' || line[i] == '<') && quotes == 0 && line[i - 1] != '\\')
+		if ((str[i] == '>' || str[i] == '<') &&\
+			quotes == 0 && str[i - 1] != '\\')
 		{
-			check_i_o = check_redirection(line, &i);
-			if (check_i_o == 1 || check_i_o == 2 || check_i_o == 3 || check_i_o == 4)
-			{
-				if ((check_i_o == 2 || check_i_o == 4) && index == 1)
-					check_i_o = (check_i_o == 2) ? 1 : 3;
-				if ((check_i_o == 2 || check_i_o == 4) && index == 0)
-				{
-					save = alloc_store(save, ">", 1, check_i_o);
-				}
-				else
-				{
-					save = alloc_store(save, ">", 2, check_i_o);
-				}
-				index = 1;
-			}
-			else if (check_i_o == 5 || check_i_o == 6 || check_i_o == 7 || check_i_o == 8)
-			{
-				line[i++] = ' ';
-				if ((check_i_o == 6 || check_i_o == 8) && index == 1)
-					check_i_o = (check_i_o == 6) ? 5 : 7;
-				if ((check_i_o == 6 || check_i_o == 8) && index == 0)
-					save = alloc_store(save, ">>", 1, check_i_o);
-				else
-					save = alloc_store(save, ">>", 2, check_i_o);
-				index = 1;
-			}
-			else
-			{
-				if ((check_i_o == 10 || check_i_o == 12) && index == 1)
-					check_i_o = (check_i_o == 10) ? 9 : 11;
-				if ((check_i_o == 10 || check_i_o == 12) && index == 0)
-					save = alloc_store(save, "<", 1, check_i_o);
-				else
-					save = alloc_store(save, "<", 2, check_i_o);
-				index = 1;
-			}
-			line[i] = ' ';
+			in_boucle_r(str, &i, &save, &index);
+			str[i] = ' ';
 		}
 		i++;
 	}
-	// printf("line ==> %s\n",line);
-	tab_split = ft_space_split_quote(line);
-	int k = 0;
-	// while(tab_split[k])
-		// printf("salam %s\n",tab_split[k++]);
-	store(l_cmd, &save, tab_split);
-	save_redirection(l_cmd, save);
-	// while (save)
-	// {
-	// 	// if (save->cmd_arg != NULL)
-	// 		printf("|cmd-arg ==> %s|\t", save->cmd_arg);
-		// if (save->file != NULL)
-			// printf("|file ==> %s|\t", save->file);
-		// if (save->red != NULL)
-			// printf("|RED ==> %s|\n", save->red);
-	// 	save = save->next;
-	// }
-	// for free
-	// if (save->cmd_arg != NULL)
-		// frees(&save->cmd_arg);
-	// if (save->file != NULL)
-		// frees(&save->file);
-	// 	frees(&save->red);
-	// free(save);
-		// frees(&save->red);
-	// if (save->red != NULL)
-	// {
-	// 	printf("|RED ==> %s|\n", save->red);
-	// 	frees(&save->red);
-	// 	printf("|RED ==> %s|\n", save->red);
-	// }
-	// free(save);
-	// save = NULL;
-	frees(&line);
-	free_redirection(&save);
-	free_tab1(&tab_split);
-	// printf("3raft shnu ta sir t9awad\n");
+	affect_redirection_ext(l_cmd, &save, &str);
 }
-
-// 3/4
-// 7/8
-// 11/12
-// arguements 2/4 6/8 10/12
-
-// result 2  no argument without file
-// result 3  no argument with file
-// result 4	 with argument and without file
-// result 5  with arguement and with file

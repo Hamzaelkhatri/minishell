@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/11 18:51:04 by sqatim            #+#    #+#             */
+/*   Updated: 2021/02/11 18:51:05 by sqatim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int		search_str(char *str1, char *str2, int l1, int l2)
@@ -10,58 +22,6 @@ int		search_str(char *str1, char *str2, int l1, int l2)
 	else if (ft_strncmp(str1, str2, l1) == 0)
 		return (1);
 	return (0);
-}
-
-
-void	ignoring_quote_ext(char *line, int *i, int *index)
-{
-	char	wich;
-	int p = 0;
-
-	// printf("sassaas\n");
-	wich = line[*i];
-	(*i)++;
-	// printf("{%c}\n",wich);
-	while ((((line[*i] == wich && count_antislach(line, *i - 2) == 0)) || line[*i] != wich) && line[*i])
-	{
-		line[(*index)++] = line[(*i)++];
-	}
-	if(line[*i] == wich)
-		line[(*index)] = line[++(*i)];
-	// if (line[*i] == '\0')
-	// 	line[(*index)] = '\0';
-	else
-		(*i)++;
-}
-
-char	*ignoring_quote(char *line)
-{
-	int		i;
-	int		index;
-	char	wich;
-
-	i = 0;
-	index = 0;
-	while (line[i])
-	{
-		while ((count_antislach(line, i - 1) == 0 && (line[i] == 34 || line[i] == 39))\
-				|| (line[i] != 34 && line[i] != 39 && line[i]))
-		{
-			// printf("line[%d] ==> %c\n",i,line[i]);
-			line[index++] = line[i++];
-		}
-		if (line[i] == 34  && line[i])
-			ignoring_quote_ext(line, &i, &index);
-		if(line[i] == 39 && line[i])
-		{
-			line[index++] = line[i++];
-			while(line[i] != 39 && line[i])
-				line[index++] = line[i++];
-		}
-		else if (line[i] == '\0')
-			line[index] = '\0';
-	}
-	return (line);
 }
 
 void	ft_strjoin_cmd_ext(t_simple_command *cmd, char **line)
@@ -90,12 +50,10 @@ char	*ft_strjoin_command(t_simple_command *cmd)
 			tmp = line;
 			if (cmd->right != NULL)
 			{
-				
 				line = ft_strjoin_free(line, " ");
 				frees(&tmp);
 				tmp = line;
 			}
-			// frees(&tmp);
 		}
 		else
 			ft_strjoin_cmd_ext(cmd, &line);
@@ -103,4 +61,36 @@ char	*ft_strjoin_command(t_simple_command *cmd)
 	}
 	cmd = tmp_s;
 	return (line);
+}
+
+int		count_antislach(char *line, int i)
+{
+	int	j;
+	int	result;
+
+	j = 0;
+	if (i < 0)
+		return (1);
+	while (line[i] == '\\' && i >= 0)
+	{
+		i--;
+		j++;
+	}
+	result = j % 2;
+	if (result == 0)
+		return (1);
+	else
+		return (0);
+}
+
+void	*leak(char **spl, int j)
+{
+	j = j - 1;
+	while (spl[j])
+	{
+		free(spl[j]);
+		j--;
+	}
+	free(spl);
+	return (NULL);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/11 18:49:30 by sqatim            #+#    #+#             */
+/*   Updated: 2021/02/11 18:49:31 by sqatim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	parcs_simple_command(char *s_command, t_list_cmd *l_cmd)
@@ -41,12 +53,8 @@ void	parse_list_command(t_list_cmd *l_cmd, char *line)
 	int		index;
 
 	index = 0;
-
 	tab = ft_split_quotes(line, ';');
 	while (tab[index])
-	{
-		// printf("{%s}\n",tab[index]);
 		parse_command(l_cmd, tab[index++]);
-	}
 	free_tab(&tab);
 }

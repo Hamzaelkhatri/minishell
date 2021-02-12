@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/11 18:49:16 by sqatim            #+#    #+#             */
+/*   Updated: 2021/02/11 18:49:18 by sqatim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	init(t_path *path, t_key *key, t_cmd *cmd)
 {
-    ft_bzero(key, sizeof(t_key));
-    ft_bzero(cmd, sizeof(t_cmd));
-    path->env = malloc(sizeof(t_env));
-    path->dollar = 0;
+	ft_bzero(key, sizeof(t_key));
+	ft_bzero(cmd, sizeof(t_cmd));
+	path->env = malloc(sizeof(t_env));
+	path->dollar = 0;
 }
 
 void	init_simple_cmd(t_simple_command **parent, int i)

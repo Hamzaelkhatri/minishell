@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd_two.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:12:40 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/11 18:12:53 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/12 11:24:31 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		create_file(char *file)
 {
 	int fd;
 
-	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, FLAG);
+	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
 	ft_putstr_fd("", fd);
 	close(fd);
 	return (0);

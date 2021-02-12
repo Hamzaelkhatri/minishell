@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/11 18:48:09 by sqatim            #+#    #+#             */
+/*   Updated: 2021/02/11 18:48:12 by sqatim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void ft_strdel(char **as)
+void	ft_strdel(char **as)
 {
 	if (as != NULL)
 	{
@@ -9,7 +21,7 @@ void ft_strdel(char **as)
 	}
 }
 
-void free_tab(char ***tab)
+void	free_tab(char ***tab)
 {
 	int index;
 
@@ -27,7 +39,7 @@ void free_tab(char ***tab)
 	}
 }
 
-void free_element(t_elements **element)
+void	free_element(t_elements **element)
 {
 	if ((*element)->cmd != NULL)
 	{
@@ -53,23 +65,22 @@ void free_element(t_elements **element)
 	}
 }
 
-void free_s_command(t_simple_command **s_command)
+void	free_s_command(t_simple_command **s_command)
 {
 	free_element(&(*s_command)->l_element);
 	free(*s_command);
 	*s_command = NULL;
 }
 
-void free_redirection(t_save **save)
+void	free_redirection(t_save **save)
 {
 	if ((*save)->next != NULL)
 		free_redirection(&(*save)->next);
 	if (*save != NULL)
 	{
-		// printf("zainab\n");
-		if((*save)->cmd_arg != NULL)
+		if ((*save)->cmd_arg != NULL)
 			frees(&(*save)->cmd_arg);
-		if((*save)->file != NULL)
+		if ((*save)->file != NULL)
 			frees(&(*save)->file);
 		free(*save);
 		*save = NULL;

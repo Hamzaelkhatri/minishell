@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   s_command.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/11 18:50:34 by sqatim            #+#    #+#             */
+/*   Updated: 2021/02/11 18:50:36 by sqatim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	join(t_simple_command **cmd)
@@ -45,7 +57,8 @@ static void	check_echo(t_simple_command **cmd)
 	tmp = *cmd;
 	*cmd = (*cmd)->right;
 	index = 0;
-	if (*cmd != NULL && (*cmd)->l_element->argument != NULL && check_n((*cmd)->l_element->argument))
+	if (*cmd != NULL && (*cmd)->l_element->argument != NULL\
+		&& check_n((*cmd)->l_element->argument))
 	{
 		while ((*cmd)->right != NULL &&
 				check_n((*cmd)->right->l_element->argument))

@@ -1,59 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/11 18:51:16 by sqatim            #+#    #+#             */
+/*   Updated: 2021/02/11 18:51:17 by sqatim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void	quotes_extended(t_list_cmd *l_cmd, t_simple_command *tmp_s)
-{
-	while (l_cmd->command != NULL)
-	{
-		tmp_s = l_cmd->command->s_left;
-		while (l_cmd->command->s_left != NULL)
-		{
-			if (l_cmd->command->s_left->l_element->indice == 1)
-				l_cmd->command->s_left->l_element->cmd =\
-				ignoring_quote(l_cmd->command->s_left->l_element->cmd);
-			else if (l_cmd->command->s_left->l_element->indice == 2)
-				l_cmd->command->s_left->l_element->argument =\
-				ignoring_quote(l_cmd->command->s_left->l_element->argument);
-			else if (l_cmd->command->s_left->l_element->indice == 3)
-				l_cmd->command->s_left->l_element->redirection.file =\
-				ignoring_quote(l_cmd->command->s_left->l_element->\
-						redirection.file);
-			l_cmd->command->s_left = l_cmd->command->s_left->right;
-		}
-		l_cmd->command->s_left = tmp_s;
-		l_cmd->command = l_cmd->command->right;
-	}
-}
-
-void	quotes(t_list_cmd *l_cmd)
-{
-	t_list_cmd			*tmp_l_command;
-	t_command			*tmp_command;
-	t_simple_command	*tmp_s;
-
-	tmp_l_command = l_cmd;
-	tmp_command = l_cmd->command;
-	tmp_s = l_cmd->command->s_left;
-	while (l_cmd != NULL)
-	{
-		tmp_command = l_cmd->command;
-		tmp_s = l_cmd->command->s_left;
-		quotes_extended(l_cmd, tmp_s);
-		l_cmd->command = tmp_command;
-		l_cmd = l_cmd->next;
-	}
-	l_cmd = tmp_l_command;
-}
-
-void	alloc_affect_extended(t_list_cmd **l_cmd, char *command, int indice, t_save *save)
+void	alloc_affect_extended(t_list_cmd **l_cmd,\
+		char *command, int indice, t_save *save)
 {
 	(*l_cmd)->command->tool.redirection = 1;
 	(*l_cmd)->command = add_simple_cmd((*l_cmd)->command, 3, (*l_cmd));
 	if ((*l_cmd)->command->s_left->right != NULL)
 		(*l_cmd)->command->s_left = (*l_cmd)->command->s_left->right;
 	(*l_cmd)->command->s_left->l_element->redirection.file = ft_strdup(command);
-	// frees(&save->file);
-		(*l_cmd)->command->s_left->l_element->redirection.i_o = ft_strdup(save->red);
-	// frees(&save->red);
+	(*l_cmd)->command->s_left->l_element->redirection.i_o =\
+			ft_strdup(save->red);
 }
 
 void	alloc_affect(t_list_cmd *l_cmd, char *command, int indice, t_save *save)
@@ -86,4 +54,51 @@ int		ft_2strlen(char **str)
 	while (str[i] != 0)
 		i++;
 	return (i);
+}
+
+char	*ft_strdup_beg(const char *s1, int j)
+{
+	int		i;
+	char	*ptr;
+
+	i = 0;
+	if (s1 == NULL)
+		return (NULL);
+	if (!(ptr = malloc(sizeof(char) * (j) + 1)))
+		return (NULL);
+	while (i < j)
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}
+
+char	*ft_concatenation(char *line, int *i, int index, char *ptr)
+{
+	char	*str1;
+	char	*str_beg;
+	char	*str_end;
+	int		len;
+	char	*tmp;
+
+	str1 = (ptr != NULL) ? ft_strdup(ptr) : ft_strdup("");
+	tmp = str1;
+	len = ft_strlen(str1);
+	if (*i > 0)
+	{
+		str_beg = ft_strdup_beg(line, *i);
+		concat_ext(&str1, &str_beg, &tmp, 1);
+		tmp = str1;
+	}
+	if (line[*i + 1 + index])
+	{
+		str_end = ft_strdup(&line[*i + index + 1]);
+		concat_ext(&str1, &str_end, &tmp, 2);
+	}
+	*i = len + *i - 1;
+	if (*i < 0)
+		*i = 0;
+	return (str1);
 }

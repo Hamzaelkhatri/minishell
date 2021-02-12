@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_extended.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/11 18:48:19 by sqatim            #+#    #+#             */
+/*   Updated: 2021/02/11 18:48:21 by sqatim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	free_scommand(t_simple_command **scommand)
@@ -33,5 +45,14 @@ void	free_lcommand(t_list_cmd **l_command)
 			ft_strdel(&(*l_command)->line);
 		free(*l_command);
 		*l_command = NULL;
+	}
+}
+
+void	frees(char **str)
+{
+	if (*str)
+	{
+		free(*str);
+		*str = NULL;
 	}
 }

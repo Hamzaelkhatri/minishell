@@ -1,34 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split_quotes.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/11 18:49:02 by sqatim            #+#    #+#             */
+/*   Updated: 2021/02/12 11:09:37 by helkhatr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-static int words(char *str, char c)
+static int	words(char *str, char c)
 {
-	int i;
-	int j;
-	char quote;
-	static int index;
+	int		i;
+	int		j;
+	char	quote;
+
 	i = 0;
 	j = 0;
-	// printf("index{%d}\n",++index);
 	while (str[i])
 	{
 		while ((str[i] == c && count_antislach(str, i - 1)) && str[i])
 			i++;
 		if (str[i] && str[i] != c)
 			j++;
-		while (str[i] && (((str[i] == c  && count_antislach(str, i - 1) == 0) || str[i] != c)))
+		while (split_tool(str, i, c, 4))
 		{
 			if ((str[i] == 34 || str[i] == 39) && count_antislach(str, i - 1))
 			{
 				quote = str[i++];
-				while (((quote == 34 && str[i] == quote && count_antislach(str, i - 1) == 0) || str[i] != quote) && str[i])
+				while (split_tool(str, i, quote, 3))
 					i++;
-				if (!str[i])
-				{
-					ft_putstr_fd("words\t",1);
-					ft_putstr_fd("split_quotes",1);
-					exit(1);
-				}
 			}
 			if (str[i])
 				i++;
@@ -37,25 +41,21 @@ static int words(char *str, char c)
 	return (j);
 }
 
-static int carcts(char *str, char c)
+static int	carcts(char *str, char c)
 {
-	int i;
-	char quote;
+	int		i;
+	char	quote;
 
 	i = 0;
-	while (str[i] && (((str[i] == c  && count_antislach(str, i - 1) == 0) || str[i] != c)))
+	while (str[i] && (((str[i] == c &&\
+		count_antislach(str, i - 1) == 0) || str[i] != c)))
 	{
 		if ((str[i] == 34 || str[i] == 39) && count_antislach(str, i - 1))
 		{
 			quote = str[i];
 			i++;
-			while (((quote == 34 && str[i] == quote && count_antislach(str, i - 1) == 0) || str[i] != quote) && str[i])
+			while (split_tool(str, i, quote, 3))
 				i++;
-			if (!str[i])
-			{
-				ft_putstr_fd("split_quotes",1);
-				// exit(1);
-			}
 		}
 		if (str[i])
 			i++;
@@ -63,38 +63,35 @@ static int carcts(char *str, char c)
 	return (i);
 }
 
-static void check_affec(char ***tab, char *src, int *o, int wich[2])
+static void	check_affec(char ***tab, char *src, int *o, int wich[2])
 {
-	int i;
-	char quote;
+	int		i;
+	char	quote;
 
 	i = 0;
-while (src[*o] && ((src[*o] == wich[1] && count_antislach(src, *o - 1) == 0) || src[*o] != wich[1]))
+	while (src[*o] && ((src[*o] == wich[1] &&\
+		count_antislach(src, *o - 1) == 0) ||\
+			src[*o] != wich[1]))
 	{
-
 		if ((src[*o] == 34 || src[*o] == 39) && count_antislach(src, *o - 1))
 		{
 			quote = src[*o];
 			(*tab)[wich[0]][i++] = src[(*o)++];
-			while (((quote == 34 && src[*o] == quote && count_antislach(src, *o - 1) == 0) || src[*o] != quote) && src[*o])
+			while (((quote == 34 && src[*o] == quote && count_antislach(src, \
+				*o - 1) == 0) || src[*o] != quote) && src[*o])
 				(*tab)[wich[0]][i++] = src[(*o)++];
-		}
-		if (!src[*o])
-		{
-			ft_putstr_fd("split_quotes",1);
-			// exit(1);
 		}
 		(*tab)[wich[0]][i++] = src[(*o)++];
 	}
 	(*tab)[wich[0]][i] = '\0';
 }
 
-static char *alloc(char **tab, char *src, char c)
+static char	*alloc(char **tab, char *src, char c)
 {
-	int wich[2];
-	int j;
-	int o;
-	char quote;
+	int		j;
+	int		o;
+	int		wich[2];
+	char	quote;
 
 	j = 0;
 	o = 0;
@@ -115,11 +112,11 @@ static char *alloc(char **tab, char *src, char c)
 	return (*tab);
 }
 
-char **ft_split_quotes(char const *s, char c)
+char		**ft_split_quotes(char const *s, char c)
 {
-	int j;
-	char **tab;
-	char *str;
+	int		j;
+	char	**tab;
+	char	*str;
 
 	j = 0;
 	if (!s)
