@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:51:04 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/11 18:51:05 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/13 16:54:11 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		search_str(char *str1, char *str2, int l1, int l2)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (l1 != l2 || l1 == 0 || l2 == 0)
@@ -26,11 +26,19 @@ int		search_str(char *str1, char *str2, int l1, int l2)
 
 void	ft_strjoin_cmd_ext(t_simple_command *cmd, char **line)
 {
+	char	*tmp;
+
 	if (cmd->l_element->indice == 2)
 	{
+		tmp = *line;
 		*line = ft_strjoin_free(*line, cmd->l_element->argument);
+		frees(&tmp);
 		if (cmd->right != NULL)
+		{
+			tmp = *line;
 			*line = ft_strjoin_free(*line, " ");
+			frees(&tmp);
+		}
 	}
 }
 
@@ -65,8 +73,8 @@ char	*ft_strjoin_command(t_simple_command *cmd)
 
 int		count_antislach(char *line, int i)
 {
-	int	j;
-	int	result;
+	int j;
+	int result;
 
 	j = 0;
 	if (i < 0)

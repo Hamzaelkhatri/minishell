@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:51:44 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/12 17:37:34 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/11 18:51:45 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,9 @@ char	*ft_extraire_variable(char *line, int i, int *index)
 	j = 0;
 	k = 0;
 	result = *index + 2;
-	// getchar();
-	// printf("result ==< %d\n",result);
-	// getchar();
 	str = (char *)malloc(result);
-	if(*index == -1)
-		str[j++] = '$';
-	else
-	{
 	while (j < *index + 1)
 		str[j++] = line[i++];
-	}
-	
 	str[j] = '\0';
 	return (str);
 }
@@ -43,12 +34,7 @@ char	*ft_variables(char *line, int i, int *index)
 	char	*str;
 
 	str = NULL;
-	// printf("i ==> %d\n",i);
 	*index = ft_check_variable(line, i);
-	// getchar();
-	// printf("%d\n",*index);
-	// getchar();
-
 	if (*index == 0)
 		return (NULL);
 	else
@@ -92,9 +78,6 @@ void	check_variable(char **str, int *i, int index, t_path *path)
 		{
 			ptr = (get_var_env1(path, var)) ?\
 				ft_strdup(get_var_env1(path, var)) : NULL;
-			// getchar();
-			// printf("ptr ==> %s\n",ptr);
-			// getchar();
 		}
 		affectation_dollar(&(*str), &ptr, i, index);
 	}

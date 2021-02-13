@@ -6,7 +6,7 @@
 /*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:47:27 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/12 17:20:38 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/11 18:53:28 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ int		ft_check_variable(char *line, int i)
 
 	j = 0;
 	i++;
-	if(line[i] == '"' || line[i] == '\'')
-	{
-		return(-1);
-	}
 	if (line[i] == '$')
 		return (0);
 	else if (line[i] == '?')

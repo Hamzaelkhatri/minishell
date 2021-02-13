@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 11:10:30 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/12 11:11:19 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/13 17:17:30 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ void		print_working_directory(t_path *path)
 {
 	char	*pwd;
 
-	pwd = getcwd(NULL, 100);
-	ft_putendl_fd(pwd, 1);
-	frees(&pwd);
+	pwd = search_env(path->env->fullenv, "PWD");
+	if (pwd)
+		ft_putendl_fd(pwd, 1);
+	else
+		ft_putendl_fd(getcwd(pwd,100), 1);
 }
 
-void		execute_pwd(char *cmd, t_path *path)
+void		execute_pwd(t_path *path)
 {
 	print_working_directory(path);
 	path->dollar = 0;
@@ -49,4 +51,9 @@ int			check_paths(char *path)
 	if (stat(path, &sb) == -1)
 		return (127);
 	return (0);
+}
+
+char		**args(char *cmd)
+{
+	return (ft_split(cmd, ' '));
 }

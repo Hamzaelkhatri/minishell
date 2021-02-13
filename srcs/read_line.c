@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 18:16:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/12 09:32:11 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/13 18:10:21 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		manage_line(t_path *path, int check, t_list_cmd *cmd, char *line)
 {
-	int		i;
-	char	*tmp;
+	size_t		i;
+	char		*tmp;
 
 	i = 0;
 	g_var = 0;
@@ -34,23 +34,27 @@ int		manage_line(t_path *path, int check, t_list_cmd *cmd, char *line)
 		tmp = path->cmds;
 		cmd->line = ft_strdup(path->cmds);
 		parse_list_command(cmd, cmd->line);
-		ft_strdel(&path->cmds);
 		sort_execute(cmd, path);
 		free_lcommand(&cmd);
 	}
+	ft_strdel(&path->cmds);
 	return (check);
 }
 
 void	manage_d(char **lines, char *line)
 {
+	char	*tmp;
+
+	tmp = *lines;
 	if (*lines)
 		*lines = ft_strjoin(*lines, line);
 	else
 		*lines = ft_strdup(line);
+	frees(&tmp);
 	g_var1 = 1;
 }
 
-int		set_new_cmd(char **lines, char *line, t_list_cmd *cmd, t_path *path)
+int		set_new_cmd(char *line, t_list_cmd *cmd, t_path *path)
 {
 	int check;
 
@@ -65,7 +69,7 @@ int		set_new_cmd(char **lines, char *line, t_list_cmd *cmd, t_path *path)
 	if (!g_var1)
 	{
 		check = manage_line(path, check, cmd, line);
-		manage_cntrc(line, path);
+		manage_cntrc(line);
 		if (g_var == 112)
 			path->dollar = 131;
 		bash_promp();

@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/12 11:24:19 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/13 15:27:09 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ int				get_cmd(char *cmd, t_path *path, t_command *l_cmd);
 int				get_cmd_(char *cmd, t_path *path, t_command *l_cmd);
 void			free_lcommand(t_list_cmd **l_command);
 void			bash_promp();
-void			echo(char *line, t_path *patht);
+void			echo(char *line);
 void			commandes(char *cmd, t_path *path, t_command *l_cmd);
 void			promp_bash(t_path *path, int ret, char **line);
 void			show_export(char **env);
@@ -233,7 +233,7 @@ int				check_equal(char *str);
 int				ft_strcmp(const char *s1, const char *s2);
 char			*get_befor_equal(char *str);
 int				check_paths(char *path);
-char			**args(char *cmd, t_path *path);
+char			**args(char *cmd);
 char			*get_file(t_command *lcmd);
 char			*get_file_shift(t_command *lcmd, char *shift);
 int				double_red(char *file1, char *file2, char *shift);
@@ -255,16 +255,16 @@ void			exit_(char **line);
 void			signals(void);
 void			sigint_handler(int sig);
 void			init_(char **lines);
-void			manage_cntrc(char *line, t_path *path);
+void			manage_cntrc(char *line);
 int				execute(t_path *path, t_command *cmd);
 void			manage_d(char **lines, char *line);
-int				set_new_cmd(char **lines, char *line, t_list_cmd *cmd,
+int				set_new_cmd(char *line, t_list_cmd *cmd,
 				t_path *path);
 void			execute_cd(t_command *l_cmd, t_path *path);
 void			execute_env(t_path *path);
 void			execute_echo(char *cmd, t_path *path, t_command *l_cmd);
 void			execute_unset(t_path *path, t_command *l_cmd);
-void			execute_pwd(char *cmd, t_path *path);
+void			execute_pwd(t_path *path);
 void			execute_export(t_path *path);
 void			execute_export_(t_path *path, t_command *l_cmd);
 char			*word_tolower(char *str);

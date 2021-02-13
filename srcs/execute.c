@@ -6,31 +6,25 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 18:56:51 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/02/11 12:22:10 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:48:07 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**args(char *cmd, t_path *path)
+void	err_no(char *cmd)
 {
-	return (ft_split(cmd, ' '));
+	ft_putstr_fd("bash$ :", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putendl_fd(": is a directory", 2);
 }
 
-int		status_cmd_(int status, t_path *path)
-{
-	if (WIFEXITED(status))
-		path->dollar = WEXITSTATUS(status);
-	else
-		path->dollar = 0;
-	return (path->dollar);
-}
-
-void	errrno_handler(t_path *path, char *cmd)
+void	errrno_handler(char *cmd)
 {
 	int		a;
 	char	**args;
 
+	args = NULL;
 	a = fork();
 	if (!a)
 	{
@@ -38,11 +32,7 @@ void	errrno_handler(t_path *path, char *cmd)
 		args[1] = ft_strdup("-c");
 		args[2] = ft_strdup(cmd);
 		if (execve("/bin/bash", args, NULL) == -1)
-		{
-			ft_putstr_fd("bash$ :", 2);
-			ft_putstr_fd(cmd, 2);
-			ft_putendl_fd(": is a directory", 2);
-		}
+			err_no(cmd);
 		exit(0);
 	}
 	wait(0);
@@ -51,9 +41,23 @@ void	errrno_handler(t_path *path, char *cmd)
 
 void	frees_(char **binarypath, char ***tmp, char **cmds)
 {
+	frees(&*cmds);
 	frees(&*binarypath);
 	free_tab(&*tmp);
-	frees(&*cmds);
+}
+
+char	**exeuck(char **binarypath, char **cmds, t_path *path, t_command *cmd)
+{
+	char *tmp;
+
+	if (!ft_strlen(cmd->s_left->l_element->cmd))
+		tmp = NULL;
+	else
+		tmp = ft_strdup(cmd->s_left->l_element->cmd);
+	*binarypath = get_directory(path, tmp);
+	frees(&tmp);
+	*cmds = ft_strjoin_command(cmd->s_left);
+	return (args(*cmds));
 }
 
 int		execute(t_path *path, t_command *cmd)
@@ -64,18 +68,18 @@ int		execute(t_path *path, t_command *cmd)
 	char	*cmds;
 	int		status;
 
-	binarypath = get_directory(path, cmd->s_left->l_element->cmd);
-	cmds = ft_strjoin_command(cmd->s_left);
-	tmp = args(cmds, path);
+	binarypath = NULL;
+	status = 0;
+	tmp = exeuck(&binarypath, &cmds, path, cmd);
 	if (binarypath)
 	{
 		a = fork();
 		if (a < 0)
-			ft_putendl_fd(strerror(errno), 1);
+			ft_putendl_fd(strerror(errno), 2);
 		if (!a)
 		{
 			if (execve(binarypath, tmp, path->env->fullenv) != 0)
-				errrno_handler(path, cmds);
+				err_no(binarypath);
 			exit(EXIT_SUCCESS);
 		}
 		wait(&status);

@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:12:40 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/12 11:24:31 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:48:27 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	commandes(char *cmd, t_path *path, t_command *l_cmd)
 	if (!ft_check_str("exit", cmd))
 		cmd = word_tolower(cmd);
 	if (!ft_strcmp(cmd, "pwd"))
-		execute_pwd(cmd, path);
+		execute_pwd(path);
 	else if (!ft_strcmp(cmd, "env"))
 		execute_env(path);
 	else if (!ft_strcmp(cmd, "cd"))
@@ -36,7 +36,6 @@ void	commandes(char *cmd, t_path *path, t_command *l_cmd)
 
 char	*get_file_shift(t_command *lcmd, char *shift)
 {
-	int					fd;
 	t_simple_command	*cmd;
 
 	cmd = lcmd->s_left;
@@ -52,7 +51,8 @@ char	*get_file_shift(t_command *lcmd, char *shift)
 				&& ft_strcmp(cmd->right->l_element->redirection.i_o, "<"))
 			return (cmd->l_element->redirection.file);
 		else if (cmd->l_element->indice == 3 &&
-				ft_strcmp(cmd->l_element->redirection.i_o, "<"))
+				ft_strcmp(cmd->l_element->redirection.i_o, "<") &&
+				cmd->right && cmd->right->l_element->redirection.file)
 			create_file(cmd->l_element->redirection.file);
 		cmd = cmd->right;
 	}
@@ -77,7 +77,8 @@ int		create_file(char *file)
 {
 	int fd;
 
-	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+	fd = open(file,
+O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
 	ft_putstr_fd("", fd);
 	close(fd);
 	return (0);
@@ -86,7 +87,6 @@ int		create_file(char *file)
 char	*get_shift(t_command *lcmd)
 {
 	t_simple_command	*cmd;
-	int					fd;
 
 	cmd = lcmd->s_left;
 	while (cmd)

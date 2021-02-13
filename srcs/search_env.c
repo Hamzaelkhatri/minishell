@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 09:34:19 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/12 10:21:35 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/13 11:55:54 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_str_to_equal(const char *s1, const char *s2, int len)
 {
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;

@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 18:16:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/11 18:57:08 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/13 18:13:24 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ void	loop_shell(t_path *path, t_list_cmd *cmd)
 			tmp = lines;
 			lines = ft_strjoin(lines, line);
 			frees(&tmp);
+			tmp = line;
 			line = ft_strdup(lines);
+			frees(&tmp);
 			init_2(&lines);
 		}
-		check = set_new_cmd(&lines, line, cmd, path);
+		check = set_new_cmd(line, cmd, path);
 		frees(&line);
 	}
 }
@@ -74,7 +76,7 @@ void	sigint_handler(int sig)
 	}
 }
 
-void	manage_cntrc(char *line, t_path *path)
+void	manage_cntrc(char *line)
 {
 	if ((g_var == 111 || g_var == 112) && line[0] != '\n')
 		ft_putendl_fd("", 1);

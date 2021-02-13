@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 10:41:45 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/12 10:42:57 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/12 11:50:30 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,13 @@ void	init_2(char **lines)
 	g_var1 = 0;
 	g_var2 = 0;
 	frees(&*lines);
+}
+
+int		status_cmd_(int status, t_path *path)
+{
+	if (WIFEXITED(status))
+		path->dollar = WEXITSTATUS(status);
+	else
+		path->dollar = 0;
+	return (path->dollar);
 }

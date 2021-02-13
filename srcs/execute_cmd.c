@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 12:24:47 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/11 18:02:36 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:09:40 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int		ft_check_str(char *cmd, char *des)
 
 int		get_cmd_(char *cmd, t_path *path, t_command *l_cmd)
 {
-	char		*cmds;
 	char		*tmp1;
 	char		*tmp2;
 	t_command	*tmp;

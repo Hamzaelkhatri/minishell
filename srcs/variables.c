@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:51:34 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/12 17:45:48 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/11 18:51:36 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 void	after_dollar(char *str, int *i)
 {
 	if (str[*i] && ((str[*i] == '$' && (str[*i + 1] == '$'\
-		|| !str[*i + 1] || str[*i + 1] == '\\')) || (str[*i] == '$' &&\
+		|| !str[*i + 1])) || (str[*i] == '$' &&\
 			count_antislach(str, *i - 1) == 0) || str[*i] != '$'))
-		{
 		(*i)++;
-		}
 }
 
 char	*dollars(char *line, t_path *path)
@@ -43,16 +41,10 @@ char	*dollars(char *line, t_path *path)
 			while (str[i] != 39 && str[i])
 				i++;
 		}
-		else if ((str[i] == '$' && ((str[i + 1] != '$' && str[i + 1] != '\\' && str[i + 1]))) &&\
+		else if ((str[i] == '$' && ((str[i + 1] != '$' && str[i + 1]))) &&\
 			count_antislach(str, i - 1))
-			{
 			check_variable(&str, &i, index, path);
-			}
-			// getchar();
-			// printf("{%c}",str[i]);
-			// getchar();
 		after_dollar(str, &i);
-
 	}
 	return (str);
 }

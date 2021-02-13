@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tools2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:51:16 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/12 17:37:09 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/12 11:34:58 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	alloc_affect_extended(t_list_cmd **l_cmd,\
-		char *command, int indice, t_save *save)
+		char *command, t_save *save)
 {
 	(*l_cmd)->command->tool.redirection = 1;
 	(*l_cmd)->command = add_simple_cmd((*l_cmd)->command, 3, (*l_cmd));
@@ -43,7 +43,7 @@ void	alloc_affect(t_list_cmd *l_cmd, char *command, int indice, t_save *save)
 		l_cmd->command->s_left->l_element->argument = ft_strdup(command);
 	}
 	else if (indice == 3)
-		alloc_affect_extended(&l_cmd, command, indice, save);
+		alloc_affect_extended(&l_cmd, command, save);
 }
 
 int		ft_2strlen(char **str)
@@ -86,8 +86,6 @@ char	*ft_concatenation(char *line, int *i, int index, char *ptr)
 	str1 = (ptr != NULL) ? ft_strdup(ptr) : ft_strdup("");
 	tmp = str1;
 	len = ft_strlen(str1);
-	if(index == -1)
-		index = 0;
 	if (*i > 0)
 	{
 		str_beg = ft_strdup_beg(line, *i);
@@ -97,10 +95,6 @@ char	*ft_concatenation(char *line, int *i, int index, char *ptr)
 	if (line[*i + 1 + index])
 	{
 		str_end = ft_strdup(&line[*i + index + 1]);
-		// printf("|index ==> %d|\t|%s|\n",*i + 1 + index,&line[*i + 1 + index]);
-		// getchar();
-		// printf("|index ==> %d|\t|%s|\n",*i + 1 + index,str_end);
-		// getchar();
 		concat_ext(&str1, &str_end, &tmp, 2);
 	}
 	*i = len + *i - 1;

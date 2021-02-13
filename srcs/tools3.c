@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:51:24 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/12 11:03:22 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/12 11:37:00 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int		ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-int		split_tool_norm(char *str, int i, char c_q, int index)
+int		split_tool_norm(char *str, int i, char c_q)
 {
 	if (str[i] && (((str[i] == c_q && count_antislach(str, i - 1) == 0)\
 			|| str[i] != c_q)))
@@ -97,6 +97,6 @@ int		split_tool(char *str, int i, char c_q, int index)
 			return (1);
 	}
 	else if (index == 4)
-		return (split_tool_norm(str, i, c_q, 4));
+		return (split_tool_norm(str, i, c_q));
 	return (0);
 }

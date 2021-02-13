@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_space_split_quote.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:48:38 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/11 18:48:45 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/12 11:33:56 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ static char	*alloc(char **tab, char *src)
 	int		i;
 	int		j;
 	int		o;
-	char	quote;
 
 	j = 0;
 	o = 0;

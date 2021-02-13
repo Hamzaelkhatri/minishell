@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:47:07 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/11 18:52:40 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/12 11:44:50 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int			ft_check_line_ext(char *line, int *i)
 		(*i)++;
 	if (!(line[*i]))
 	{
-		ft_putstr_fd("syntax error\n", 2);
+		ft_putstr_fd("bash : syntax error\n", 2);
 		return (258);
 	}
 	return (1);
@@ -69,7 +69,7 @@ int			ft_check_line(char *line)
 			check = ft_check_line_ext2(line, &i);
 			if (check == 0)
 			{
-				ft_putstr_fd("syntax error\n", 2);
+				ft_putstr_fd("bash : syntax error\n", 2);
 				return (258);
 			}
 		}

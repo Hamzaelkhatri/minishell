@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:17:03 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/11 18:21:16 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:49:02 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,15 @@ void	exit_exec(t_command *l_cmd)
 	if (size_args(l_cmd) > 1 &&
 			is_int(l_cmd->s_left->right->l_element->argument))
 	{
+		ft_putendl_fd("exit", 2);
 		ft_putendl_fd("\e[1;31mminishell: exit: too many arguments", 2);
 	}
-	if (l_cmd->s_left->right && l_cmd->s_left->right->l_element->argument)
+	else if (!is_int(l_cmd->s_left->right->l_element->argument))
+	{
+		print_err_exite(l_cmd->s_left->right->l_element->argument);
+		exit(EXIT_FAILURE);
+	}
+	else if (l_cmd->s_left->right && l_cmd->s_left->right->l_element->argument)
 	{
 		ft_putendl_fd("exit", 1);
 		exit(check_int(l_cmd->s_left->right->l_element->argument));

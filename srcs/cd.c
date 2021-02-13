@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 10:29:26 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/11 18:00:44 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:47:43 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	cd_cmd(char *next_path, t_path *path)
 	char	*tmp;
 
 	path->dollar = 0;
-	if (next_path == NULL)
+	if (next_path == NULL && search_env(path->env->fullenv, "HOME"))
 		next_path = search_env(path->env->fullenv, "HOME");
+	else if (next_path == NULL)
+		next_path = ".";
 	tmp = getcwd(NULL, 100);
 	edit_env(path->env->fullenv, "OLDPWD", tmp);
 	frees(&tmp);

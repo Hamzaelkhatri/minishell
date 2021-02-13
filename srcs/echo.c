@@ -6,13 +6,13 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 11:02:30 by zjamali           #+#    #+#             */
-/*   Updated: 2021/02/12 11:08:53 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/12 11:34:37 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	echo(char *line, t_path *path)
+void	echo(char *line)
 {
 	line = ft_strtrim(line, "\n");
 	ft_putstr_fd(line, 1);
@@ -35,7 +35,7 @@ void	execute_echo(char *cmd, t_path *path, t_command *l_cmd)
 	while (l_cmd->s_left)
 	{
 		if (l_cmd->s_left->right)
-			echo(l_cmd->s_left->right->l_element->argument, path);
+			echo(l_cmd->s_left->right->l_element->argument);
 		if (l_cmd->s_left->right && l_cmd->s_left->right->right)
 			ft_putstr_fd(" ", 1);
 		l_cmd->s_left = l_cmd->s_left->right;

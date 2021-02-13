@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 10:34:58 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/11 17:31:05 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:10:59 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ int		bash_err(char *cmd)
 	return (127);
 }
 
-char	*directory_(t_path *path, char *cmd, char *tmp)
+char	*directory_(t_path *path, char *cmd)
 {
 	char	*tmps;
 	char	*link;
 
+	tmps = NULL;
 	if (check_link((cmd)))
 	{
 		if (!(path->dollar = check_paths((cmd))))
@@ -65,13 +66,14 @@ char	*get_directory_two(t_path *path, char *cmd, char *tmp)
 	char	*link;
 	char	*tmps;
 
+	i = 0;
 	paths = ft_split(tmp, ':');
 	while (paths[i])
 	{
 		link = ft_strjoin(paths[i], "/");
 		tmps = link;
 		link = ft_strjoin(link, cmd);
-		free(tmps);
+		frees(&tmps);
 		tmps = link;
 		if (!(path->dollar = check_paths(link)))
 		{
@@ -89,14 +91,16 @@ char	*get_directory_two(t_path *path, char *cmd, char *tmp)
 char	*get_directory(t_path *path, char *cmd)
 {
 	char	*tmp;
-	char	**paths;
 	int		i;
 
 	i = 0;
-	tmp = search_env(path->env->fullenv, "PATH");
-	if (tmp && !check_link((cmd)))
-		return (get_directory_two(path, cmd, tmp));
-	else
-		return (directory_(path, cmd, tmp));
+	if (cmd)
+	{
+		tmp = search_env(path->env->fullenv, "PATH");
+		if (tmp && !check_link((cmd)))
+			return (get_directory_two(path, cmd, tmp));
+		else
+			return (directory_(path, cmd));
+	}
 	return (NULL);
 }

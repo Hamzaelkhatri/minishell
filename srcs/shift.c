@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 09:43:44 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/12 11:14:15 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:53:16 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ int		double_red(char *file1, char *file2, char *shift)
 
 	in = open(file2, O_RDONLY);
 	out = get_file_desc(file1, shift);
+	if (in < 0 || out < 0)
+	{
+		ft_putendl_fd(strerror(errno), 2);
+		return (-1);
+	}
 	dup2(in, 0);
 	dup2(out, 1);
 	close(in);
@@ -84,22 +89,25 @@ void	opening_files(char *file, char *shifts, t_command *cmd)
 
 void	shift_extra(char *file, char *shifts, t_path *path, t_command *cmd)
 {
-	int		file_desc;
-	int		status;
-	int		pid;
+	int					status;
+	int					pid;
+	int					err;
+	t_simple_command	*tmp;
 
+	tmp = cmd->s_left;
 	pid = fork();
+	err = 0;
 	if (pid == 0)
 	{
 		if ((get_file_shift(cmd, ">") || get_file_shift(cmd, ">>")) &&
-				(get_file_shift(cmd, "<")))
-			double_red(get_file_shift(cmd, ">") ? get_file_shift(cmd, ">") :
-				get_file_shift(cmd, ">>"), get_file_shift(cmd, "<"), shifts);
+		(get_file_shift(cmd, "<")))
+			err = double_red(get_file_shift(cmd, ">") ? get_file_shift(cmd, ">")
+		: get_file_shift(cmd, ">>"), get_file_shift(cmd, "<"), shifts);
 		else
 			opening_files(file, shifts, cmd);
-		if (cmdcheck(cmd->s_left->l_element->cmd))
-			commandes(cmd->s_left->l_element->cmd, path, cmd);
-		else if (cmd->s_left->l_element->cmd)
+		if (cmdcheck(tmp->l_element->cmd) && !err)
+			commandes(tmp->l_element->cmd, path, cmd);
+		else if (tmp->l_element->cmd && !err)
 			execute(path, cmd);
 		exit(EXIT_SUCCESS);
 	}

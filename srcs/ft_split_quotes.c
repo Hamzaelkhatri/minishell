@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:49:02 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/12 11:09:37 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/12 11:33:49 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ static char	*alloc(char **tab, char *src, char c)
 	int		j;
 	int		o;
 	int		wich[2];
-	char	quote;
 
 	j = 0;
 	o = 0;
