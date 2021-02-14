@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/12 11:24:19 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/14 18:27:46 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ typedef struct	s_tmp
 }				t_tmp;
 
 char			*ft_ignoring(char *line);
+int				norm_i(int *i);
+int				check_if_in(char *str, int i, int save);
 void			back_slash(t_list_cmd *l_cmd);
 void			variables(t_list_cmd *l_cmd, t_path *path);
 int				count_antislach(char *line, int i);

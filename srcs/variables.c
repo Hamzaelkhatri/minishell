@@ -6,32 +6,27 @@
 /*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:51:34 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/14 11:51:10 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/14 18:23:22 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void after_dollar(char *str, int *i)
+void	after_dollar(char *str, int *i)
 {
-	if (str[*i] && ((str[*i] == '$' && (str[*i + 1] == '$' || !str[*i + 1] || str[*i + 1] == '\\' || !ft_isalnum(str[*i + 1]))) || (str[*i] == '$' && count_antislach(str, *i - 1) == 0) || str[*i] != '$'))
-	{
-		// if(str[*i] == '$' )
-		// {
-		// getchar();
-		// printf("{%s}\n",&str[*i]);
-		// getchar();
-		// }s
+	if (str[*i] && ((str[*i] == '$' && (str[*i + 1] == '$' || !str[*i + 1]\
+		|| str[*i + 1] == '\\' || !ft_isalnum(str[*i + 1]))) ||\
+			(str[*i] == '$' && count_antislach(str, *i - 1) == 0) ||\
+				str[*i] != '$'))
 		(*i)++;
-	}
 }
 
-char *dollars(char *line, t_path *path)
+char	*dollars(char *line, t_path *path)
 {
-	int i;
-	int index;
-	int save;
-	char *str;
+	int		i;
+	int		index;
+	int		save;
+	char	*str;
 
 	i = 0;
 	save = 0;
@@ -40,38 +35,22 @@ char *dollars(char *line, t_path *path)
 	while (str[i])
 	{
 		if (str[i] == 34 && count_antislach(str, i - 1))
-		{
 			save = (save == 0) ? 1 : 0;
-		}
 		if (str[i] == 39 && count_antislach(str, i - 1) && save == 0)
 		{
 			i++;
 			while (str[i] != 39 && str[i])
 				i++;
 		}
-		else if ((str[i] == '$' && (( (ft_isalnum(str[i + 1]) || str[i + 1] == '_' || (str[i + 1] == 34 && save == 0) || str[i + 1] == 39) &&   str[i + 1] != '$' && str[i + 1] != '\\' && str[i + 1] && !(str[i + 1] == 34 && save == 1)))) &&
-				 count_antislach(str, i - 1))
-		{
-			// if(!(str[i + 1] == 34 && save == 1))
-			// {
-			// printf("|str[i + 1] ==> %s|\t|save ==> %d|\n",&str[i],save);
-			// if(str[i] == '$' && str[i + 1] == '$')
-			// 	puts("hmaaar");
-			// printf("str[i] ==> %s\n",&str[i]);
+		else if (check_if_in(str, i, save))
 			check_variable(&str, &i, index, path);
-			// }
-		}
 		else
-		{
 			after_dollar(str, &i);
-		}
-		// puts("wa lhaj");
 	}
-	// printf("str ==> %s\n",str);
 	return (str);
 }
 
-void variables_affect(char **cmd, t_path *path)
+void	variables_affect(char **cmd, t_path *path)
 {
 	char *tmp;
 	char *str;
@@ -85,7 +64,7 @@ void variables_affect(char **cmd, t_path *path)
 	free(tmp);
 }
 
-void variables_extended(t_list_cmd *l_cmd,
+void	variables_extended(t_list_cmd *l_cmd,
 						t_simple_command *tmp_s, t_path *path)
 {
 	while (l_cmd->command != NULL)
@@ -95,12 +74,13 @@ void variables_extended(t_list_cmd *l_cmd,
 		{
 			if (l_cmd->command->s_left->l_element->indice == 1)
 				variables_affect(&l_cmd->command->s_left->l_element->cmd,
-								 path);
+								path);
 			else if (l_cmd->command->s_left->l_element->indice == 2)
 				variables_affect(&l_cmd->command->s_left->l_element->argument,
-								 path);
+								path);
 			else if (l_cmd->command->s_left->l_element->indice == 3)
-				variables_affect(&l_cmd->command->s_left->l_element->redirection.file, path);
+				variables_affect(&l_cmd->command->s_left->l_element\
+					->redirection.file, path);
 			l_cmd->command->s_left = l_cmd->command->s_left->right;
 		}
 		l_cmd->command->s_left = tmp_s;
@@ -108,11 +88,11 @@ void variables_extended(t_list_cmd *l_cmd,
 	}
 }
 
-void variables(t_list_cmd *l_cmd, t_path *path)
+void	variables(t_list_cmd *l_cmd, t_path *path)
 {
-	t_list_cmd *tmp_l_command;
-	t_command *tmp_command;
-	t_simple_command *tmp_s;
+	t_list_cmd			*tmp_l_command;
+	t_command			*tmp_command;
+	t_simple_command	*tmp_s;
 
 	tmp_l_command = l_cmd;
 	tmp_command = l_cmd->command;

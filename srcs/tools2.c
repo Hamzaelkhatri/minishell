@@ -6,7 +6,7 @@
 /*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:51:16 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/14 11:41:26 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/14 18:28:04 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,32 +86,20 @@ char	*ft_concatenation(char *line, int *i, int index, char *ptr)
 	str1 = (ptr != NULL) ? ft_strdup(ptr) : ft_strdup("");
 	tmp = str1;
 	len = ft_strlen(str1);
-	// printf("hii\n");
-	if(index == -1)
+	if (index == -1)
 		index = 0;
 	if (*i > 0)
 	{
 		str_beg = ft_strdup_beg(line, *i);
-		// printf("str_beg ==> %s\n",str_beg);
 		concat_ext(&str1, &str_beg, &tmp, 1);
 		tmp = str1;
 	}
 	if (line[*i + 1 + index])
 	{
 		str_end = ft_strdup(&line[*i + index + 1]);
-		// printf("|index ==> %d|\t|%s|\n",*i + 1 + index,&line[*i + 1 + index]);
-		// getchar();
-		// printf("|index ==> %d|\t|%s|\n",*i + 1 + index,str_end);
-		// getchar();
 		concat_ext(&str1, &str_end, &tmp, 2);
-	// printf("str1 ==> %s\n",str1);
-		
 	}
-	// printf("str1 ==> %s\n",str1);
 	*i = len + *i;
-	if (*i < 0)
-		*i = 0;
-	// printf("i==> %d\n",*i);
-		// printf("str1 ==> %s\n",&str1[*i]);
+	norm_i(i);
 	return (str1);
 }

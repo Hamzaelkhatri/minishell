@@ -6,7 +6,7 @@
 /*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:47:27 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/14 11:37:18 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/14 17:08:15 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@ int		ft_check_variable(char *line, int i)
 
 	j = 0;
 	i++;
-	if(line[i] == '"' || line[i] == '\'')
-	{
-		return(-1);
-	}
+	if (line[i] == '"' || line[i] == '\'')
+		return (-1);
 	if (line[i] == '$')
 		return (0);
 	else if (line[i] == '?')
@@ -31,7 +29,6 @@ int		ft_check_variable(char *line, int i)
 		i++;
 		j++;
 	}
-	// printf("j ==> %d\n",j);
 	return (j);
 }
 

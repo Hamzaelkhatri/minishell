@@ -50,6 +50,7 @@ SRC_NAME=allocation.c\
 		export_extra.c\
 		duping.c\
 		variables2.c\
+		variables3.c\
 
 HDR_NAME=minishell.h 
 
