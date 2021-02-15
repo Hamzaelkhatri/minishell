@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 18:56:51 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/02/15 14:50:08 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/15 15:32:33 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	frees_(char **binarypath, char ***tmp)
 
 char	**exeuck(char **binarypath, t_path *path, t_command *cmd)
 {
-	char *tmp;
+	char	*tmp;
 	char	*cmds;
 
 	tmp = NULL;
@@ -58,9 +58,9 @@ char	**exeuck(char **binarypath, t_path *path, t_command *cmd)
 		tmp = ft_strdup(cmd->s_left->l_element->cmd);
 	*binarypath = get_directory(path, tmp);
 	frees(&tmp);
-	if(cmd->s_left->right && cmd->s_left->right->right)
+	if (cmd->s_left->right && cmd->s_left->right->l_element->argument)
 		cmds = ft_strjoin_command(cmd->s_left);
-	else if(ft_strlen(cmd->s_left->l_element->cmd))
+	else if (ft_strlen(cmd->s_left->l_element->cmd))
 		cmds = ft_strdup(cmd->s_left->l_element->cmd);
 	return (args(&cmds));
 }

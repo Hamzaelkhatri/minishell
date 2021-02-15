@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 10:15:25 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/13 16:54:41 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/15 15:48:28 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int			is_int(char *str)
 	int		i;
 
 	i = 0;
+	while (str[i] == '-' || str[i] == '+')
+		i++;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))

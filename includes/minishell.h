@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/15 14:34:05 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/15 15:38:05 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,5 +292,6 @@ void			affect_redirection_ex(t_list_cmd *l_cmd, int result,
 int				split_tool(char *str, int i, char quote, int index);
 void			concat_ext(char **str1, char **dupstr, char **tmp, int index);
 char			*ft_strjoin_free(char *s1, char const *s2);
+void			empty_exit(char **line);
 
 #endif

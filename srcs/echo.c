@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 11:02:30 by zjamali           #+#    #+#             */
-/*   Updated: 2021/02/15 14:55:34 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/15 15:17:17 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ void	execute_echo(char *cmd, t_path *path, t_command *l_cmd)
 {
 	int					i;
 	t_simple_command	*cmds;
-	t_simple_command	*tmp;
 
 	cmds = l_cmd->s_left;
-	tmp = l_cmd->s_left;
 	i = 0;
 	if (l_cmd->s_left->right &&
 			!ft_strcmp(l_cmd->s_left->right->l_element->argument, "-n"))

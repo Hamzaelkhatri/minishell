@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:12:40 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/13 16:48:27 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/15 15:33:21 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ char	*get_file_shift(t_command *lcmd, char *shift)
 			return (cmd->l_element->redirection.file);
 		else if (cmd->l_element->indice == 3 &&
 				ft_strcmp(cmd->l_element->redirection.i_o, "<") &&
-				cmd->right && cmd->right->l_element->redirection.file)
+				cmd->right && cmd->right->l_element->redirection.file &&
+				ft_strcmp(cmd->l_element->redirection.i_o, ">>"))
 			create_file(cmd->l_element->redirection.file);
 		cmd = cmd->right;
 	}
@@ -91,10 +92,12 @@ char	*get_shift(t_command *lcmd)
 	cmd = lcmd->s_left;
 	while (cmd)
 	{
-		if (cmd->l_element->indice == 3 && cmd->right == NULL)
+		if (cmd->l_element->indice == 3 && (cmd->right == NULL ||
+		!ft_strcmp(cmd->l_element->redirection.i_o, ">>")))
 			return (cmd->l_element->redirection.i_o);
 		else if (cmd->l_element->indice == 3 &&
-				ft_strcmp(cmd->l_element->redirection.i_o, "<"))
+				ft_strcmp(cmd->l_element->redirection.i_o, "<") &&
+				ft_strcmp(cmd->l_element->redirection.i_o, ">>"))
 			create_file(cmd->l_element->redirection.file);
 		cmd = cmd->right;
 	}

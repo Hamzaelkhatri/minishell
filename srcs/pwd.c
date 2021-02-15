@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 11:10:30 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/15 14:48:08 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/15 15:46:59 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		print_working_directory(t_path *path)
 	if (pwd)
 		ft_putendl_fd(pwd, 1);
 	else
-		ft_putendl_fd(getcwd(pwd,100), 1);
+		ft_putendl_fd(getcwd(pwd, 100), 1);
 }
 
 void		execute_pwd(t_path *path)

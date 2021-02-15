@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   s_command.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:50:34 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/15 15:06:38 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/15 15:47:47 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	join(t_simple_command **cmd)
 	t_simple_command	*tmp;
 	t_simple_command	*save;
 	char				*tmp1;
-
 
 	tmp = *cmd;
 	if ((*cmd)->right->right != NULL && (*cmd)->right->l_element->indice == 2)

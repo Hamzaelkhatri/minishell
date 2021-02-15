@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 18:16:32 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/13 18:13:24 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/15 15:46:12 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ void	loop_shell(t_path *path, t_list_cmd *cmd)
 	while (1)
 	{
 		ret = read_line(&line);
-		if (line[0] == '\0' && !g_var1)
-			exit_(&line);
-		if (line[ret - 1] != '\n')
-			manage_d(&lines, line);
-		else if (lines && g_var1)
+		empty_exit(&line);
+		(line[ret - 1] != '\n') ? manage_d(&lines, line) : 0;
+		if (lines && g_var1 && line[ret - 1] == '\n')
 		{
 			tmp = lines;
 			lines = ft_strjoin(lines, line);
@@ -45,7 +43,7 @@ void	loop_shell(t_path *path, t_list_cmd *cmd)
 
 void	exit_(char **line)
 {
-	frees(line);
+	frees(&*line);
 	ft_putendl_fd("exit", 1);
 	exit(EXIT_SUCCESS);
 }
