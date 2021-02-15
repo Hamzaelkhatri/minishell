@@ -6,7 +6,7 @@
 /*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:50:34 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/15 15:06:38 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/15 15:06:22 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	join(t_simple_command **cmd)
 		save = (*cmd)->right->right;
 		tmp1 = (*cmd)->l_element->cmd;
 		(*cmd)->l_element->cmd = ft_strjoin((*cmd)->l_element->cmd, " -n");
-		frees(&tmp1);
 		*cmd = (*cmd)->right;
 		free_s_command(&(*cmd));
 		*cmd = save;

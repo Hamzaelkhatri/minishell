@@ -6,7 +6,7 @@
 /*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:50:34 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/15 15:06:38 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/15 14:49:16 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,15 @@
 
 static void	join(t_simple_command **cmd)
 {
-	t_simple_command	*tmp;
-	t_simple_command	*save;
-	char				*tmp1;
-
+	t_simple_command *tmp;
+	t_simple_command *save;
 
 	tmp = *cmd;
 	if ((*cmd)->right->right != NULL && (*cmd)->right->l_element->indice == 2)
 	{
 		save = (*cmd)->right->right;
-		tmp1 = (*cmd)->l_element->cmd;
-		(*cmd)->l_element->cmd = ft_strjoin((*cmd)->l_element->cmd, " -n");
-		frees(&tmp1);
+		(*cmd)->l_element->cmd = ft_strjoin_free((*cmd)->l_element->cmd, " ");
+		(*cmd)->l_element->cmd = ft_strjoin_free((*cmd)->l_element->cmd, "-n");
 		*cmd = (*cmd)->right;
 		free_s_command(&(*cmd));
 		*cmd = save;
@@ -96,9 +93,9 @@ void		check_scommand(t_list_cmd *l_cmd)
 		while (l_cmd->command != NULL)
 		{
 			cmd = l_cmd->command->s_left->l_element->cmd;
-			if (cmd != NULL && (ft_strlen(cmd) == 4 &&\
-						(ft_strnstr(cmd, "echo", 4))))
-				check_echo(&l_cmd->command->s_left);
+			// if (cmd != NULL && (ft_strlen(cmd) == 4 &&\
+			// 			(ft_strnstr(cmd, "echo", 4))))
+			// 	check_echo(&l_cmd->command->s_left);
 			l_cmd->command = l_cmd->command->right;
 		}
 		l_cmd->command = tmp_command;

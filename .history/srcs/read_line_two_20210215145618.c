@@ -6,7 +6,7 @@
 /*   By: sqatim <sqatim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 18:48:35 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/02/15 15:00:23 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/15 14:56:18 by sqatim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	sort_execute(t_list_cmd *cmd, t_path *path)
 {
 	sort(cmd);
 	variables(cmd, path);
-	check_scommand(cmd);
+	// check_scommand(cmd);
 	commande_effect(cmd, path);
 }
 
