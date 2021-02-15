@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 12:43:41 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/13 15:27:09 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/15 14:34:05 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ typedef struct	s_tmp
 }				t_tmp;
 
 char			*ft_ignoring(char *line);
+int				norm_i(int *i);
+int				check_if_in(char *str, int i, int save);
 void			back_slash(t_list_cmd *l_cmd);
 void			variables(t_list_cmd *l_cmd, t_path *path);
 int				count_antislach(char *line, int i);
@@ -233,7 +235,7 @@ int				check_equal(char *str);
 int				ft_strcmp(const char *s1, const char *s2);
 char			*get_befor_equal(char *str);
 int				check_paths(char *path);
-char			**args(char *cmd);
+char			**args(char **cmd);
 char			*get_file(t_command *lcmd);
 char			*get_file_shift(t_command *lcmd, char *shift);
 int				double_red(char *file1, char *file2, char *shift);

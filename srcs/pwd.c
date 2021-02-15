@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 11:10:30 by helkhatr          #+#    #+#             */
-/*   Updated: 2021/02/13 17:17:30 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/15 14:38:40 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ int			check_paths(char *path)
 	return (0);
 }
 
-char		**args(char *cmd)
+char		**args(char **cmd)
 {
-	return (ft_split(cmd, ' '));
+	char	**tmp;
+
+	tmp = ft_split(*cmd, ' ');
+	frees(&*cmd);
+	return (tmp);
 }

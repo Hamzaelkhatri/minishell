@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 18:56:51 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/02/13 16:48:07 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/15 14:39:35 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ void	errrno_handler(char *cmd)
 	free_tab(&args);
 }
 
-void	frees_(char **binarypath, char ***tmp, char **cmds)
+void	frees_(char **binarypath, char ***tmp)
 {
-	frees(&*cmds);
 	frees(&*binarypath);
 	free_tab(&*tmp);
 }
@@ -50,14 +49,18 @@ char	**exeuck(char **binarypath, char **cmds, t_path *path, t_command *cmd)
 {
 	char *tmp;
 
+	tmp = NULL;
 	if (!ft_strlen(cmd->s_left->l_element->cmd))
 		tmp = NULL;
 	else
 		tmp = ft_strdup(cmd->s_left->l_element->cmd);
 	*binarypath = get_directory(path, tmp);
 	frees(&tmp);
-	*cmds = ft_strjoin_command(cmd->s_left);
-	return (args(*cmds));
+	if(cmd->s_left->right && cmd->s_left->right->right)
+		*cmds = ft_strjoin_command(cmd->s_left);
+	else 
+		*cmds = ft_strdup(cmd->s_left->l_element->cmd);
+	return (args(&*cmds));
 }
 
 int		execute(t_path *path, t_command *cmd)
@@ -85,6 +88,6 @@ int		execute(t_path *path, t_command *cmd)
 		wait(&status);
 	}
 	(status && !path->dollar) ? status_cmd_(status, path) : 0;
-	frees_(&binarypath, &tmp, &cmds);
+	frees_(&binarypath, &tmp);
 	return (path->dollar);
 }

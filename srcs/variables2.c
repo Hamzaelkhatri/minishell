@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:51:44 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/11 18:51:45 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/15 12:35:49 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,13 @@ char	*ft_extraire_variable(char *line, int i, int *index)
 	k = 0;
 	result = *index + 2;
 	str = (char *)malloc(result);
-	while (j < *index + 1)
-		str[j++] = line[i++];
+	if (*index == -1)
+		str[j++] = '$';
+	else
+	{
+		while (j < *index + 1)
+			str[j++] = line[i++];
+	}
 	str[j] = '\0';
 	return (str);
 }

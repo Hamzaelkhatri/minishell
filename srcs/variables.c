@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sqatim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 18:51:34 by sqatim            #+#    #+#             */
-/*   Updated: 2021/02/11 18:51:36 by sqatim           ###   ########.fr       */
+/*   Updated: 2021/02/15 12:35:47 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	after_dollar(char *str, int *i)
 {
-	if (str[*i] && ((str[*i] == '$' && (str[*i + 1] == '$'\
-		|| !str[*i + 1])) || (str[*i] == '$' &&\
-			count_antislach(str, *i - 1) == 0) || str[*i] != '$'))
+	if (str[*i] && ((str[*i] == '$' && (str[*i + 1] == '$' || !str[*i + 1]\
+		|| str[*i + 1] == '\\' || !ft_isalnum(str[*i + 1]))) ||\
+			(str[*i] == '$' && count_antislach(str, *i - 1) == 0) ||\
+				str[*i] != '$'))
 		(*i)++;
 }
 
@@ -41,18 +42,18 @@ char	*dollars(char *line, t_path *path)
 			while (str[i] != 39 && str[i])
 				i++;
 		}
-		else if ((str[i] == '$' && ((str[i + 1] != '$' && str[i + 1]))) &&\
-			count_antislach(str, i - 1))
+		else if (check_if_in(str, i, save))
 			check_variable(&str, &i, index, path);
-		after_dollar(str, &i);
+		else
+			after_dollar(str, &i);
 	}
 	return (str);
 }
 
 void	variables_affect(char **cmd, t_path *path)
 {
-	char	*tmp;
-	char	*str;
+	char *tmp;
+	char *str;
 
 	tmp = ft_strdup(*cmd);
 	str = tmp;
@@ -64,7 +65,7 @@ void	variables_affect(char **cmd, t_path *path)
 }
 
 void	variables_extended(t_list_cmd *l_cmd,
-		t_simple_command *tmp_s, t_path *path)
+						t_simple_command *tmp_s, t_path *path)
 {
 	while (l_cmd->command != NULL)
 	{
@@ -73,13 +74,13 @@ void	variables_extended(t_list_cmd *l_cmd,
 		{
 			if (l_cmd->command->s_left->l_element->indice == 1)
 				variables_affect(&l_cmd->command->s_left->l_element->cmd,
-						path);
+								path);
 			else if (l_cmd->command->s_left->l_element->indice == 2)
 				variables_affect(&l_cmd->command->s_left->l_element->argument,
-						path);
+								path);
 			else if (l_cmd->command->s_left->l_element->indice == 3)
-				variables_affect(&l_cmd->command->\
-						s_left->l_element->redirection.file, path);
+				variables_affect(&l_cmd->command->s_left->l_element\
+					->redirection.file, path);
 			l_cmd->command->s_left = l_cmd->command->s_left->right;
 		}
 		l_cmd->command->s_left = tmp_s;
