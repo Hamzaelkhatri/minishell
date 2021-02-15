@@ -6,7 +6,7 @@
 /*   By: helkhatr <helkhatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 18:56:51 by ahaddad           #+#    #+#             */
-/*   Updated: 2021/02/15 14:39:35 by helkhatr         ###   ########.fr       */
+/*   Updated: 2021/02/15 14:50:08 by helkhatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,13 @@ void	frees_(char **binarypath, char ***tmp)
 	free_tab(&*tmp);
 }
 
-char	**exeuck(char **binarypath, char **cmds, t_path *path, t_command *cmd)
+char	**exeuck(char **binarypath, t_path *path, t_command *cmd)
 {
 	char *tmp;
+	char	*cmds;
 
 	tmp = NULL;
+	cmds = NULL;
 	if (!ft_strlen(cmd->s_left->l_element->cmd))
 		tmp = NULL;
 	else
@@ -57,10 +59,10 @@ char	**exeuck(char **binarypath, char **cmds, t_path *path, t_command *cmd)
 	*binarypath = get_directory(path, tmp);
 	frees(&tmp);
 	if(cmd->s_left->right && cmd->s_left->right->right)
-		*cmds = ft_strjoin_command(cmd->s_left);
-	else 
-		*cmds = ft_strdup(cmd->s_left->l_element->cmd);
-	return (args(&*cmds));
+		cmds = ft_strjoin_command(cmd->s_left);
+	else if(ft_strlen(cmd->s_left->l_element->cmd))
+		cmds = ft_strdup(cmd->s_left->l_element->cmd);
+	return (args(&cmds));
 }
 
 int		execute(t_path *path, t_command *cmd)
@@ -68,12 +70,11 @@ int		execute(t_path *path, t_command *cmd)
 	char	*binarypath;
 	pid_t	a;
 	char	**tmp;
-	char	*cmds;
 	int		status;
 
 	binarypath = NULL;
 	status = 0;
-	tmp = exeuck(&binarypath, &cmds, path, cmd);
+	tmp = exeuck(&binarypath, path, cmd);
 	if (binarypath)
 	{
 		a = fork();
