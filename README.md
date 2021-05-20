@@ -1,6 +1,35 @@
-# minishell
-project 1337
-<h1>Resources</h1>
+# Minishell_42
+
+## What is a shell? :thinking: ## 
+  Basically in an operating system there are these two elements:
+  <br>
+    * The kernel (= kernel): which performs the fundamental functions of 
+                    the operating system such as memory management, processes, files ...
+  <br>
+    * The shell: At its base, a shell is simply a macro processor that executes commands. 
+                -The term macro processor means functionality where text and symbols are expanded to create larger expressions.
+                -A Unix shell is both a command interpreter and a programming language. 
+
+## This Project Majerly Include :open_file_folder: ##
+
+**Parsing**
+
+        2. The separations
+        1. Pipes
+        3. Command and arguments
+        4. Protections
+        5. The <,>, >> redirects
+        6. Environment variables
+      
+**The execution**
+
+
+    1. Redirects
+    2. Env, export, unset
+    3. Exit and $?
+    4. Pipes / signals / process links 
+    
+  ## Resources
 https://medium.com/@nickolasteixeira/want-to-build-a-simple-shell-heres-how-you-do-it-75890647bae8</br>
 https://medium.com/dev-genius/lets-build-a-linux-shell-part-i-954c95911501</br>
 https://medium.com/better-programming/how-bash-works-8424becc12f3</br>
